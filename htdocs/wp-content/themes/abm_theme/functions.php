@@ -49,7 +49,7 @@ function abm_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'abm_theme' ),
+			'header_menu' => esc_html__( 'header_menu', 'abm_theme' ),
 		)
 	);
 
