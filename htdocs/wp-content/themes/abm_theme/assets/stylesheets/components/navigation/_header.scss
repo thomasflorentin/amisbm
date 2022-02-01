@@ -1,0 +1,186 @@
+
+/*
+ Généralité HEADER
+ */
+
+.header-container{
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0px; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    box-shadow: 0 4px 6px -2px #8685855e;
+    background-color: white;
+    z-index: 999999;
+}
+
+.header_inner {
+    background-color: white;
+    position: relative;
+    z-index: 999999;
+}
+
+.header-branding {
+    position: absolute;
+    top: 20px;
+    left: 0;
+
+    @include at-least(medium) {
+        width: $space_left * .6;
+        top: 20px;
+    }
+    @include at-least(large) {
+        width: $space_left;
+    }
+    @include up-to(medium) {
+        width: 125px;
+        top: 8px;
+    }
+}
+
+.site_logo {
+    width: 80%;
+    max-width: 150px;
+}
+
+
+
+
+/*
+ NAVIGATION PRINCIPALE (3-4 entrées)
+ */
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    padding: 10px $marge 10px $space_left;
+    justify-content: flex-start;
+
+    i {
+        margin-right: 10px;
+    }
+
+    li {
+        margin: 0 0 0 20px;
+        line-height: 1;
+        text-transform: uppercase;
+        @include at-least(large) {
+            font-size: 2rem;
+        }
+    }
+
+    @include up-to(medium) {
+        padding-left: 100px;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    @include at-least(medium) {
+        padding-left: $space_left * .6;
+    }
+    @include at-least(large) {
+        padding-left: $space_left;
+    }
+}
+
+.nav-upper {
+    @include up-to(medium) {
+        border-bottom: 1px solid black;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        width: 100vw;
+        font-size: 3rem;
+        padding: 20px 0 20px;
+
+        ul {
+            justify-content: flex-end;
+        }
+
+        li, i {
+            margin-right: 0;
+            margin-left: $marge;
+        }
+    }
+}
+
+.navigation-links {
+    width: 60%;
+
+    @include up-to(large) {
+        width: 90%;
+    }
+    @include up-to(medium) {
+        width: 100vw;
+        padding: 0 0 0 125px;
+
+        ul {
+            justify-content: flex-end;
+            align-items: center;
+        }
+        li {
+            margin-right: 0;
+            margin-left: $marge;
+            display: inline-block;
+            text-align: right;
+            line-height: 1;
+        }
+        a {
+            padding: 10px 0 5px;
+            display: inline-block;
+        }
+    }
+}
+
+
+.header-link {
+    @include up-to(medium) {
+        display: none;
+    }
+}
+
+
+
+/*
+ HOMMEPAGE BANNIERE
+ */
+
+    .header-banner {
+        transition: height .4s;
+        ;
+        @include at-least(medium) {
+            overflow: hidden;
+            height: 50vh;
+
+            figure {
+                margin: 0;
+            }
+    
+            figure img {
+                width: auto;
+                height: 100%;
+                width: 100vw;
+                object-fit: cover;
+            }
+        }
+
+        @include up-to(medium) {
+            display: none;
+        }
+
+    }
+
+
+
+/*
+ BLOC ALERT
+ */
+
+    .header-alert {
+        padding: 10px 0px;
+        min-height: 0px;
+        transition: all .4s;
+
+        .alert-container{
+            min-width: 50%;
+        }
+        @include at-least(medium) {
+            min-height: 100px;
+        }
+    }

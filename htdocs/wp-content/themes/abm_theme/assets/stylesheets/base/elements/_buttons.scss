@@ -1,0 +1,23 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	border: 1px solid;
+	border-color: $primary_color;
+	border-radius: 3px;
+	background: $primary_color;
+	color: rgba(0, 0, 0, 0.8);
+	line-height: 1;
+	padding: 0.6em 1em 0.4em;
+    
+	&:hover {
+		border-color: $primary_color;
+	}
+
+	&:active,
+	&:focus {
+		border-color: $primary_color;
+	}
+}
+
+

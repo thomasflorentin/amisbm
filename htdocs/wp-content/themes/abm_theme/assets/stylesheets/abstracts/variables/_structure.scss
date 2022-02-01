@@ -1,0 +1,245 @@
+$max-width: 1600px;
+$marge_wrapper: 40px;
+
+$space_left: 300px;
+$space_top: 200px;
+
+
+// CLASSES
+
+.wrapper {
+    max-width: $max-width;
+    width: calc(100% - #{$marge_wrapper});
+
+    @include at-least(large) {
+        padding-left: $space_left;
+    }
+
+    @include up-to(large) {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+
+
+.hidden,
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    opacity: 0;
+}
+
+
+// POSITIONS
+
+.is-relative {
+    position: relative;
+}
+
+.is-absolute {
+    position: absolute;
+}
+
+
+
+
+
+
+// MARGINS
+
+$marge: 20px;
+$marge_medium: $marge * 2;
+$marge_big: $marge * 4;
+$marge_vbig: $marge * 8;
+
+.mb-none {
+    margin-bottom: 0;
+}
+
+.mb-vsmall {
+    margin-bottom: $marge / 2 !important;
+}
+
+.mb-small {
+    margin-bottom: $marge !important;
+}
+
+.mb-medium {
+    margin-bottom: $marge_medium !important;
+}
+
+.mb-big {
+    margin-bottom: $marge_big;
+}
+
+
+
+.mt-vsmall {
+    margin-top: $marge / 2 !important;
+}
+
+.mt-small {
+    margin-top: $marge !important;
+}
+
+.mt-medium {
+    margin-top: $marge_medium !important;
+}
+
+.mt-big {
+    margin-top: $marge_big !important;
+}
+
+.mt-vbig {
+    margin-top: $marge_vbig !important;
+}
+
+
+.mr-small {
+    margin-right: $marge;
+}
+
+//PADDING
+
+.p-small {
+    padding: $marge;
+}
+
+.pb-medium{
+    padding-bottom: $marge_medium;
+}
+
+// FLEX
+
+.flex {
+    display: flex;
+}
+
+.fl-col {
+    @extend .flex;
+    flex-direction: column;
+}
+
+.fl-top {
+    @extend .flex;
+    align-items: flex-start;
+}
+
+.fl-hcentered {
+    @extend .flex;
+    align-items: center;
+}
+
+.fl-bottom {
+    @extend .flex;
+    align-items: flex-end;
+}
+
+.fl-justify {
+    @extend .flex;
+    justify-content: space-between;
+}
+
+.fl-vcentered {
+    @extend .flex;
+    justify-content: center;
+}
+
+.fl-centered {
+    @extend .flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.fl-end {
+    @extend .flex;
+    justify-content: flex-end;
+}
+
+.fl-wrap {
+    @extend .flex;
+    flex-wrap: wrap;
+}
+
+
+.txt-centered {
+    text-align: center;
+}
+
+.txt-right {
+    text-align: right;
+}
+
+.txt-capitalize {
+    text-transform: capitalize;
+}
+
+// RATIO
+
+.ratio {
+    position: relative;
+    overflow: hidden;
+
+    .inner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+    }
+
+    img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.square {
+    @extend .ratio;
+
+    &::after {
+        padding-bottom: 100%;
+    }
+}
+
+.ratio_1 {
+    @extend .ratio;
+
+    &::after {
+        padding-bottom: 70%;
+    }
+
+    @include up-to(medium) {
+        width: 100vw;
+        margin-left: - $marge_wrapper / 2;
+    }
+}
+
+.ratio_2 {
+    @extend .ratio;
+
+    &::after {
+        padding-bottom: 33%;
+    }
+    
+    @include up-to(medium) {
+        width: 100vw;
+        margin-left: - $marge_wrapper / 2;
+    }
+}

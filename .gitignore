@@ -1,0 +1,7 @@
+.DS_Store
+/htdocs/wp-config.php
+/htdocs/node_modules/
+/htdocs/wp-content/themes/abm_theme/node_modules/
+/.DS_Store
+/abm.code-workspace
+/htdocs/wp-content/uploads
