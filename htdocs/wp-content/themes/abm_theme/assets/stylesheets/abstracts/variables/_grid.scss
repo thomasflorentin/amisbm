@@ -12,10 +12,10 @@
     grid-row-gap: 0;
 
     @include at-least(medium) {
-        grid-column-gap: $marge_wrapper;
+        grid-column-gap: $gutter_medium;
     }
     @include up-to(medium) {
-        grid-column-gap: 20px;
+        grid-column-gap: $gutter_medium;
     }
 }
 

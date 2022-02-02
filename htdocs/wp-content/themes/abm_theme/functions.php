@@ -143,6 +143,9 @@ function abm_theme_scripts() {
 
 	wp_enqueue_script( 'abm_theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
+    wp_register_style('my_css', get_template_directory_uri() . '/assets/styles.css', false);
+    wp_enqueue_style('my_css');
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

@@ -13,7 +13,7 @@ p {
 
 .copy {
 	a {
-		border-bottom: 1px solid $secondary_color;
+		border-bottom: 1px solid $black;
 	}
 }
 
@@ -41,7 +41,7 @@ address {
 }
 
 pre {
-	background: $gray;
+	background: $grey;
 	font-family: $font__pre;
 	line-height: $font__lh;
 	margin-bottom: 1.6em;
@@ -59,7 +59,7 @@ var {
 
 abbr,
 acronym {
-	border-bottom: 1px dotted $gray;
+	border-bottom: 1px dotted $grey;
 	cursor: help;
 }
 

@@ -2,22 +2,36 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 1px solid;
-	border-color: $primary_color;
-	border-radius: 3px;
-	background: $primary_color;
-	color: rgba(0, 0, 0, 0.8);
-	line-height: 1;
-	padding: 0.6em 1em 0.4em;
-    
-	&:hover {
-		border-color: $primary_color;
-	}
+    border: 1px solid;
+    border-color: $primary_color;
+    border-radius: 3px;
+    background: $primary_color;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 1;
+    padding: 0.6em 1em 0.4em;
 
-	&:active,
-	&:focus {
-		border-color: $primary_color;
-	}
+    &:hover {
+        border-color: $primary_color;
+    }
+
+    &:active,
+    &:focus {
+        border-color: $primary_color;
+    }
 }
 
 
+.btn-medium {
+    padding: 8px 40px;
+    background: $blue;
+    color: $white;
+    border-radius: 13px;
+
+    &:hover {
+        color: $black !important;
+    }
+
+    a:hover {
+        color: $black !important;
+    }
+}

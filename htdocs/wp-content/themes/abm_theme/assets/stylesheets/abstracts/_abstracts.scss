@@ -4,6 +4,8 @@
 
 $cols: 12;
 
+$gutter_medium: 50px;
+
 $mobile_first:                      true !default; 
 $minimal_breakpoint:                300px !default; 
 $medium_breakpoint:                 800px !default; 
@@ -11,7 +13,10 @@ $large_breakpoint:                  1200px !default;
 $wide_breakpoint:                   1550px !default; 
 
 $max-width: 1600px;
-$marge_wrapper: 40px;
+$marge_wrapper: 200px;
+
+$space_left: 300px;
+$space_top: 200px;
 
 
 

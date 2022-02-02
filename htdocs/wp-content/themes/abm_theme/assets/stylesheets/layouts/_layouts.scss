@@ -6,8 +6,8 @@
 
 .breadcrumb {
     z-index: 99999;
-    background-color: $gray_light;
-    color: $gray;
+    background-color: $grey;
+    color: $grey;
     position: fixed;
     left: 0;
     right: 0;
@@ -62,45 +62,6 @@
     }
 
 }
-.scrolling {
-    .header-alert {
-        min-height: 0;
-    }
-    .breadcrumb {
-        top: 45px;
-    }
-    .header-banner {
-        height: 0;
-    }
-    .shortcuts {
-        top: 250px;
-    }
-    .structure-infos {
-        top: 150px;
-    }
-}
-
-// Single post
-
-.single_cover {
-
-    @include at-least(medium) {
-        .container-title-post {
-            margin-left: -115px;
-            z-index: 100;
-            background: $white;
-            //box-shadow: -12px -9px 10px #00000012;
-        }
-    }
-}
-.thumbnail_single {
-    img {
-        width: 100%;
-    }
-}
-
-
-
 
 // Cards
 
@@ -112,65 +73,6 @@
     position: relative;
     z-index: 9999;
     width: 75%;
-}
-
-.item_related {
-    background: $gray_light;
-    position: relative;
-    padding: 0 $marge / 1.5 $marge / 1.5 $marge / 1.5;
-
-    @include up-to(medium) {
-        margin-bottom: $marge_medium;
-    }
-
-    .item_related_type {
-        width: 50%;
-        background: $white;
-        margin: auto;
-    }
-
-    .item_related_date {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-/*
- shortcuts aside
- */
-
-.shortcuts {
-    position: fixed;
-    padding: $marge $marge * 2;
-    left: 0;
-    transition: transform .4s;
-    z-index: 99999;
-    transition: all .4s;
-
-    hr {
-        width: 60px;
-    }
-
-    @include at-least(large) {
-        width: $space_left;
-    }
-
-    @include up-to(large) {
-        transform: translateY(100vh);
-        background-color: gray;
-        color: white;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding-top: $space_top * 1.5;
-    }
-
-    &.open {
-        transform: none;
-    }
-
 }
 
 
