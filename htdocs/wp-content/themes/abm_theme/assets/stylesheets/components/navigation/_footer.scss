@@ -1,87 +1,22 @@
-.site-footer {
-    margin-top: 100px;
-    margin-bottom: $marge_medium;
-}
-
-.number-rescue p {
-    margin: 0px !important;
-}
-
-
-.site-footer .section-search,
-.site-footer .news-infos {
-    border-bottom: 1px solid black;
-    margin-bottom: $marge_medium;
-}
-
-.site-footer .news-infos form label {
-    display: block;
-}
-
-
-
-.social-qrcode img {
-    height: 100px;
-}
-
-
-.social {
-    display: inline-block;
-    align-self: flex-end;
-}
-
-.qrcode i {
-    font-size: 125px;
-}
-
-.footer_links {
-    @include at-least(medium) {
-        border-left: 1px solid rgb(203, 203, 203);
-        padding-left: $marge;
+.site-footer{
+    align-items: start;
+    background: $grey-white;
+    padding: 80px $marge_wrapper / 2;
+    box-shadow: 0px -4px 6px -2px #8685855e;
+    .footer-navigation{
+        li {
+            margin-left: 30px;
+            color: $black;
+            @extend .FS_20_B;
+        }
     }
 
-    &>div {
-        height: 100%;
+    .footer-branding{
+        img{
+            max-width: 164px; 
+        }
     }
 }
 
-.logo-footer figure {
-    text-align: end;
-}
 
-.notification-footer,
-.social-qrcode {
-    @include up-to(medium) {
-        display: none;
-    }
-}
 
-.number-rescue {
-    margin-right: $marge_medium;
-}
-.end-link{
-    @include up-to(medium){
-        margin-bottom: $marge-medium;
-    }
-}
-/*
- * FOOTER MOBILE MENU
- */
-
-.footer_menu {
-    position: fixed;
-    padding: $marge / 2 $marge;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 -4px 6px -2px #8685855e;
-    z-index: 99999;
-    font-size: 1.8rem;
-
-    li {
-        padding: 0 10px;
-        line-height: 1;
-        text-align: center;
-    }
-}

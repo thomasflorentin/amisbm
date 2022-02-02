@@ -21,11 +21,9 @@ a {
 	}
 }
 
-.arrow{
-    &:after{
-        font-family: "Font Awesome 5 Pro";
-        font-weight: 900;
-        content: "\f061";
-        margin-left: 10px;
-    }
+.btn_inline {
+	
+	&:before {
+		content: '> ';
+	}
 }

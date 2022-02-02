@@ -12,9 +12,9 @@
     width: 100%;
     /* Full width */
     box-shadow: 0 4px 6px -2px #8685855e;
-    background-color: white;
+    background-color: $grey-white;
     z-index: 999999;
-    padding: 30px 100px;
+    padding: 30px $marge_wrapper / 2;
 }
 
 .header_inner {

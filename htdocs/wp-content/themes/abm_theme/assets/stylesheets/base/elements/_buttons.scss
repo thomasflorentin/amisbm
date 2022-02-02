@@ -22,16 +22,17 @@ input[type="submit"] {
 
 
 .btn-medium {
-    padding: 8px 40px;
-    background: $blue;
-    color: $white;
-    border-radius: 13px;
-
+    padding: 8px 40px !important;
+    background: $blue !important;
+    color: $white !important;
+    border-radius: 13px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
     &:hover {
-        color: $black !important;
+        color: $white !important;
     }
 
     a:hover {
-        color: $black !important;
+        color: $white !important;
     }
 }
