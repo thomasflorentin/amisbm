@@ -193,3 +193,13 @@ function add_additional_class_on_li($classes, $item, $args)
     return $classes;
 }
 add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
+
+/* 
+ * CSS ADMIN
+ *************************/
+
+function admin_style()
+{
+    wp_enqueue_style('admin-styles', get_template_directory_uri() . '/admin.css');
+}
+add_action('admin_enqueue_scripts', 'admin_style');
