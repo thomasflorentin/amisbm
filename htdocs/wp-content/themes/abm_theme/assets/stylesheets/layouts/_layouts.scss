@@ -39,27 +39,7 @@
 
 .site-main {
     transition: all .4s;
-    padding-top: 250px;
-
-    .home & {
-        @include at-least(medium) {
-            padding-top: calc(50vh + 200px);
-        }
-
-        @include up-to(medium) {
-            padding-top: $space_top;
-        }
-    }
-
-    @include up-to(medium) {
-        padding-bottom: $marge * 3;
-    }
-    @include at-least(medium) {
-                
-        .home .scrolling & {
-            padding-top: 400px;
-        }
-    }
+    padding-top: 150px;
 
 }
 
