@@ -36,3 +36,19 @@ input[type="submit"] {
         color: $white !important;
     }
 }
+
+.btn-big {
+    padding: 13px 39px !important;
+    background: $blue !important;
+    color: $white !important;
+    border-radius: 13px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    &:hover {
+        color: $white !important;
+    }
+
+    a:hover {
+        color: $white !important;
+    }
+}

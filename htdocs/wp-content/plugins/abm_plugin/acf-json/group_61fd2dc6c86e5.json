@@ -106,9 +106,57 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_6200e1b4c4b50": {
+                    "key": "layout_6200e1b4c4b50",
+                    "name": "mod_intro",
+                    "label": "Introduction",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6200e1c7c4b51",
+                            "label": "Titre",
+                            "name": "mod_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_6200e1e0c4b52",
+                            "label": "Contenu",
+                            "name": "mod_content",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "m_11col",
+                                "id": "m_11col"
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": "",
+                            "new_lines": "wpautop"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
-            "button_label": "Ajouter un élément",
+            "button_label": "Ajouter un module",
             "min": "",
             "max": ""
         }
@@ -145,5 +193,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1643984800
+    "modified": 1644226723
 }

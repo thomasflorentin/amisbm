@@ -11,6 +11,7 @@ if (have_rows('flex_content')) :
          * (cf. Accueil)
          */
         if (get_row_layout() == 'mod_cover_banner') :
+
             $title = get_sub_field('mod_title');
             $text_button = get_sub_field('mod_text_button');
             $link_button = get_sub_field('mod_link_button');
@@ -25,6 +26,21 @@ if (have_rows('flex_content')) :
 
             get_template_part('components/modules/module', 'banner-cover', $args);
 
+        /*
+         * BLOCS INTRO
+         * (cf. Accueil)
+         */
+        elseif (get_row_layout() == 'mod_intro') :
+
+            $title = get_sub_field('mod_title');
+            $text_content = get_sub_field('mod_content');
+
+            $args = array(
+                'title'   => $title,
+                'text_content'   => $text_content
+            );
+
+            get_template_part('components/modules/module', 'intro', $args);
         endif;
 
 

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
 .wrapper { width: calc(100% - 200px); margin: auto; }
 
 .hidden, .visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; opacity: 0; }
@@ -293,7 +294,9 @@ h1, h2, h3, h4, h5, h6 { clear: both; margin-top: 0; }
 
 .h31 { text-transform: uppercase; line-height: 1; }
 
-.FS_60 { font-weight: bold; font-size: 6rem; }
+.FS_60 { font-weight: 700; font-family: 'Libre Baskerville'; font-size: 4rem; }
+
+.FS_45 { font-weight: 700; font-family: 'Libre Baskerville'; font-size: 3.5rem; }
 
 .FS_20_B, .main-navigation .menu li, .site-footer .footer-navigation li { font-weight: 600; font-size: 1.5rem; text-transform: uppercase; }
 
@@ -375,6 +378,12 @@ button:active, button:focus, input[type="button"]:active, input[type="button"]:f
 .btn-medium:hover, .main-navigation .menu li:hover:last-child { color: white !important; }
 
 .btn-medium a:hover, .main-navigation .menu li:last-child a:hover { color: white !important; }
+
+.btn-big { padding: 13px 39px !important; background: #4d70ad !important; color: white !important; border-radius: 13px !important; text-transform: uppercase !important; font-weight: 600 !important; }
+
+.btn-big:hover { color: white !important; }
+
+.btn-big a:hover { color: white !important; }
 
 input[type="text"], input[type="email"], input[type="url"], input[type="password"], input[type="search"], input[type="number"], input[type="tel"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"], input[type="color"], textarea { color: #818181; border: 1px solid #3d3d3d; padding: 5px 10px; border-radius: 13px; outline: none; width: 100%; height: 43px; width: 394px; margin-bottom: 10px; }
 
@@ -467,6 +476,12 @@ button { border: none; padding: 0; margin: 0; background: none; }
 .site-footer .footer-navigation li { margin-left: 30px; color: #3d3d3d; }
 
 .site-footer .footer-branding img { max-width: 164px; }
+
+/* Modules
+--------------------------------------------- */
+.mod_cover_banner { padding: 120px 0 120px 103px; color: white; background-position: center !important; background-repeat: no-repeat !important; background-size: cover !important; }
+
+.mod_intro { padding: 100px 0 100px 0; }
 
 /* Media
 --------------------------------------------- */
@@ -603,7 +618,7 @@ button { border: none; padding: 0; margin: 0; background: none; }
 
 @media (min-width: 1200px) { .breadcrumb { top: 100px; padding-left: 300px; } }
 
-.site-main { transition: all .4s; padding-top: 150px; }
+.site-main { transition: all .4s; padding-top: 125px; }
 
 .item_title { display: block; margin-left: auto; margin-right: auto; background: white; margin-top: -60px; padding: 20px; position: relative; z-index: 9999; width: 75%; }
 
