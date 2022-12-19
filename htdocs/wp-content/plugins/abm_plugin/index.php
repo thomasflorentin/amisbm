@@ -12,5 +12,3 @@ define('ABM_URL', WP_PLUGIN_URL.'/abm_plugin');
 
 require_once(ABM_DIR.'/acf.php');
 require_once(ABM_DIR.'/cpt/cpt-event.php');
-//require_once(ABM_DIR.'/cpt/cpt-information.php');
-

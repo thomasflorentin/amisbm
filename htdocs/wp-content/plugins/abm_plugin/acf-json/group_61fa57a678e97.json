@@ -7,7 +7,7 @@
             "label": "Logo du footer",
             "name": "logo_footer",
             "type": "image",
-            "instructions": "",
+            "instructions": "Image du footer",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -64,5 +64,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1643797302
+    "modified": 1671444744
 }
