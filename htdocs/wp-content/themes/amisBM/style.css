@@ -6,3 +6,7 @@ Description: Thème réalisé pour le site internet de l'association "Les Amis d
 Author: Thomas FLORENTIN & Arthur CLOUX
 Author URI: http://thomasflorentin.net/
 */
+
+h1 {
+    color: red;
+}
