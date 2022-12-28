@@ -33,4 +33,16 @@ if (!function_exists('ABM_setup')){
 }
 add_action( 'after_setup_theme', 'ABM_setup' );
 
+
+function ABM_public_scripts() {
+    
+}
+add_action( 'wp_enqueue_scripts', 'ABM_public_scripts' );
+
+function ABM_admin_scripts() {
+    
+}
+add_action( 'admin_enqueue_scripts', 'ABM_admin_scripts' );
+
+
 ?>
