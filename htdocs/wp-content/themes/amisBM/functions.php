@@ -35,7 +35,11 @@ add_action( 'after_setup_theme', 'ABM_setup' );
 
 
 function ABM_public_scripts() {
-    
+    // Styles
+    wp_enqueue_style('main', get_template_directory_uri() . '/assets/css/main.css', [], 1.0, 'all');
+
+    // Scripts
+    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.css', [], 1.0, true);
 }
 add_action( 'wp_enqueue_scripts', 'ABM_public_scripts' );
 
