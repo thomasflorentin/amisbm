@@ -11,7 +11,7 @@
     <div class="page-content">
         <?php
             the_content();
-            
+
             // for the navigation while being on the wp editor
             wp_link_pages( array(
                 'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'ninestars' ),
