@@ -14,7 +14,7 @@
 
             // for the navigation while being on the wp editor
             wp_link_pages( array(
-                'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'ninestars' ),
+                'before' => '<div class="page-links">' . esc_html__( 'Pages:'),
                 'after' => '</div>',
             ));
         ?>

@@ -2,7 +2,7 @@
     get_header();
 ?>
 
-<div class="archive-content">
+<main class="archive-content">
 
     <?php if(have_posts()): ?>
         <header class="archive-page-header">
@@ -24,13 +24,11 @@
         ])
         ?>
 
-    <?php
-    else:
-        get_template_part('template-parts/page/content', 'none');
-    endif;
-    ?>
+    <?php else: ?>
+        Aucn contenu dans cette catégorie.
+    <?php endif; ?>
         
-</div>
+</main>
 
 <?php
     get_footer();

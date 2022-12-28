@@ -2,6 +2,8 @@
 
 get_header();
 
+get_search_form();
+
 if(have_posts()):
     while(have_posts()):
         the_post();

@@ -9,3 +9,11 @@
 </head>
 
 <body <?php body_class(); ?>>
+
+<?php 
+    // <header class="main-header">
+    //     <div class="header-logo">
+    //         <img src="assets/images/logo.png" alt="logo des amis de Bourron-Marlotte">
+    //     </div>
+    // </header>
+?>

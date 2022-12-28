@@ -7,6 +7,14 @@ Author: Thomas FLORENTIN & Arthur CLOUX
 Author URI: http://thomasflorentin.net/
 */
 
+.main-header{
+    background-color: rgba(24, 24, 24, 0.75);
+}
+
+.main-header > .header-logo {
+    height: clamp(2rem, 100%, 100px);
+}
+
 h1 {
     color: red;
 }
