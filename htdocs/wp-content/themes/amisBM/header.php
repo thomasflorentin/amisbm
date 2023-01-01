@@ -10,10 +10,18 @@
 
 <body <?php body_class(); ?>>
 
-<?php 
-    // <header class="main-header">
-    //     <div class="header-logo">
-    //         <img src="assets/images/logo.png" alt="logo des amis de Bourron-Marlotte">
-    //     </div>
-    // </header>
-?>
+    <header class="header" <?php if(is_user_logged_in()) {echo 'style="top:30px;"';} ?>>
+        <div class="header_logo">
+            <?php the_custom_logo(); ?>
+        </div>
+
+        <div class="header_wrapper">
+            <div class="header_searchForm">
+                <?php get_search_form(); ?>
+            </div>
+
+            <nav class="header_nav">
+                <?php wp_nav_menu('Header nav'); ?>
+            </nav>
+        </div>
+    </header>
