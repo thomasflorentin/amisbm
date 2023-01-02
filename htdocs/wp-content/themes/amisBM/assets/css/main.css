@@ -42,7 +42,9 @@ body {
 
 
 
-/* Hero Sections */
+
+
+/* Hero Section */
 .home_hero {
     width: 100%;
     height: 70vh;
@@ -71,19 +73,21 @@ body {
     height: 100%;
 
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     z-index: -1;
 }
 .hero--img > img {
     width: 100%;
     height: auto;
-    margin-top: -150px;
+    margin-top: -115px;
 }
 
 
 
-/* Main Sections */
+
+
+/* Main Section */
 main.main {
     width: clamp(300px, 75%, 90%);
     margin-inline: auto;
@@ -102,6 +106,12 @@ main.main {
 
 
 
+/* News Sections */
+.rule {}
+
+
+
+/* Monthly Subject Section */
 .home_sujetDuMois {
     background-color: #F1F1F1;
 }
@@ -120,8 +130,7 @@ main.main {
 
 
 
-
-
+/* Publications Section */
 .home_publications {
     position: relative;
     overflow: hidden;
@@ -163,8 +172,7 @@ main.main {
 
 
 
-
-
+/* Join the association Section */
 .home_join {    
     background-color: #EBEFF9;
 }

@@ -5,6 +5,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 10;
 
     display: flex;
     justify-content: space-between;
@@ -29,4 +30,29 @@
 
 .header_searchForm {
     display: none;
+}
+
+
+
+
+
+.footer {
+    padding-top: 150px;
+    padding-inline: 250px;
+    padding-bottom: 100px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #5D5D5D;
+
+    color: white;
+
+    z-index: -1;
+    position: relative;
+}
+
+.footer_rightCol span {
+    display: block;
 }

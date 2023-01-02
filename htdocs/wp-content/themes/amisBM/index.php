@@ -42,7 +42,7 @@ get_header();
     </section>
 
     <section class="home_publications">
-        <div class="publications--bgdImg" style="">
+        <div class="publications--bgdImg">
             <img src="<?php echo get_template_directory_uri() . "/assets/images/home-publication.jpg"; ?>" alt='Image de fond de la section "les publications"'>
         </div>
 
