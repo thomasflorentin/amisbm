@@ -1,0 +1,113 @@
+/* Misc */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E9E9E9;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --main_font_blue: #687BAB;
+    --main_bg_blue: #4A62A0;
+    --light-bg-blue: #698ADE;
+}
+
+
+
+/* OOCSS */
+.section_title {
+    color: var(--main_font_blue);
+    font-size: 2.5em;
+    margin-top: 0;
+    margin-bottom: 5rem;
+}
+
+.mainBtn {
+    padding: .75em 1.5em;
+
+    background-color: var(--light-bg-blue);
+    border: none;
+    border-radius: 7px;
+
+    color: white;
+}
+
+
+
+/* Hero Sections */
+.home_hero {
+    width: 100%;
+    height: 70vh;
+
+    position: relative;
+
+    color: white;
+
+    overflow: hidden;
+    z-index: -1;
+}
+
+.hero--content {
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #3f3f3f83;
+}
+
+.hero--img {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.hero--img > img {
+    width: 100%;
+    height: auto;
+}
+
+
+
+/* Main Sections */
+main.main {
+    width: clamp(300px, 75%, 90%);
+    margin-inline: auto;
+    margin-top: -75px;
+    
+    background-color: white;
+    box-shadow: 3px 3px 3px rgba(180, 180, 180, 0.452), -3px -3px 3px rgba(180, 180, 180, 0.452);
+    
+    z-index: 2;
+}
+.section_padding {
+    padding: 5% 7.5%;
+}
+
+
+
+
+
+.home_sujetDuMois {
+    background-color: #F1F1F1;
+}
+
+.sujetDuMois_wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.sujetDuMois_txt {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

@@ -2,7 +2,7 @@
     <!-- Post Thumbnail -->
     <?php
     if(has_post_thumbnail()):
-        the_post_thumbnail('large'); //full, large, medium or custom size
+        the_post_thumbnail('medium'); //full, large, medium or custom size
     endif;
     ?>
 
