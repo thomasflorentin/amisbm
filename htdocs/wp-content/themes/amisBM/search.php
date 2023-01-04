@@ -13,7 +13,8 @@
         <?php
         while(have_posts()):
             the_post();
-            get_template_part('template-parts/post/content', 'post');
+            get_template_part('components/blocs/bloc', 'post');
+
         endwhile;
 
         echo paginate_links([

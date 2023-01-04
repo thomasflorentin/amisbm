@@ -4,7 +4,7 @@
 
 <main class="page-content">
     <?php
-        get_template_part('template-parts/page/content', 'page');
+        get_template_part('components/blocs/bloc', 'page');
     ?>
 </main>
 
