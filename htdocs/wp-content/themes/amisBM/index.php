@@ -15,6 +15,8 @@ get_header();
 <main class="main">
     <section class="home_actus section_padding">
         <h2 class="section_title">Actualités</h2>
+
+        <div class="actus_itemWrapper">
         <?php
         if(have_posts()):
             while(have_posts()):
@@ -23,6 +25,7 @@ get_header();
             endwhile;
         endif;
         ?>
+        </div>
     </section>
 
     <section class="home_sujetDuMois section_padding">
