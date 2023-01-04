@@ -1,6 +1,7 @@
 <?php
     get_header();
 ?>
+
 <section class="home_hero">
     <div class="hero--img">
         <img src="<?php echo get_template_directory_uri() . "/assets/images/home-hero.png"; ?>" alt="Image d'introduction de la page d'accueil">

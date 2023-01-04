@@ -10,5 +10,14 @@ define('ABM_PATH', '/'.str_replace(ABSPATH, '', ABM_DIR));
 define('ABM_URL', WP_PLUGIN_URL.'/abm_plugin');
 
 
+
+// ACF
+
 require_once(ABM_DIR.'/acf.php');
-require_once(ABM_DIR.'/cpt/cpt-event.php');
+
+
+// REQUIRE CUSTOM POST TYPES 
+// Publications & Sujet du Mois
+
+//require_once(ABM_DIR.'/cpt/cpt-event.php');
+require_once(ABM_DIR.'/cpt/cpt-publications.php');
