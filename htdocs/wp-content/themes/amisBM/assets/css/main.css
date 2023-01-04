@@ -40,6 +40,10 @@ body {
     color: white;
 }
 
+.wrapper--flex {
+    display: flex;
+}
+
 
 
 
@@ -96,6 +100,7 @@ main.main {
     background-color: white;
     box-shadow: 2px 2px 10px rgba(116, 116, 116, 0.333), -2px 2px 10px rgba(116, 116, 116, 0.333);
     
+    position: relative;
     z-index: 2;
 }
 .section_padding {
