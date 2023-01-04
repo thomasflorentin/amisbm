@@ -1,12 +1,12 @@
 {
     "key": "group_61fd2dc6c86e5",
-    "title": "Flexible Modules",
+    "title": "Section couverture page d'accueil",
     "fields": [
         {
-            "key": "field_61fd2dd136002",
-            "label": "Modules flexible",
-            "name": "flex_content",
-            "type": "flexible_content",
+            "key": "field_63b576473ab92",
+            "label": "Titre de la page (hero)",
+            "name": "page_title",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,365 +15,38 @@
                 "class": "",
                 "id": ""
             },
-            "layouts": {
-                "layout_61fd2ddcb937b": {
-                    "key": "layout_61fd2ddcb937b",
-                    "name": "mod_cover_banner",
-                    "label": "Bannière image + text",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_61fd2f5936003",
-                            "label": "Texte de l'image",
-                            "name": "mod_title",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_61fd2f8936004",
-                            "label": "Texte du bouton",
-                            "name": "mod_text_button",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_61fd2fad36005",
-                            "label": "Lien du boutton",
-                            "name": "mod_link_button",
-                            "type": "page_link",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "post_type": "",
-                            "taxonomy": "",
-                            "allow_null": 0,
-                            "allow_archives": 1,
-                            "multiple": 0
-                        },
-                        {
-                            "key": "field_61fd2fcf36006",
-                            "label": "Bannière",
-                            "name": "mod_img_banner",
-                            "type": "image",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "url",
-                            "preview_size": "medium",
-                            "library": "all",
-                            "min_width": "",
-                            "min_height": "",
-                            "min_size": "",
-                            "max_width": "",
-                            "max_height": "",
-                            "max_size": "",
-                            "mime_types": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_6200e1b4c4b50": {
-                    "key": "layout_6200e1b4c4b50",
-                    "name": "mod_intro",
-                    "label": "Introduction",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_6200e1c7c4b51",
-                            "label": "Titre",
-                            "name": "mod_title",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_6200e1e0c4b52",
-                            "label": "Contenu",
-                            "name": "mod_content",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "m_11col",
-                                "id": "m_11col"
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "maxlength": "",
-                            "rows": "",
-                            "new_lines": "wpautop"
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_6200f274a2783": {
-                    "key": "layout_6200f274a2783",
-                    "name": "mod_list_page",
-                    "label": "Liste de pages (actus, évènements)",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_6200f3eaa2784",
-                            "label": "Titre",
-                            "name": "mod_title",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_6200f3fba2785",
-                            "label": "Lien du titre ?",
-                            "name": "mod_link",
-                            "type": "page_link",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "post_type": "",
-                            "taxonomy": "",
-                            "allow_null": 0,
-                            "allow_archives": 1,
-                            "multiple": 0
-                        },
-                        {
-                            "key": "field_6200f411a2786",
-                            "label": "Mode d'affichage",
-                            "name": "mod_display",
-                            "type": "select",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "actu": "Liste de bloc -> Actualité",
-                                "event": "Liste de bloc -> Evénement"
-                            },
-                            "default_value": false,
-                            "allow_null": 0,
-                            "multiple": 0,
-                            "ui": 0,
-                            "return_format": "value",
-                            "ajax": 0,
-                            "placeholder": ""
-                        },
-                        {
-                            "key": "field_6200f4dba2787",
-                            "label": "Affichage automatique ?",
-                            "name": "mod_auto",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "ui": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": ""
-                        },
-                        {
-                            "key": "field_6200f50fa2788",
-                            "label": "Nombre d'éléments ?",
-                            "name": "mod_postsperpage",
-                            "type": "number",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_6200f4dba2787",
-                                        "operator": "==",
-                                        "value": "1"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "min": "",
-                            "max": "",
-                            "step": ""
-                        },
-                        {
-                            "key": "field_6200f534a2789",
-                            "label": "Type de post",
-                            "name": "mod_posttype",
-                            "type": "select",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_6200f4dba2787",
-                                        "operator": "==",
-                                        "value": "1"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "event": "Événements",
-                                "post": "Actualités"
-                            },
-                            "default_value": "post",
-                            "allow_null": 0,
-                            "multiple": 0,
-                            "ui": 0,
-                            "return_format": "value",
-                            "ajax": 0,
-                            "placeholder": ""
-                        },
-                        {
-                            "key": "field_6200f574a278a",
-                            "label": "Liste des éléments à afficher",
-                            "name": "mod_list_elements",
-                            "type": "relationship",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_6200f4dba2787",
-                                        "operator": "!=",
-                                        "value": "1"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "100",
-                                "class": "",
-                                "id": ""
-                            },
-                            "post_type": [
-                                "post",
-                                "page",
-                                "event"
-                            ],
-                            "taxonomy": "",
-                            "filters": [
-                                "search",
-                                "post_type",
-                                "taxonomy"
-                            ],
-                            "elements": [
-                                "featured_image"
-                            ],
-                            "min": "",
-                            "max": 6,
-                            "return_format": "object"
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                }
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_63b5774305791",
+            "label": "Mot d'introduction de la page d'accueil",
+            "name": "page_introduction",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
             },
-            "button_label": "Ajouter un module",
-            "min": "",
-            "max": ""
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "page_template",
                 "operator": "==",
-                "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "event"
+                "value": "page-home.php"
             }
         ]
     ],
@@ -386,5 +59,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1644241947
+    "modified": 1672837167
 }

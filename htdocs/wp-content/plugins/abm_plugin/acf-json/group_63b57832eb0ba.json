@@ -1,0 +1,131 @@
+{
+    "key": "group_63b57832eb0ba",
+    "title": "Contenus flexibles",
+    "fields": [
+        {
+            "key": "field_63b57898d724b",
+            "label": "Sections flexibles de la page",
+            "name": "sections_flexibles",
+            "type": "flexible_content",
+            "instructions": "Ajouter autant de sections que voulu. Vous pouvez les réordonner comme vous le souhaitez.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layouts": {
+                "layout_63b578a1498e2": {
+                    "key": "layout_63b578a1498e2",
+                    "name": "section_news",
+                    "label": "Blocs Actualités",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_63b5792cd724c",
+                            "label": "Titre de la section",
+                            "name": "section_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_63b57944d724d",
+                            "label": "Actualités à afficher",
+                            "name": "section_items",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "post"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search",
+                                "post_type",
+                                "taxonomy"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": 3,
+                            "max": 3,
+                            "return_format": "object"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_63b57a4cf19fc": {
+                    "key": "layout_63b57a4cf19fc",
+                    "name": "section_sujet",
+                    "label": "Sujet du Mois",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_63b57a5df19fd",
+                            "label": "Titre de la section",
+                            "name": "section_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "button_label": "Ajouter une section",
+            "min": "",
+            "max": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1672837758
+}
