@@ -14,11 +14,17 @@
 
 
             elseif( get_row_layout() == 'section_sujet' ):
+                $section_item = get_sub_field('section_item');
+
+                set_query_var( 'section_item', $section_item);
                 get_template_part('components/flexibles/flexible', 'sujet');
 
 
             elseif( get_row_layout() == 'section_publications' ):
                 get_template_part('components/flexibles/flexible', 'publications');
+
+            elseif( get_row_layout() == 'section_joinUs' ):
+                get_template_part('components/flexibles/flexible', 'join');
 
 
             endif;
