@@ -2,6 +2,11 @@
 * {
     box-sizing: border-box;
 }
+img {
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+}
 
 body {
     background-color: #E9E9E9;
@@ -17,6 +22,11 @@ body {
     --grey-filter: #33333383;
 }
 
+ul[class] {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
 
 /* OOCSS */
@@ -161,6 +171,7 @@ main.main {
     gap: 0.5rem;
 }
 .separator--dot{
+    display: inline-block;
     width: 0.25rem;
     height: 0.25rem;
     border-radius: 100%;
@@ -288,4 +299,22 @@ main.main {
 }
 .filters_group button {
     margin-right: 20px;
+}
+.publication_tags {
+    display: flex;
+    align-items: center;
+}
+.publication_tags li {
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+}
+.publication_tags .separator--dot {
+    margin-left: 10px;
+}
+.publication-content {
+    display: flex;
+}
+.content_media, .content_text {
+    width: 50%;
 }
