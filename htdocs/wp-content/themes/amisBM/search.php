@@ -1,27 +1,39 @@
 <?php
     get_header();
+    global $wp_query;
+    $total_results = $wp_query->found_posts;
+
 ?>
 
-<main class="serach-content">
+
+
+<main class="main content_area section_padding serach-content">
 
     <h1>Recherche</h1>
-    <?php get_search_form() ?>
+
+    <div class="">
+        <?php get_search_form() ?>
+        <span><?php echo $total_results; ?> résultat(s)</span>
+    </div>
 
     <?php if(have_posts()): ?>
-        <h2>Actualités</h2>
+    
+        <div class="actus_itemWrapper">
 
-        <?php
-        while(have_posts()):
-            the_post();
-            get_template_part('components/blocs/bloc', 'post');
 
-        endwhile;
+            <?php
+            while(have_posts()):
+                the_post();
+                get_template_part('components/blocs/bloc', 'post');
 
-        echo paginate_links([
-            'prev_text' => esc_html__('Précédent'),
-            'next_text' => esc_html__('Suivant')
-        ])
-        ?>
+            endwhile;
+
+            echo paginate_links([
+                'prev_text' => esc_html__('Précédent'),
+                'next_text' => esc_html__('Suivant')
+            ])
+            ?>
+        </div>
 
     <?php else: ?>
         <h3>Désolé, aucun résultat ne correspond à votre recherche</h3>

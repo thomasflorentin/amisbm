@@ -28,6 +28,12 @@ ul[class] {
     margin: 0;
 }
 
+.link-block {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
 
 /* OOCSS */
 .section_title {

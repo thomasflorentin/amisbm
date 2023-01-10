@@ -1,5 +1,5 @@
 <article class="" id="post-<?php the_ID(); ?>">
-    <a href="<?php the_permalink(); ?>">
+    <a href="<?php the_permalink(); ?>" class="link-block">
         <div class="post_thumbnail">
             <?php
             if(has_post_thumbnail()):
@@ -9,9 +9,36 @@
         </div>
 
         <div class="post_content">
+
+            <?php 
+                
+                if( is_search() ) {
+                    $post_type = $post->post_type;
+
+                    switch ($post_type) {
+                        case 'post':
+                            echo "<span>Actualité / Evénement</span>";
+                            break;
+
+                        case 'publication':
+                            echo "<span>Publication</span>";
+                            break;                   
+                
+                        case 'sujet':
+                            echo "<span>Sujet du moment</span>";
+                            break;
+
+                        default:
+                            echo "<span>Page</span>";
+                            break;
+                    }
+                }
+
+            ?>
+
             <!-- Post Title -->
             <div class="post_title">
-                <?php the_title( '<h3 class="post-title"> <a href="' . esc_url( get_permalink() ) . '" class="post-link">', '</a> </h3>' ); ?>
+                <?php the_title( '<h3 class="post-title">', '</h3>' ); ?>
             </div>
 
             <!-- Post Meta-Datas -->

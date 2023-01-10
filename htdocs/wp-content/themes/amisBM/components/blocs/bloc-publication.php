@@ -25,7 +25,6 @@
                     echo $terms_string;
 
                 ?>
-                
             </div>
         </div>
     </a>
