@@ -36,7 +36,10 @@ body {
     background-color: var(--light-bg-blue);
     border: none;
     border-radius: 7px;
+    text-decoration: none;
 
+    font-family: inherit;
+    font-size: 1rem;  
     color: white;
 }
 
@@ -174,6 +177,11 @@ main.main {
     gap: 2rem;
 }
 
+.sujetDuMois_img img {
+    width: 100%;
+    height: auto;
+}
+
 .sujetDuMois_txt {
     display: flex;
     flex-direction: column;
@@ -242,6 +250,7 @@ main.main {
 }
 
 
+
 /* SINGLES */
 
 .single_event_meta {
@@ -258,4 +267,10 @@ main.main {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.wp-block-image img {
+    display: block;
+    margin: 4rem auto;
+
 }

@@ -5,19 +5,24 @@
                         <!-- ICI, mettre un Champ ACF OBJET POST-->
                         <?php
                         if( $section_item ):
-                            setup_postdata($section_item); ?>
 
-                            <div class="sujetDuMois_img">
-                                <?php the_post_thumbnail(); ?>
-                            </div>
+                            foreach( $section_item as $post ): 
 
-                            <div class="sujetDuMois_txt">
-                                <?php the_title( "<h3>", "</h3>") ?>
-                                <p><?php the_excerpt(); ?></p>
-                                <button class="mainBtn">Découvrir le sujet</button>
-                            </div>
+                                setup_postdata($post); ?>
+      
+                                <div class="sujetDuMois_img">
+                                    <?php the_post_thumbnail(); ?>
+                                </div>
 
-                            <?php wp_reset_postdata();
+                                <div class="sujetDuMois_txt">
+                                    <?php the_title( "<h3>", "</h3>") ?>
+                                    <p><?php the_excerpt(); ?></p>
+                                    <a href="<?php the_permalink(); ?>" class="mainBtn">Découvrir le sujet</a>
+                                </div>
+
+                            <?php endforeach; ?>
+
+                        <?php wp_reset_postdata();
                         endif; ?>
                     </div>
 </section>
