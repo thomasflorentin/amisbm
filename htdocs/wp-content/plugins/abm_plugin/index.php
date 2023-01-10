@@ -22,3 +22,4 @@ require_once(ABM_DIR.'/acf.php');
 //require_once(ABM_DIR.'/cpt/cpt-event.php');
 require_once(ABM_DIR.'/cpt/cpt-publications.php');
 require_once(ABM_DIR.'/cpt/cpt-sujetDuMois.php');
+require_once(ABM_DIR.'/cpt/ctax-publicationtype.php');

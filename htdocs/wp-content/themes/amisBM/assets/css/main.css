@@ -109,6 +109,9 @@ main.main {
     position: relative;
     z-index: 2;
 }
+.main.no-hero {
+    margin-top: 125px;
+}
 .section_padding {
     padding: 5% 7.5%;
 }
@@ -273,4 +276,16 @@ main.main {
     display: block;
     margin: 4rem auto;
 
+}
+
+
+
+/* PUBLICATIONS ARCHIVES */
+
+.publications_filters {
+    display: flex;
+    justify-content: space-between;
+}
+.filters_group button {
+    margin-right: 20px;
 }

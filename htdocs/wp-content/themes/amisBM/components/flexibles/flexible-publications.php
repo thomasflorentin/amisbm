@@ -11,6 +11,11 @@
             <p><?php the_sub_field('section_p2'); ?></p>
         </div>
     
-        <button class="mainBtn">Voir toutes les publications</button>
+        <?php 
+            $section_link = get_sub_field('section_link');
+            if( $section_link ): ?>
+                <a class="mainBtn" href="<?php the_permalink( $section_link->ID); ?>">Voir toutes les publications</a>
+        <?php endif; ?>
+
     </div>
 </section>
