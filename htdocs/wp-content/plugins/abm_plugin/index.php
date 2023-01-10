@@ -21,4 +21,4 @@ require_once(ABM_DIR.'/acf.php');
 
 //require_once(ABM_DIR.'/cpt/cpt-event.php');
 require_once(ABM_DIR.'/cpt/cpt-publications.php');
-require_once(ABM_DIR.'/cpt/cpt-sujet.php');
+require_once(ABM_DIR.'/cpt/cpt-sujetDuMois.php');

@@ -1,0 +1,63 @@
+{
+    "key": "group_63bbd63fc8b6d",
+    "title": "Page Header",
+    "fields": [
+        {
+            "key": "field_63bbd64e179c5",
+            "label": "Titre de la page",
+            "name": "page_title",
+            "type": "text",
+            "instructions": "Entrez le titre de la page ici.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Titre",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_63bbd686179c6",
+            "label": "Introduction de la page",
+            "name": "page_introduction",
+            "type": "text",
+            "instructions": "Entrez le texte d'introduction de la page ici.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Intro",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-home.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": false,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1673266757
+}
