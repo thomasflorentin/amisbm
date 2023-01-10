@@ -49,7 +49,7 @@ body {
 
 
 /* Hero Section */
-.home_hero {
+.home_hero, .post_hero {
     width: 100%;
     height: 70vh;
 
@@ -59,6 +59,9 @@ body {
 
     overflow: hidden;
     z-index: -1;
+}
+.post_hero {
+    height: 40vh;
 }
 
 .hero--content {
@@ -236,4 +239,23 @@ main.main {
 .home_join .join_btnWrapper {
     width: fit-content;    
     margin-inline: auto;
+}
+
+
+/* SINGLES */
+
+.single_event_meta {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 2em;
+}
+.single_excerpt {
+    font-size: 1.4em;
+    margin-bottom: 2em;
+}
+.single_excerpt, 
+.single_content p {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }

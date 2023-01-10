@@ -54,4 +54,7 @@ add_action( 'admin_enqueue_scripts', 'ABM_admin_scripts' );
 // links the custom-shortcodes.php file
 include('custom-shortcodes.php');
 
+include('inc/template-functions.php');
+
+
 ?>

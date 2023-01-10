@@ -1,9 +1,9 @@
 <?php
     get_header();
 ?>
-<section class="home_hero">
+<section class="post_hero">
     <div class="hero--img">
-        <img src="<?php echo get_template_directory_uri() . "/assets/images/home-hero.png"; ?>" alt="Image d'introduction de la page d'accueil">
+        <?php the_post_thumbnail('full'); ?>
     </div>
     <div class="hero--content">
         <?php the_title( '<h1 class="single-title">', '</h1>' ); ?>
