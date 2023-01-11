@@ -161,6 +161,7 @@ main.main {
     max-height: 200px;
     overflow: hidden;
 }
+
 .post_thumbnail > img {
     width: 100%;
     height: auto;
@@ -311,6 +312,10 @@ main.main {
     display: flex;
     justify-content: space-between;
 }
+.publication-filter:not(.active){
+    background: none;
+    color: var(--light-bg-blue);
+}
 .filters_group button {
     margin-right: 20px;
 }
@@ -332,3 +337,13 @@ main.main {
 .content_media, .content_text {
     width: 50%;
 }
+
+.publications_itemWrapper {
+    display: flex;
+    gap: 2.5%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.publication_thumbnail {
+    width: 100%;
+} 

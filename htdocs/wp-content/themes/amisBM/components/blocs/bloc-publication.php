@@ -1,6 +1,6 @@
 <article class="" id="post-<?php the_ID(); ?>">
     <a href="<?php the_permalink(); ?>">
-        <div class="post_thumbnail">
+        <div class="publication_thumbnail">
             <?php
             if(has_post_thumbnail()):
                 the_post_thumbnail('medium'); //full, large, medium or custom size

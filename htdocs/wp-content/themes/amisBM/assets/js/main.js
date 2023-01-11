@@ -17,6 +17,11 @@ function init() {
             el.addEventListener('click', function (e) {
                 console.log('please do filter');
 
+                els.forEach(element => {
+                    element.classList.remove('active');
+                });
+                this.classList.add('active');
+
                 const data = new FormData();
                 const term = this.getAttribute('data-term');
                 const termID = this.getAttribute('data-termID');

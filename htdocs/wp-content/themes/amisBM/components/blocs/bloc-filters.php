@@ -1,7 +1,7 @@
 <section class="publications_filters section_padding">
 
     <div class="filters_group">
-        <button class="mainBtn publication-filter" data-term="all">Tous</button>
+        <button class="mainBtn publication-filter active" data-term="all">Tous</button>
         <?php 
         $types = get_terms( array(
             'taxonomy' => 'publication_type',

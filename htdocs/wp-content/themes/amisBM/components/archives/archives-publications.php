@@ -10,7 +10,7 @@
     );
 
     if ( $the_query->have_posts() ) {
-        echo '<div id="publications_posts" class="actus_itemWrapper">';
+        echo '<div id="publications_posts" class="publications_itemWrapper">';
 
         while ( $the_query->have_posts() ) {
             $the_query->the_post();
