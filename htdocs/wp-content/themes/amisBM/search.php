@@ -7,7 +7,7 @@
 
 
 
-<main class="main content_area section_padding serach-content">
+<main class="main no-hero section_padding search-content">
 
     <h1>Recherche</h1>
 
