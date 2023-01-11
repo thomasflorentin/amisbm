@@ -4,19 +4,10 @@
 */
 
 get_header();
+
+get_template_part('components/blocs/bloc', 'hero');
+
 ?>
-
-<section class="home_hero">
-    <div class="hero--img">
-        <img src="<?php echo get_template_directory_uri() . "/assets/images/home-hero.png"; ?>" alt="Image d'introduction de la page d'accueil">
-    </div>
-    <div class="hero--content">
-        <h1><?php the_field('page_title'); ?></h1>
-        <p><?php the_field('page_introduction'); ?></p>
-    </div>
-</section>
-
-
 
 
 

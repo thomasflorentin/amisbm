@@ -5,7 +5,9 @@
         <?php 
             $section_link = get_sub_field('section_link');
             if( $section_link ): ?>
-                <a class="mainBtn" href="<?php the_permalink( $section_link->ID); ?>">Rejoindre l'association</a>
+                <a class="mainBtn" href="<?php the_permalink( $section_link->ID); ?>">
+                    <?php the_sub_field('section_link_label'); ?>
+                </a>
         <?php endif; ?>
     </div>
 </section>
