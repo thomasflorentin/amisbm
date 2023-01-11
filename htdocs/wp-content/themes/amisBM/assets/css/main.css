@@ -149,7 +149,8 @@ main.main {
     flex-wrap: wrap;
 }
 
-.actus_itemWrapper > article {
+.actus_itemWrapper > article,
+.publications_itemWrapper > article {
     width: clamp(150px, 100%, 31.666%);
     margin-bottom: 2.5%;
 
@@ -346,4 +347,8 @@ main.main {
 }
 .publication_thumbnail {
     width: 100%;
+} 
+.publication_thumbnail img {
+    width: 100%;
+    height: auto;
 } 
