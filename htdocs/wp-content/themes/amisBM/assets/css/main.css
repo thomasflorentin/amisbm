@@ -121,7 +121,7 @@ ul[class] {
 
 /* Main Section */
 main.main {
-    width: clamp(300px, 90%, 1200px);
+    width: clamp(300px, 90%, 1400px);
     margin-inline: auto;
     margin-block: -75px;
     
