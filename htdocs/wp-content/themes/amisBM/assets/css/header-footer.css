@@ -29,10 +29,13 @@
 }
 
 .header_searchForm {
-    display: none;
+    /* display: none; */
 }
 
-
+.header_logo img{
+    max-height: 100px;
+    width: auto;
+}
 
 
 
