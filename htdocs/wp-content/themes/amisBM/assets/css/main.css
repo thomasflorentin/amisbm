@@ -146,10 +146,12 @@ main.main {
 .actus_itemWrapper {
     display: flex;
     gap: 2.5%;
+    flex-wrap: wrap;
 }
 
 .actus_itemWrapper > article {
     width: clamp(150px, 100%, 31.666%);
+    margin-bottom: 2.5%;
 
     border: 3px solid #BDC8C1;
 }
