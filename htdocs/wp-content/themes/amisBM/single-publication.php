@@ -2,7 +2,7 @@
     get_header();
 ?>
 
-<main class="main content_area section_padding">
+<main class="main content_area section_padding no-hero">
     <?php
         while(have_posts()):
             the_post();

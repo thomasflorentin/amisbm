@@ -4,6 +4,7 @@
 }
 img {
     max-width: 100%;
+    height: auto;
     display: block;
     object-fit: cover;
 }
@@ -132,7 +133,7 @@ main.main {
     z-index: 2;
 }
 .main.no-hero {
-    margin-top: 125px;
+    margin-top: 150px;
 }
 .section_padding {
     padding: 5% 7.5%;
