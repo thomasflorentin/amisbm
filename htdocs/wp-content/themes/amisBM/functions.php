@@ -40,7 +40,12 @@ function ABM_public_scripts() {
     wp_enqueue_style('header and footer', get_template_directory_uri() . '/assets/css/header-footer.css', [], rand(), 'all');
 
     // Scripts
-    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.css', [], rand(), true);
+    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js', [], rand(), true);
+    wp_localize_script('main', 'ajax_var', array(
+        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'nonce' => wp_create_nonce( 'wp-pageviews-nonce' ),
+    ));
+
 }
 add_action( 'wp_enqueue_scripts', 'ABM_public_scripts' );
 
@@ -55,6 +60,58 @@ add_action( 'admin_enqueue_scripts', 'ABM_admin_scripts' );
 include('custom-shortcodes.php');
 
 include('inc/template-functions.php');
+
+
+
+
+/*
+ * Ajax Functions
+ */
+
+    add_action("wp_ajax_loadpublications", "loadpublications");
+    add_action("wp_ajax_nopriv_loadpublications", "loadpublications");
+
+    function loadpublications() {
+
+        $term = $_POST['term'];
+        $termID = $_POST['termID'];
+
+        $args = array( 
+            'post_type' => 'publication',
+            'posts_per_page' => 12,
+        );
+
+        if( $term != "all" ) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'publication_type',
+                    'field'    => 'term_id',
+                    'terms'    => array( $termID ),
+                )
+            );
+        }
+
+        $the_query = new WP_Query( 
+            $args
+        );
+
+        ob_start();
+
+            // The Loop
+            if ( $the_query->have_posts() ) {
+                while ( $the_query->have_posts() ) {
+                    $the_query->the_post();
+                    get_template_part('components/blocs/bloc', 'publication');
+                }
+            } else {
+                echo "<h2>Désolé, nous n'avons rien trouvé...</h2>";
+            }
+
+            wp_reset_postdata();
+
+        $response = ob_get_clean();
+        die(json_encode($response));
+    }
 
 
 ?>

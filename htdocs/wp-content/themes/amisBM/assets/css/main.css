@@ -50,13 +50,19 @@ ul[class] {
     padding: .75em 1.5em;
 
     background-color: var(--light-bg-blue);
-    border: none;
+    border: 1px solid var(--light-bg-blue);
     border-radius: 7px;
     text-decoration: none;
 
     font-family: inherit;
     font-size: 1rem;  
     color: white;
+    cursor: pointer;
+    transition: all .3s;
+}
+.mainBtn:hover {
+    background: none;
+    color: var(--light-bg-blue);
 }
 
 .wrapper--flex {
