@@ -314,6 +314,8 @@ main.main {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 2rem;
+    margin-top: 0;
 }
 
 .wp-block-image img {
@@ -389,15 +391,27 @@ main.main {
     flex-wrap: wrap;
 }
 .wp-block-file {
+    width: 48%;
+}
+.wp-block-file a{
     border: 2px solid var(--light-bg-blue);
     padding: 15px;
-    width: 48%;
+    cursor: pointer;
+    display: block;
+}
+.wp-block-file a:hover {
+    border: 2px solid var(--light-bg-blue);
+    background-color: var(--light-bg-blue);
+    color: white;
 }
 .wp-block-file a:first-child:before {
     content: "[pdf]";
     margin-right: 10px;
     opacity: .9;
     color: var(--light-bg-blue)
+}
+.wp-block-file a:first-child:hover:before {
+    color: inherit;
 }
 .wp-block-file a {
     color: inherit;
