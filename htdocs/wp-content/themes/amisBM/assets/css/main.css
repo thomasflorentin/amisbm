@@ -310,7 +310,7 @@ main.main {
     margin-bottom: 2em;
 }
 .single_excerpt, 
-.single_content p {
+.single_content > p {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -418,3 +418,50 @@ main.main {
     text-decoration: none;
 }
 
+
+
+
+/* FORMULAIRES */
+
+
+input,
+textarea {
+    padding: 10px; 
+    border: 1px solid var(--light-bg-blue);
+
+}
+
+label {
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--light-bg-blue)
+}
+
+.wpcf7-form {
+    width: 700px;
+    margin: auto;
+}
+.wpcf7-form input,
+.wpcf7-form textarea {
+    width: 100%;
+}
+.wpcf7-form p {
+    margin-bottom: 2rem;
+}
+.wpcf7-form p + ul {
+    margin-top: -2rem;
+}
+ul.wpcf7-post_image_checkbox {
+    display: flex;
+    gap: 2.5%;
+    flex-wrap: wrap;
+    border: 1px solid var(--light-bg-blue);
+    padding: 15px;
+}
+.wpcf7-form ul.wpcf7-post_image_checkbox > li.wpcf7-list-item {
+    width: 48%;
+    margin: 0;
+}
+.wpcf7-list-item-content {
+    display: none;
+}
