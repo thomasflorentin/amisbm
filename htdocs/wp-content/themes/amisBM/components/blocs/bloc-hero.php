@@ -9,8 +9,18 @@
             if(has_post_thumbnail()) {
                 the_post_thumbnail('hero');  
             } 
-            else { ?>
-                <img src="<?php echo get_template_directory_uri() . "/assets/images/home-hero.png"; ?>" alt="Image d'introduction de la page d'accueil">
+            else { 
+                $images = get_field('hero_images');
+                $size = 'hero'; 
+                if( $images ): ?>
+                    <ul class="slider">
+                        <?php foreach( $images as $image_id ): ?>
+                            <li class="slide">
+                                <?php echo wp_get_attachment_image( $image_id, $size ); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
             <?php } ?>
     </div>

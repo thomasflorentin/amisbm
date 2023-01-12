@@ -110,11 +110,28 @@ ul[class] {
     left: 0;
     z-index: -1;
 }
-.hero--img > img {
+.hero--img img {
     width: 100%;
     height: 100%;
 }
 
+.slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    transition: background-image 2s ease-in-out;
+}
+
+.slider .slide {
+    position: absolute;
+    transition: opacity 1s ease-in;
+    width: 100%;
+    height: 100%;
+}
+
+.slide + .slide { opacity: 0; }
 
 
 
