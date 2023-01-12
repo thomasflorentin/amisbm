@@ -53,7 +53,6 @@ function init() {
 
             })
         }
-
     }
 
     const filter_buttons = document.querySelectorAll('.publication-filter');
@@ -61,18 +60,28 @@ function init() {
 
 
 
-    var current = 0,
-    slides = document.querySelectorAll(".slide");
 
-    setInterval(function() {
-    for (var i = 0; i < slides.length; i++) {
-        slides[i].style.opacity = 0;
+    /*
+     * Slide on fade
+     */
+    const slides = document.querySelectorAll(".slide");
+    if(slides.length !== 0 ) {
+        let current = 0;
+
+        setInterval(function() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.opacity = 0;
+        }
+        current = (current != slides.length - 1) ? current + 1 : 0;
+        slides[current].style.opacity = 1;
+        }, 5000);
     }
-    current = (current != slides.length - 1) ? current + 1 : 0;
-    slides[current].style.opacity = 1;
-    }, 5000);
 
-}
+
+
+
+
+} // end init()
 
 
 
