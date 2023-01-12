@@ -10,7 +10,9 @@
                 the_post_thumbnail('hero');  
             } 
             else { 
-                $images = get_field('hero_images');
+
+                $images = get_field('hero_images', get_option('page_on_front'));
+            
                 $size = 'hero'; 
                 if( $images ): ?>
                     <ul class="slider">
