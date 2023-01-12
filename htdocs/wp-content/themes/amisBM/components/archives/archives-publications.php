@@ -2,8 +2,6 @@
     
     <?php 
 
-
-
     $args = array( 
         'post_type' => 'publication',
         'posts_per_page' => 12,

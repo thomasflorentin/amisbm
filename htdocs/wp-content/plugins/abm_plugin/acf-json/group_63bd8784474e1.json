@@ -6,6 +6,7 @@
             "key": "field_63bd878ee8179",
             "label": "Date de publication",
             "name": "publication_date",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -40,5 +41,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1673365531
+    "modified": 1673542682
 }

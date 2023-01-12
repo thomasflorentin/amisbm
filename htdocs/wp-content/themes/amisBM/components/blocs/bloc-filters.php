@@ -20,7 +20,8 @@
     </div>
 
     <div class="filters_action">
-        <a href="#" class="mainBtn"><?php printf('Commander'); ?></a>
+        <?php $cta_url = get_field('cta_url'); ?>
+        <a href="<?php echo get_the_permalink( $cta_url[0]->ID ); ?>" class="mainBtn"><?php the_field('cta_label'); ?></a>
     </div>
 
 </section>
