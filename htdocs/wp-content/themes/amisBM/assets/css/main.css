@@ -377,3 +377,30 @@ main.main {
     display: flex;
     justify-content: space-around;
 }
+
+
+
+
+/* BLOC FILE */
+
+.wp-block-group__inner-container {
+    display: flex;
+    gap: 2.5%;
+    flex-wrap: wrap;
+}
+.wp-block-file {
+    border: 2px solid var(--light-bg-blue);
+    padding: 15px;
+    width: 48%;
+}
+.wp-block-file a:first-child:before {
+    content: "[pdf]";
+    margin-right: 10px;
+    opacity: .9;
+    color: var(--light-bg-blue)
+}
+.wp-block-file a {
+    color: inherit;
+    text-decoration: none;
+}
+
