@@ -27,6 +27,20 @@
     color: inherit;
     text-decoration: none;
 }
+    ul.sub-menu {
+        height: 0;
+        display: none;
+        position: absolute;
+        padding: 10px;
+        background-color: #292929bf;
+        border: 3px solid var(--main_bg_blue);
+        min-width: 200px;
+        transition: all .3s;
+    }
+    .header_nav .menu-item:hover > .sub-menu {
+        height: auto;
+        display: block;
+    }
 
 .header_searchForm {
     /* display: none; */
