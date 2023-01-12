@@ -69,6 +69,21 @@ include('inc/template-functions.php');
 
 
 
+
+/*
+ * Ajouter des styles en admin
+ */
+
+ function wptutsplus_admin_styles() {
+	wp_register_style( 'abm_admin_stylesheet', get_template_directory_uri() . '/assets/css/admin-style.css' );
+	wp_enqueue_style( 'abm_admin_stylesheet' );
+}
+add_action( 'admin_enqueue_scripts', 'wptutsplus_admin_styles' );
+
+
+
+
+
 /*
  * Ajax Functions
  */

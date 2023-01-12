@@ -1,0 +1,12 @@
+
+
+
+#poststuff .postbox-header h2 {
+    color: red !important;
+    font-size: 24px !important;
+    padding: 8px 30px !important;
+}
+.acf-flexible-content .layout .acf-fc-layout-handle {
+    font-size: 22px !important;
+    padding: 14px 10px !important;
+}
