@@ -2,11 +2,19 @@
     
     <?php 
 
+
+
+    $args = array( 
+        'post_type' => 'publication',
+        'posts_per_page' => 12,
+    );
+
+    $args['paged'] = get_query_var( 'paged' ) 
+    ? get_query_var( 'paged' ) 
+    : 1;
+
     $the_query = new WP_Query( 
-        array( 
-            'post_type' => 'publication',
-            'posts_per_page' => 12,
-        ) 
+        $args
     );
 
     if ( $the_query->have_posts() ) {
@@ -21,6 +29,10 @@
     }
     wp_reset_postdata(); ?>
 
+    <div class="posts_navigation">
+        <div><?php previous_posts_link( 'Publications plus anciennes' ); ?></div>
+        <div><?php next_posts_link( 'Publications plus récentes', $the_query->max_num_pages ); ?></div>
+    </div>
 </section>
 
 <?php echo "<script type='text/javascript'>const ajaxurl = '".admin_url('admin-ajax.php')."'</script>"; ?>

@@ -371,3 +371,9 @@ main.main {
     width: 100%;
     height: auto;
 } 
+
+
+.posts_navigation {
+    display: flex;
+    justify-content: space-around;
+}
