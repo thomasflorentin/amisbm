@@ -11,7 +11,7 @@
                                 setup_postdata($post); ?>
       
                                 <div class="sujetDuMois_img">
-                                    <?php the_post_thumbnail(); ?>
+                                    <?php the_post_thumbnail('publication'); ?>
                                 </div>
 
                                 <div class="sujetDuMois_txt">

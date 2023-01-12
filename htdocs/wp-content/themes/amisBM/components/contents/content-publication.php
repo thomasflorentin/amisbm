@@ -35,7 +35,7 @@
         <?php
             if(has_post_thumbnail()):
                 echo '<div class="content_media">';
-                    the_post_thumbnail('large');
+                    the_post_thumbnail('publication');
                 echo '</div>'; 
             endif;
         ?>

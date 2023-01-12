@@ -7,7 +7,7 @@
     <div class="hero--img">
         <?php 
             if(has_post_thumbnail()) {
-                the_post_thumbnail('full');  
+                the_post_thumbnail('hero');  
             } 
             else { ?>
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/home-hero.png"; ?>" alt="Image d'introduction de la page d'accueil">

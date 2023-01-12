@@ -4,7 +4,7 @@
         the_title( '<h1 class="page-title">', '</h1>' );
 
         if(has_post_thumbnail()):
-            the_post_thumbnail('full'); //full, large, medium or custom size
+            the_post_thumbnail('hero'); //full, large, medium or custom size
         endif;
     ?>
 

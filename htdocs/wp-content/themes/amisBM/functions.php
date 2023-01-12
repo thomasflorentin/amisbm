@@ -29,6 +29,11 @@ if (!function_exists('ABM_setup')){
         register_nav_menus([
             'primary' => 'Header nav'
         ]);
+
+        add_image_size( 'hero', 1500 ); // 1500 pixels wide (and unlimited height)
+        add_image_size( 'bloc', 400 ); 
+        add_image_size( 'publication', 600 ); 
+
     }
 }
 add_action( 'after_setup_theme', 'ABM_setup' );
