@@ -30,10 +30,10 @@
         <?php 
             
             if( is_front_page() ) { ?>
-                <h1><?php the_field('page_title'); ?></h1>
+                <h1 class="baskerville hero_title"><?php the_field('page_title'); ?></h1>
                 <p><?php the_field('page_introduction'); ?></p>
             <?php } else {
-                the_title( '<h1 class="single-title">', '</h1>' ); 
+                the_title( '<h1 class="single-title baskerville hero_title">', '</h1>' ); 
             }
         ?>
         

@@ -5,10 +5,14 @@
 
 /* Sections styles */
 .section_title {
-    color: misc.$main_font_blue;
-    font-size: 2.5em;
     margin-top: 0;
     margin-bottom: 5rem;
+
+    color: misc.$main_font_blue;
+    font-size: 2.5em;
+    font-weight: normal;
+
+    @extend .baskerville
 }
 .section_title--light {
     color: misc.$light_font_blue;
@@ -114,6 +118,10 @@ main.main {
     flex-direction: column;
 
     background-color: misc.$grey-filter;
+}
+.hero_title {
+    font-size: 4.5em;
+    font-weight: normal;
 }
 .hero--img {
     width: 100%;

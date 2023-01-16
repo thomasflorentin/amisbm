@@ -17,6 +17,8 @@ body {
     background-color: #E9E9E9;
     margin: 0;
     padding: 0;
+
+    font-family: "QuireSansPro";
 }
 
 ul[class] {
@@ -40,10 +42,170 @@ img {
     text-decoration: none;
     color: inherit;
 }
-.separator--dot{
+.separator--dot {
     display: inline-block;
     width: 0.25rem;
     height: 0.25rem;
     border-radius: 100%;
     background-color: #BDC8C1;
+}
+.baskerville {
+    font-family: "Baskerville";
+    font-weight: normal;
+
+    &--italic {
+        font-style: italic;
+    }
+}
+.quireSansPro {
+    font-family: "QuireSansPro";
+
+    &--italic {
+        font-style: italic;
+    }
+}
+
+
+
+// Fonts
+// Baskerville
+@font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-regularItalic.otf") format("opentype");
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-medium.otf") format("opentype");
+    font-weight: medium;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-mediumItalic.otf") format("opentype");
+    font-weight: medium;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Baskerville";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-boldItalic.otf") format("opentype");
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+      font-family: "Baskerville";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-extraBold.otf") format("opentype");
+      font-weight: 800;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: "Baskerville";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-extraBoldItalic.otf") format("opentype");
+      font-weight: 800;
+      font-style: italic;
+  }
+    
+  @font-face {
+      font-family: "Baskerville";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-black.otf") format("opentype");
+      font-weight: 900;
+      font-style: normal;
+  }
+    
+  @font-face {
+      font-family: "Baskerville";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/baskerville/Baskerville-blackItalic.otf") format("opentype");
+      font-weight: 900;
+      font-style: italic;
+}
+
+// Quire Sans Pro
+@font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+      
+  @font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-regularItalic.otf") format("opentype");
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-regularItalic.otf") format("opentype");
+    font-weight: medium;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-regularItalic.otf") format("opentype");
+    font-weight: medium;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "QuireSansPro";
+    src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-boldItalic.otf") format("opentype");
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+      font-family: "QuireSansPro";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-extraBold.otf") format("opentype");
+      font-weight: 800;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: "QuireSansPro";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-extraBoldItalic.otf") format("opentype");
+      font-weight: 800;
+      font-style: italic;
+  }
+    
+  @font-face {
+      font-family: "QuireSansPro";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-black.otf") format("opentype");
+      font-weight: 900;
+      font-style: normal;
+  }
+    
+  @font-face {
+      font-family: "QuireSansPro";
+      src: url("http://amisbm/wp-content/themes/amisBM/assets/fonts/quire-sans-pro/QuireSansPro-blackItalic.otf") format("opentype");
+      font-weight: 900;
+      font-style: italic;
 }

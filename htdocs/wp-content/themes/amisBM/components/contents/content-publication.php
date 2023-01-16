@@ -1,7 +1,7 @@
 <article id="post-<?php the_ID() ?>">
 
-    <section>
-        <?php the_title( '<h1 class="page-title">', '</h1>' ); ?>
+    <section class="publication-header">
+        <?php the_title( '<h1 class="page-title baskerville">', '</h1>' ); ?>
 
             <div class="post_otherInfos">
                 <span><?php the_field('publication_date'); ?></span>

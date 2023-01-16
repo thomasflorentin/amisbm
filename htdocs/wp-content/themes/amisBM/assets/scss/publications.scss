@@ -1,6 +1,18 @@
 // Import misc ressources
 @use 'miscellaneous' as misc;
 
+
+
+// PUBLICATION SINGLES
+.publication-header {
+    .page-title {
+        color: misc.$main_font_blue;
+        font-size: 3.5em;
+    }
+}
+
+
+
 /* PUBLICATIONS ARCHIVES */
 .publications_filters {
     display: flex;
