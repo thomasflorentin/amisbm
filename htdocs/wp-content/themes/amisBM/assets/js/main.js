@@ -84,6 +84,28 @@ function init() {
 } // end init()
 
 
+document.addEventListener('wheel', findScrollDirectionOtherBrowsers);
+
+function findScrollDirectionOtherBrowsers(event){
+    const headerSearch = document.querySelector('.header_searchForm')        
+    const logo = document.querySelector('.custom-logo')        
+    let delta;
+    if (event.wheelDelta){
+    	delta = event.wheelDelta;
+    }else{
+    	delta = -1 * event.deltaY;
+    }
+    if (delta < 0){
+        console.log("down");
+        headerSearch.style.display = "none"
+        logo.style.height = "40px"
+    }else if (delta > 0){
+        console.log("up");
+        headerSearch.style.display = "block"
+        logo.style.height = "100px"
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', function(e) {
     init() 

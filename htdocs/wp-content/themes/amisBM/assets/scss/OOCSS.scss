@@ -69,6 +69,10 @@ main.main {
 }
 .post_content {
     padding: 0.8rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .post_title, .post_title > .post-title {
     margin-top: 0;

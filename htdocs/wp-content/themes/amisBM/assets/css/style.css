@@ -101,6 +101,9 @@ main.main {
 
 .post_content {
   padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .post_title, .post_title > .post-title {
@@ -282,6 +285,10 @@ ul.wpcf7-post_image_checkbox {
   background-color: rgba(41, 41, 41, 0.7490196078);
   border-bottom: 3px solid var(--main_bg_blue);
   color: white;
+  transition: 0.3s;
+}
+.header .header_searchForm, .header .custom-logo {
+  transition: 0.3s;
 }
 
 .header_nav .menu {
@@ -312,7 +319,7 @@ ul.sub-menu {
 }
 
 .header_logo img {
-  max-height: 100px;
+  height: 100px;
   width: auto;
 }
 
