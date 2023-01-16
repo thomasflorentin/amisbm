@@ -1,0 +1,104 @@
+// Import misc ressources
+@use 'miscellaneous' as misc;
+
+
+
+/* News Sections */
+.actus_itemWrapper {
+    display: flex;
+    gap: 2.5%;
+    flex-wrap: wrap;
+}
+
+.actus_itemWrapper > article,
+.publications_itemWrapper > article {
+    width: clamp(150px, 100%, 31.666%);
+    margin-bottom: 2.5%;
+
+    border: 3px solid #BDC8C1;
+}
+
+
+
+/* Monthly Subject Section */
+.home_sujetDuMois {
+    background-color: #F1F1F1;
+}
+
+.sujetDuMois_wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.sujetDuMois_img img {
+    width: 100%;
+    height: auto;
+}
+
+.sujetDuMois_txt {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+}
+.sujetDuMois_txt > .mainBtn {
+    justify-self: end;
+}
+
+
+
+/* Publications Section */
+.home_publications {
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.publications--bgdImg {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.publications--bgdImg > img {
+    width: 100%;
+    height: auto;
+    margin-top: -350px;
+}
+
+.publications--content {
+    background-color: misc.$grey-filter;
+    z-index: 3;
+    position: relative;
+}
+
+.publications_txtWrapper {
+    display: flex;
+    gap: 10%;
+
+    margin-top: -50px;
+    margin-bottom: 50px;
+}
+.publications_txtWrapper > p {
+    flex-basis: 100%;
+    color: white;
+}
+
+
+
+/* Join the association Section */
+.home_join {    
+    background-color: #EBEFF9;
+}
+.join_txt {
+    text-align: center;
+    color: misc.$main_font_blue;
+}
+.home_join .join_btnWrapper {
+    width: fit-content;    
+    margin-inline: auto;
+}

@@ -1,0 +1,21 @@
+// Import misc ressources
+@use 'miscellaneous' as misc;
+
+/* SINGLES */
+.single_event_meta {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 2em;
+}
+.single_excerpt {
+    font-size: 1.4em;
+    margin-bottom: 2em;
+}
+.single_excerpt, 
+.single_content > p {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    margin-top: 0;
+}

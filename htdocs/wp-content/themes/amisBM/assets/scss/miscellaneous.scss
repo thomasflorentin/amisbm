@@ -1,0 +1,49 @@
+// Variables
+$main_font_blue: #687BAB;
+$light_font_blue: #D9E4FF;
+
+$main_bg_blue: #4A62A0;
+$light-bg-blue: #698ADE;
+
+$grey-filter: #33333383;
+
+
+// Resets
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E9E9E9;
+    margin: 0;
+    padding: 0;
+}
+
+ul[class] {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+
+
+// Atomic
+.link-block {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.separator--dot{
+    display: inline-block;
+    width: 0.25rem;
+    height: 0.25rem;
+    border-radius: 100%;
+    background-color: #BDC8C1;
+}

@@ -1,0 +1,55 @@
+// Import misc ressources
+@use 'miscellaneous' as misc;
+
+/* PUBLICATIONS ARCHIVES */
+.publications_filters {
+    display: flex;
+    justify-content: space-between;
+}
+.publication-filter:not(.active){
+    background: none;
+    color: misc.$light-bg-blue;
+}
+.filters_group button {
+    margin-right: 20px;
+}
+.publication_tags {
+    display: flex;
+    align-items: center;
+}
+.publication_tags li {
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+}
+.publication_tags .separator--dot {
+    margin-left: 10px;
+}
+.publication-content {
+    display: flex;
+    gap: 2.5%;
+    margin-bottom: 70px;
+}
+.content_media, .content_text {
+    width: 50%;
+}
+
+.publications_itemWrapper {
+    display: flex;
+    gap: 2.5%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.publication_thumbnail {
+    width: 100%;
+} 
+.publication_thumbnail img {
+    width: 100%;
+    height: auto;
+} 
+
+
+.posts_navigation {
+    display: flex;
+    justify-content: space-around;
+}

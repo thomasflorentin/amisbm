@@ -41,8 +41,7 @@ add_action( 'after_setup_theme', 'ABM_setup' );
 
 function ABM_public_scripts() {
     // Styles
-    wp_enqueue_style('main', get_template_directory_uri() . '/assets/css/main.css', [], rand(), 'all');
-    wp_enqueue_style('header and footer', get_template_directory_uri() . '/assets/css/header-footer.css', [], rand(), 'all');
+    wp_enqueue_style('main', get_template_directory_uri() . '/assets/css/style.css', [], rand(), 'all');
 
     // Scripts
     wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js', [], rand(), true);
