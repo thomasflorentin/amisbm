@@ -2,7 +2,6 @@
                     <h2 class="section_title"><?php the_sub_field('section_title'); ?></h2>
 
                     <div class="sujetDuMois_wrapper">
-                        <!-- ICI, mettre un Champ ACF OBJET POST-->
                         <?php
                         if( $section_item ):
 

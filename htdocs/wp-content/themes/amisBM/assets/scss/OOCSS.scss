@@ -80,7 +80,9 @@ main.main {
 }
 .post_title, .post_title > .post-title {
     margin-top: 0;
+
     color: misc.$main_font_blue;
+    font-weight: 400;
 }
 .post-title > a {
     color: inherit;
@@ -118,8 +120,14 @@ main.main {
     flex-direction: column;
 
     background-color: misc.$grey-filter;
+
+    p {
+        margin: 0;
+    }
 }
 .hero_title {
+    margin-bottom: 1rem;
+
     font-size: 4.5em;
     font-weight: normal;
 }
