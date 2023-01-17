@@ -60,9 +60,11 @@ add_action( 'admin_enqueue_scripts', 'ABM_admin_scripts' );
 
 
 
-// links the custom-shortcodes.php file
-include('custom-shortcodes.php');
 
+/*
+ * LOAD the template functions
+ * Fonctions utilisées dans le thème (dates, etc.)
+ */
 include('inc/template-functions.php');
 
 
