@@ -54,7 +54,7 @@ img {
   font-style: italic;
 }
 
-.greyFont {
+.greyFont, .publication-header .post_otherInfos {
   color: #95A099;
 }
 
@@ -813,11 +813,14 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-top: 0;
 }
 
+.publication-header {
+  margin-bottom: 50px;
+}
 .publication-header .page-title {
+  margin-bottom: 0;
   color: #687BAB;
   font-size: 3.5em;
 }
-
 .event_excerpt {
   margin-bottom: 75px;
   text-align: center;

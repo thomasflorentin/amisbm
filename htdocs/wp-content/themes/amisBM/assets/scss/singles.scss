@@ -26,9 +26,16 @@
 
 // PUBLICATION SINGLES
 .publication-header {
+    margin-bottom: 50px;
+
     .page-title {
+        margin-bottom: 0;
+
         color: misc.$main_font_blue;
         font-size: 3.5em;
+    }
+    .post_otherInfos {
+        @extend .greyFont;
     }
 }
 .event_excerpt {
