@@ -5,6 +5,8 @@ if (!function_exists('ABM_setup')){
         // Lets WP manage the document title
         add_theme_support('title-tag');
 
+        add_post_type_support( 'page', 'excerpt' );
+
         // Enables support for post thumbnails
         add_theme_support('post-thumbnails');
 
