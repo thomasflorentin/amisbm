@@ -10,10 +10,10 @@
 <main class="main no-hero section_padding search-content">
 
     <h1>Recherche</h1>
+    <span><?php echo $total_results; ?> résultat(s)</span>
 
-    <div class="">
+    <div class="header_searchForm">
         <?php get_search_form() ?>
-        <span><?php echo $total_results; ?> résultat(s)</span>
     </div>
 
     <?php if(have_posts()): ?>

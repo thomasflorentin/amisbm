@@ -26,9 +26,13 @@
     <?php endif; ?>
     
 
-    <div class="single_excerpt event_excerpt">
-        <?php the_excerpt(); ?>
-    </div>
+    <?php if( has_excerpt() ) : ?>
+        <div class="single_excerpt">
+            <?php the_excerpt(); ?>
+        </div>
+    <?php endif; ?>
+
+
 
     <div class="single_content">
         <?php the_content(); ?>

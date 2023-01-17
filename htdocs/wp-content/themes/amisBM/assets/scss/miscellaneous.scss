@@ -77,7 +77,12 @@ img {
 .greyFont {
     color: $main_font_grey;
 }
-
+.hidden {
+    visibility: hidden;
+    height: 0px;
+    display: block;
+    width: 0px;
+}
 
 
 // Fonts
