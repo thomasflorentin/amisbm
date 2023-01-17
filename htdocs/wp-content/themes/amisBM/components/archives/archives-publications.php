@@ -1,4 +1,4 @@
-<section class="section_padding">
+<section class="section_items section_padding">
     
     <?php 
 

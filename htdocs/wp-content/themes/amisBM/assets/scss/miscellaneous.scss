@@ -15,12 +15,17 @@ $grey-filter: #33333383;
     box-sizing: border-box;
 }
 
+html {
+    font-size: 62.5%;
+}
+
 body {
     background-color: #E9E9E9;
     margin: 0;
     padding: 0;
-
+    
     font-family: "QuireSansPro";
+    font-size: 16px;
     font-weight: 300;
     color: $main_font_black;
 }
@@ -94,13 +99,6 @@ img {
 // Quire Sans Pro
 @font-face {
     font-family: "QuireSansPro";
-    src: url("../fonts/quire-sans-pro/QuireSansPro-thin.otf") format("opentype");
-    font-weight: 100;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: "QuireSansPro";
     src: url("../fonts/quire-sans-pro/QuireSansPro-extraLight.otf") format("opentype");
     font-weight: 200;
     font-style: normal;
@@ -139,18 +137,4 @@ img {
     src: url("../fonts/quire-sans-pro/QuireSansPro-bold.otf") format("opentype");
     font-weight: 700;
     font-style: normal;
-  }
-  
-  @font-face {
-      font-family: "QuireSansPro";
-      src: url("../fonts/quire-sans-pro/QuireSansPro-extraBold.otf") format("opentype");
-      font-weight: 800;
-      font-style: normal;
-  }
-    
-  @font-face {
-      font-family: "QuireSansPro";
-      src: url("../fonts/quire-sans-pro/QuireSansPro-black.otf") format("opentype");
-      font-weight: 900;
-      font-style: normal;
-  }
+}

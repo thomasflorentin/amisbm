@@ -14,8 +14,10 @@
                                 </div>
 
                                 <div class="sujetDuMois_txt">
-                                    <?php the_title( "<h3>", "</h3>") ?>
-                                    <p><?php the_excerpt(); ?></p>
+                                    <div class="sujetDuMois_txt_content">
+                                        <?php the_title( "<h3>", "</h3>") ?>
+                                        <?php the_excerpt(); ?>
+                                    </div>
                                     <a href="<?php the_permalink(); ?>" class="mainBtn">Découvrir le sujet</a>
                                 </div>
 

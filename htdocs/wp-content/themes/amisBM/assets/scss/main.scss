@@ -27,7 +27,6 @@
 
 .sujetDuMois_wrapper {
     display: flex;
-    align-items: flex-start;
     gap: 2rem;
 }
 
@@ -37,10 +36,27 @@
 }
 
 .sujetDuMois_txt {
+    // width: clamp(200px, 95%, 1200px);
+    max-width: 66%;
+    min-height: 100%;
+
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     align-items: flex-start;
+
+    h3 {
+        margin: 0;
+
+        font-size: 1.75em;
+        font-weight: 600;
+        color: misc.$main_font_blue;
+    }
+
+    p {
+        font-size: 1.5em;
+        line-height: 1.35em;
+    }
 }
 .sujetDuMois_txt > .mainBtn {
     justify-self: end;
@@ -80,10 +96,13 @@
     display: flex;
     gap: 10%;
 
-    margin-top: -50px;
     margin-bottom: 50px;
+
+    font-size: 1.45em;
+    font-weight: 200;
 }
 .publications_txtWrapper > p {
+    margin: 0;
     flex-basis: 100%;
     color: white;
 }

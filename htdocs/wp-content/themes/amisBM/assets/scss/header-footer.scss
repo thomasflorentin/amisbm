@@ -4,7 +4,7 @@
 // HEADER
 .header {
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
 
     position: fixed;
     top: 0;
@@ -16,7 +16,7 @@
     align-items: center;
 
     background-color: #292929bf;
-    border-bottom: 3px solid var(--main_bg_blue);
+    border-bottom: 4px solid misc.$main_bg_blue;
 
     color: white;
 
@@ -29,6 +29,7 @@
     display: flex;
     gap: 1.5em;
 
+    font-size: 1.2em;
     list-style: none;
 }
 .header_nav .menu-item > a {
@@ -71,7 +72,7 @@ ul.sub-menu {
     display: block;
 }
 .header_searchForm {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     margin-left: auto;
     max-width: 75%;
 
@@ -88,6 +89,13 @@ ul.sub-menu {
 
         input {
             border: none;
+
+            &::placeholder {
+                font-family: "QuireSansPro";
+                font-size: 1.25em;
+                font-weight: 200;
+                color: misc.$main_font_grey;
+            }
         }
 
         label {
@@ -118,12 +126,13 @@ ul.sub-menu {
 // FOOTER
 .footer {
     padding-top: 150px;
-    padding-inline: 250px;
+    padding-inline: clamp(1em, 10%, 200px);
     padding-bottom: 100px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10%;
 
     background-color: #5D5D5D;
 
@@ -132,14 +141,37 @@ ul.sub-menu {
     z-index: 1;
     position: relative;
 }
+.footer_leftCol {
+    width: 56%;
+}
 .footer_supporters {
+    width: clamp(200px, 75%, 400px);
+
     display: flex;
     flex-wrap: nowrap;
+
+    img {
+        width: 50%;
+        height: auto;
+
+        object-fit: contain;
+    }
+}
+.footer_newsletterWrapper {
+    margin-top: 1em;
+
+    display: flex;
+    align-items: center;
+    gap: 2em;
+
+    span {
+        font-size: 1.5em;
+    }
 }
 .footer_newsletterForm {
+    width: 60%;
     max-width: 300px;
-    margin-top: .5rem;
-    padding: .5rem .5rem;
+    padding: 1em .75em;
 
     display: flex;
     justify-content: space-between;
@@ -177,6 +209,18 @@ ul.sub-menu {
     background-color: #BDC8C1;
     border-radius: 1px;
 }
-.footer_rightCol span {
-    display: block;
+.footer_rightCol{
+    strong {
+        font-weight: 500;
+    }
+
+    span {
+        display: block;
+    
+        font-size: 1.5em;
+        // line-height: 1.6em;
+    }
+    span:not(:last-child) {
+        margin-bottom: .6em;
+    }
 }

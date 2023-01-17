@@ -4,12 +4,35 @@
 
 
 /* PUBLICATIONS ARCHIVES */
+.page-content {
+    width: 66%;
+
+    font-size: 1.5em;
+    font-weight: 200;
+
+    strong {
+        font-weight: 300;
+    }
+
+    p:last-child {
+        margin: 0;
+    }
+}
 .publications_filters {
+    padding-block: 0;
+
     display: flex;
     justify-content: space-between;
 }
+.publication-filter.active {
+    background-color: misc.$main_bg_blue;
+
+    &:hover {
+        background: none;
+    }
+}
 .publication-filter:not(.active){
-    background: none;
+    background-color: #F8F8F8;
     color: misc.$light-bg-blue;
 }
 .filters_group button {
@@ -49,6 +72,14 @@
     width: 100%;
     height: auto;
 } 
+.section_items {
+    .post_otherInfos {
+        color: misc.$main_font_grey;
+    }
+    .post_otherInfos > span {
+        font-weight: 500;
+    }
+}
 
 
 .posts_navigation {

@@ -9,13 +9,19 @@
     margin-bottom: 5rem;
 
     color: misc.$main_font_blue;
-    font-size: 2.5em;
+    font-size: 3.25em;
     font-weight: normal;
-
-    @extend .baskerville
-}
-.section_title--light {
-    color: misc.$light_font_blue;
+    
+    @extend .baskerville;
+    
+    &--bigger {
+        @extend .section_title;
+        font-size: 5em;
+    }
+    &--light {
+        @extend .section_title;
+        color: misc.$light_font_blue;
+    }
 }
 main.main {
     width: clamp(300px, 90%, 1400px);
@@ -51,7 +57,7 @@ main.main {
     text-decoration: none;
     
     font-family: inherit;
-    font-size: 1rem;  
+    font-size: 1em;  
     color: white;
     cursor: pointer;
     transition: all .3s;
@@ -69,6 +75,9 @@ main.main {
     background: none;
     color: misc.$light-bg-blue;
 }
+a.mainBtn {
+    display: inline-block;
+}
 
 // Posts blocks
 .post_thumbnail{
@@ -82,25 +91,34 @@ main.main {
 }
 .post_content {
     padding: 0.8rem;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+.post_title {
+    height: 100%;
+}
 .post_title, .post_title > .post-title {
     margin-top: 0;
 
     color: misc.$main_font_blue;
-    font-weight: 400;
+    font-size: 1.25em;
+    font-weight: 500;
 }
 .post-title > a {
     color: inherit;
     text-decoration: none;
 }
 .post_otherInfos {
+    height: 100%;
+
     display: flex;
-    align-items: center;
     gap: 0.5rem;
+
+    font-weight: 200;
+    align-items: center;
 }
 
 
@@ -135,13 +153,17 @@ main.main {
     background-color: misc.$grey-filter;
 
     p {
-        margin: 0;
+        margin: 0 20%;
+
+        font-size: 1.9em;
+        font-weight: 200;
+        text-align: center;
     }
 }
 .hero_title {
     margin-bottom: 1rem;
 
-    font-size: 4.5em;
+    font-size: 5em;
     font-weight: normal;
 }
 .hero--img {
