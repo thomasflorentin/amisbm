@@ -13,7 +13,7 @@
 
                     <div class="wrapper--flex">
                         <div class="separator--vertical"></div>
-                        <input type="submit" value="" style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_send.png"; ?>); margin-left: 0.5em;">
+                        <input type="submit" value="" style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_send.png"; ?>); margin-left: 0.75em;">
                     </div>
                 </form>
             </div>

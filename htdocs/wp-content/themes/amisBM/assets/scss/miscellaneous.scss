@@ -1,6 +1,8 @@
 // Variables
 $main_font_blue: #687BAB;
 $light_font_blue: #D9E4FF;
+$main_font_grey: #95A099;
+$main_font_black: #363636;
 
 $main_bg_blue: #4A62A0;
 $light-bg-blue: #698ADE;
@@ -20,6 +22,7 @@ body {
 
     font-family: "QuireSansPro";
     font-weight: 300;
+    color: $main_font_black;
 }
 
 ul[class] {
@@ -65,6 +68,9 @@ img {
     &--italic {
         font-style: italic;
     }
+}
+.greyFont {
+    color: $main_font_grey;
 }
 
 

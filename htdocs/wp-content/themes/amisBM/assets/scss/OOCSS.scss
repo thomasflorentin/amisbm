@@ -49,12 +49,21 @@ main.main {
     border: 1px solid misc.$light-bg-blue;
     border-radius: 7px;
     text-decoration: none;
-
+    
     font-family: inherit;
     font-size: 1rem;  
     color: white;
     cursor: pointer;
     transition: all .3s;
+    
+    &--darkBgd {
+        @extend .mainBtn;
+        
+        &:hover {
+            color: white !important;
+            border: 1px solid white;
+        }
+    }
 }
 .mainBtn:hover {
     background: none;
@@ -110,6 +119,10 @@ main.main {
 }
 .post_hero {
     height: 50vh;
+
+    .hero_title {
+        font-size: 3.5em;
+    }
 }
 .hero--content {
     height: 100%;

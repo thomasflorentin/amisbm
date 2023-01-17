@@ -14,7 +14,7 @@
         <?php 
             $section_link = get_sub_field('section_link');
             if( $section_link ): ?>
-                <a class="mainBtn" href="<?php the_permalink( $section_link->ID); ?>"><?php the_sub_field('section_link_label'); ?></a>
+                <a class="mainBtn--darkBgd" href="<?php the_permalink( $section_link->ID); ?>"><?php the_sub_field('section_link_label'); ?></a>
         <?php endif; ?>
 
     </div>

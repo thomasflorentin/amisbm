@@ -96,11 +96,11 @@ function findScrollDirectionOtherBrowsers(event){
     	delta = -1 * event.deltaY;
     }
     if (delta < 0){
-        console.log("down");
+        // console.log("down");
         headerSearch.style.display = "none"
         logo.style.height = "40px"
     }else if (delta > 0){
-        console.log("up");
+        // console.log("up");
         headerSearch.style.display = "block"
         logo.style.height = "100px"
     }

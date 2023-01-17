@@ -3,9 +3,13 @@
 
 /* SINGLES */
 .single_event_meta {
+    margin-bottom: 2em;
+
+    @extend .baskerville;
     text-align: center;
     font-size: 1.4em;
-    margin-bottom: 2em;
+    font-weight: 500;
+
 }
 .single_excerpt {
     font-size: 1.4em;
@@ -18,4 +22,18 @@
     margin-right: auto;
     margin-bottom: 2rem;
     margin-top: 0;
+}
+
+// PUBLICATION SINGLES
+.publication-header {
+    .page-title {
+        color: misc.$main_font_blue;
+        font-size: 3.5em;
+    }
+}
+.event_excerpt {
+    margin-bottom: 75px;
+
+    @extend .baskerville;
+    text-align: center;
 }

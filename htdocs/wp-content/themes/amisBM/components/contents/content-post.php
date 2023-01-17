@@ -9,16 +9,16 @@
         <div class="single_event_meta">
             <?php 
                 if ( ! empty( $categories ) ) { 
-                    echo "<div class='single_type'>Type d'événement : " . esc_html( $categories[0]->name ) . "</div>";	
+                    echo "<div class='single_type'><span class='greyFont'>Type d'événement : </span>" . esc_html( $categories[0]->name ) . "</div>";	
                 } 
             ?>
             <div class="single_date">
-                <span>Date & horaire : </span>
+                <span class="greyFont">Date & horaire : </span>
                 <?php the_event_date(get_field('event_date')); ?>
             </div>
 
             <div class="single_date">
-                <span>Lieu : </span>
+                <span class="greyFont">Lieu : </span>
                 <?php the_event_date(get_field('event_date')); ?>
             </div>
         </div>
@@ -26,7 +26,7 @@
     <?php endif; ?>
     
 
-    <div class="single_excerpt">
+    <div class="single_excerpt event_excerpt">
         <?php the_excerpt(); ?>
     </div>
 
