@@ -47,9 +47,12 @@ img {
 
 // Atomic
 .link-block {
-    display: block;
+    display: flex;
     text-decoration: none;
     color: inherit;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 .separator--dot {
     display: inline-block;
