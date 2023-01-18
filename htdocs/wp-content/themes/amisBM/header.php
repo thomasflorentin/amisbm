@@ -16,7 +16,7 @@
         </div>
 
         <div class="header_wrapper">
-            <div class="header_searchForm">
+            <div class="header_searchForm searchForm">
                 <?php get_search_form(); ?>
             </div>
 

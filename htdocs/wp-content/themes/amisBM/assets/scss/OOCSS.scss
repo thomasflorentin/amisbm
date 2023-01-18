@@ -79,6 +79,54 @@ a.mainBtn {
     display: inline-block;
 }
 
+.searchForm {
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid;
+
+    &_inputField {
+        width: 100%;
+    }
+    &_sendBtn {
+        margin-right: 1em;
+    
+        cursor: pointer;
+    
+        background-color: transparent;
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+
+        background-color: white;
+
+        input {
+            border: none;
+
+            &::placeholder {
+                font-family: "QuireSansPro";
+                font-size: 1.25em;
+                font-weight: 200;
+                color: misc.$main_font_grey;
+            }
+        }
+
+        label {
+            display: none;
+        }
+    }
+}
+.main_searchForm {
+    @extend .searchForm;
+    border: 1px solid rgb(202, 209, 194)(0, 0, 0);
+}
+
 // Posts blocks
 .post_thumbnail{
     width: 100%;

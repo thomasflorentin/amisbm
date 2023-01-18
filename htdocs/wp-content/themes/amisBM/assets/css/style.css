@@ -30,9 +30,12 @@ img {
 }
 
 .link-block {
-  display: block;
+  display: flex;
   text-decoration: none;
   color: inherit;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .separator--dot {
@@ -43,7 +46,7 @@ img {
   background-color: #BDC8C1;
 }
 
-.baskerville, .single_event_meta, .event_excerpt, .section_title, .section_title--bigger, .section_title--light {
+.baskerville, .single_event_meta, .section_title, .section_title--bigger, .section_title--light {
   font-family: "Baskerville";
   font-weight: normal;
 }
@@ -61,6 +64,13 @@ img {
 
 .greyFont, .publication-header .post_otherInfos {
   color: #95A099;
+}
+
+.hidden {
+  visibility: hidden;
+  height: 0px;
+  display: block;
+  width: 0px;
 }
 
 @font-face {
@@ -175,10 +185,51 @@ a.mainBtn, a.mainBtn--darkBgd {
   display: inline-block;
 }
 
+.searchForm, .main_searchForm {
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid;
+}
+.searchForm_inputField {
+  width: 100%;
+}
+.searchForm_sendBtn {
+  margin-right: 1em;
+  cursor: pointer;
+  background-color: transparent;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.searchForm form, .main_searchForm form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+}
+.searchForm form input, .main_searchForm form input {
+  border: none;
+}
+.searchForm form input::placeholder, .main_searchForm form input::placeholder {
+  font-family: "QuireSansPro";
+  font-size: 1.25em;
+  font-weight: 200;
+  color: #95A099;
+}
+.searchForm form label, .main_searchForm form label {
+  display: none;
+}
+
+.main_searchForm {
+  border: 1px solid rgb(202, 209, 194) 0, 0, 0;
+}
+
 .post_thumbnail {
   width: 100%;
   max-height: 200px;
   overflow: hidden;
+  height: 50%;
 }
 
 .post_thumbnail > img {
@@ -188,7 +239,9 @@ a.mainBtn, a.mainBtn--darkBgd {
 
 .post_content {
   padding: 0.8rem;
-  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -211,11 +264,12 @@ a.mainBtn, a.mainBtn--darkBgd {
 }
 
 .post_otherInfos {
-  height: 100%;
   display: flex;
   gap: 0.5rem;
+  margin-bottom: 10px;
   font-weight: 200;
   align-items: center;
+  font-size: 2.2rem;
 }
 
 /* Hero Sections */
@@ -438,40 +492,6 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 2rem;
   margin-left: auto;
   max-width: 75%;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.header_searchForm form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  background-color: white;
-}
-.header_searchForm form input {
-  border: none;
-}
-.header_searchForm form input::placeholder {
-  font-family: "QuireSansPro";
-  font-size: 1.25em;
-  font-weight: 200;
-  color: #95A099;
-}
-.header_searchForm form label {
-  display: none;
-}
-
-.searchForm_inputField {
-  width: 100%;
-}
-
-.searchForm_sendBtn {
-  margin-right: 1em;
-  cursor: pointer;
-  background-color: transparent;
-  background-position: center center;
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .header_logo img {
@@ -613,8 +633,8 @@ ul.sub-menu .menu-item:not(:last-child) {
   color: #687BAB;
 }
 .sujetDuMois_txt p {
-  font-size: 1.5em;
-  line-height: 1.35em;
+  font-size: 1.4em;
+  line-height: 1.4;
 }
 
 .sujetDuMois_txt > .mainBtn {
@@ -680,6 +700,16 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-inline: auto;
 }
 
+/* SEARCH RESULTS */
+.search_introSection {
+  margin-bottom: 2em;
+}
+
+.main_searchForm {
+  margin-bottom: 0.5em;
+  border: 1px solid rgb(202, 209, 194) 0, 0, 0;
+}
+
 /* PUBLICATIONS ARCHIVES */
 .page-content {
   width: 66%;
@@ -724,6 +754,7 @@ ul.sub-menu .menu-item:not(:last-child) {
   padding-right: 10px;
   display: flex;
   align-items: center;
+  color: #95A099;
 }
 
 .publication_tags .separator--dot {
@@ -796,10 +827,6 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 0;
   color: #687BAB;
   font-size: 3.5em;
-}
-.event_excerpt {
-  margin-bottom: 75px;
-  text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */

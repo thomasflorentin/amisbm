@@ -71,51 +71,11 @@ ul.sub-menu {
     height: auto;
     display: block;
 }
+
 .header_searchForm {
     margin-bottom: 2rem;
     margin-left: auto;
     max-width: 75%;
-
-    border-radius: 2px;
-    overflow: hidden;
-    border: 1px solid;
-
-    form {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-
-        background-color: white;
-
-        input {
-            border: none;
-
-            &::placeholder {
-                font-family: "QuireSansPro";
-                font-size: 1.25em;
-                font-weight: 200;
-                color: misc.$main_font_grey;
-            }
-        }
-
-        label {
-            display: none;
-        }
-    }
-}
-.searchForm_inputField {
-    width: 100%;
-}
-.searchForm_sendBtn {
-    margin-right: 1em;
-
-    cursor: pointer;
-
-    background-color: transparent;
-    background-position: center center;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 .header_logo img{
     height: 100px;

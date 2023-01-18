@@ -9,16 +9,20 @@
 
 <main class="main no-hero section_padding search-content">
 
-    <h1>Recherche</h1>
-    <span><?php echo $total_results; ?> résultat(s)</span>
-
-    <div class="header_searchForm">
-        <?php get_search_form() ?>
+    <div class="search_introSection">
+        <h1 class="section_title">Recherche</h1>
+    
+        <div class="main_searchForm searchForm">
+            <?php get_search_form() ?>
+        </div>
+        
+        <span><?php echo $total_results; ?> résultat(s)</span>
     </div>
+
 
     <?php if(have_posts()): ?>
     
-        <div class="actus_itemWrapper">
+        <div class="actus_itemWrapper ">
 
 
             <?php
