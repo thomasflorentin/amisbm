@@ -18,10 +18,13 @@ $grey-filter: #33333383;
 
 html {
     font-size: 62.5%;
+    min-width: 100vw;
+    overflow-inline: hidden;
 }
 
 body {
     background-color: #E9E9E9;
+    width: 100%;
     margin: 0;
     padding: 0;
     
@@ -86,6 +89,9 @@ img {
     height: 0px;
     display: block;
     width: 0px;
+}
+.fixed-margin-top {
+    margin-top: 30px;
 }
 
 

@@ -10,7 +10,7 @@
 
 <body <?php body_class(); ?>>
 
-    <header class="header" <?php if(is_user_logged_in()) {echo 'style="top:30px;"';} ?>>
+    <header <?php if(is_user_logged_in()) {echo 'class="header fixed-margin-top"';} else {echo 'class="header"';} ?>>
         <div class="header_logo">
             <?php the_custom_logo(); ?>
         </div>
@@ -20,8 +20,16 @@
                 <?php get_search_form(); ?>
             </div>
 
-            <nav class="header_nav">
+            <div class="header_burger">
+                <button style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_burger--white.png"; ?>);"></button>
+            </div>
+
+            <nav data-display="hidden" <?php if(is_user_logged_in()) {echo 'class="header_nav fixed-margin-top"';} else {echo 'class="header_nav"';} ?>>
                 <?php wp_nav_menu('Header nav'); ?>
+
+                <div class="header_nav_close">
+                    <button style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_close.png"; ?>);"></button>
+                </div>
             </nav>
         </div>
     </header>

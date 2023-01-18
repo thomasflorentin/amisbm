@@ -83,7 +83,13 @@ function init() {
 
 } // end init()
 
+document.addEventListener('DOMContentLoaded', function(e) {
+    init() 
+});
 
+
+
+// Header size change on scroll
 document.addEventListener('wheel', findScrollDirectionOtherBrowsers);
 
 function findScrollDirectionOtherBrowsers(event){
@@ -107,6 +113,23 @@ function findScrollDirectionOtherBrowsers(event){
 }
 
 
-document.addEventListener('DOMContentLoaded', function(e) {
-    init() 
-});
+
+// Header nav menu display switch
+const burger = document.querySelector('.header_burger')
+const close = document.querySelector('.header_nav_close')
+const nav = document.querySelector('.header_nav')
+
+function headerDisplay() {
+    console.log("Function loads");
+    if (nav.dataset.display == "hidden") {
+        console.log("Function gets condition to open nav");
+        nav.classList.replace("header_nav", "header_nav--displayed")
+        nav.dataset.display = "displayed"
+    } else if (nav.dataset.display == "displayed") {
+        console.log("Function gets condition to close nav");
+        nav.classList.replace("header_nav--displayed", "header_nav")
+        nav.dataset.display = "hidden"
+    }
+}
+burger.addEventListener('click', headerDisplay)
+close.addEventListener('click', headerDisplay)
