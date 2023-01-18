@@ -45,6 +45,11 @@
 .publication-filter:not(.active){
     background-color: #F8F8F8;
     color: misc.$light-bg-blue;
+
+    &:hover {
+        background-color: misc.$light-bg-blue;
+        color: white;
+    }
 }
 .filters_group button {
     margin-right: 20px;

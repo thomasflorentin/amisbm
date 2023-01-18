@@ -540,7 +540,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 .footer_newsletterForm {
   width: 60%;
   max-width: 300px;
-  padding: 1em 0.75em;
+  padding: 0.5em 0.75em;
   display: flex;
   justify-content: space-between;
   gap: 0.5em;
@@ -549,7 +549,7 @@ ul.sub-menu .menu-item:not(:last-child) {
   border-radius: 2px;
 }
 .footer_newsletterForm .wrapper--flex {
-  max-height: 1rem;
+  max-height: 1.5em;
 }
 
 .footer_newsletterForm input {
@@ -559,6 +559,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .footer_newsletterForm input[type=email] {
   width: 100%;
+  height: 100%;
   padding: 0;
 }
 
@@ -738,6 +739,10 @@ ul.sub-menu .menu-item:not(:last-child) {
 .publication-filter:not(.active) {
   background-color: #F8F8F8;
   color: #698ADE;
+}
+.publication-filter:not(.active):hover {
+  background-color: #698ADE;
+  color: white;
 }
 
 .filters_group button {
