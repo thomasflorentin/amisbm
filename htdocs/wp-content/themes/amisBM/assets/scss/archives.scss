@@ -6,6 +6,15 @@
 /* SEARCH RESULTS */
 .search_introSection {
     margin-bottom: 2em;
+
+    .section_title {
+        display: inline-block;
+    }
+
+    .results_searchQuery {
+        margin-left: .5em;
+        font-size: 2em;
+    }
 }
 .main_searchForm {
     margin-bottom: .5em;

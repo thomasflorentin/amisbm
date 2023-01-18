@@ -37,3 +37,16 @@
         @extend .greyFont;
     }
 }
+
+.publication-content {
+    .content_text > p {
+        font-size: 1.8em;
+
+        &:first-of-type {
+            margin-top: 0;
+        }
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}

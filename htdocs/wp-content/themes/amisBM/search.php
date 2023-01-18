@@ -2,7 +2,6 @@
     get_header();
     global $wp_query;
     $total_results = $wp_query->found_posts;
-
 ?>
 
 
@@ -10,12 +9,13 @@
 <main class="main no-hero section_padding search-content">
 
     <div class="search_introSection">
-        <h1 class="section_title">Recherche</h1>
+        <h1 class="section_title">Recherche : </h1>
+        <span class="results_searchQuery"><?php echo get_search_query(); ?></span>
     
         <div class="main_searchForm searchForm">
             <?php get_search_form() ?>
         </div>
-        
+
         <span><?php echo $total_results; ?> résultat(s)</span>
     </div>
 

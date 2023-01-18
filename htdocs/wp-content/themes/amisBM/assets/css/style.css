@@ -583,7 +583,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 .footer_rightCol span {
   display: block;
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 .footer_rightCol span:not(:last-child) {
   margin-bottom: 0.6em;
@@ -703,6 +703,13 @@ ul.sub-menu .menu-item:not(:last-child) {
 /* SEARCH RESULTS */
 .search_introSection {
   margin-bottom: 2em;
+}
+.search_introSection .section_title {
+  display: inline-block;
+}
+.search_introSection .results_searchQuery {
+  margin-left: 0.5em;
+  font-size: 2em;
 }
 
 .main_searchForm {
@@ -831,6 +838,15 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 0;
   color: #687BAB;
   font-size: 3.5em;
+}
+.publication-content .content_text > p {
+  font-size: 1.8em;
+}
+.publication-content .content_text > p:first-of-type {
+  margin-top: 0;
+}
+.publication-content .content_text > p:last-of-type {
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

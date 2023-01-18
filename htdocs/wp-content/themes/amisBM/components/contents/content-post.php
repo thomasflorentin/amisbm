@@ -1,8 +1,8 @@
 <article id="post-<?php the_ID(); ?>">
 
-<?php 
+    <?php 
     $categories = get_the_category();
-?>
+    ?>
 
     <?php if( get_field('is_event') ) : ?>
 
@@ -37,9 +37,6 @@
     <div class="single_content">
         <?php the_content(); ?>
     </div>
-
-    
-
 
 
 </article>

@@ -42,8 +42,6 @@
 
         <div class="content_text">
             <?php the_content(); ?>
-
-            <?php the_content(); ?>
         </div>
 
     </section>
