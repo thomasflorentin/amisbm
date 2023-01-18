@@ -265,7 +265,7 @@ a.mainBtn, a.mainBtn--darkBgd {
   margin-bottom: 10px;
   font-weight: 200;
   align-items: center;
-  font-size: 2.2rem;
+  font-size: 1.75rem;
 }
 
 /* Hero Sections */
@@ -403,32 +403,46 @@ ul.wpcf7-post_image_checkbox {
 }
 
 .wp-block-file a {
-  border: 2px solid #698ADE;
   padding: 15px;
+  border: 3px solid #BDC8C1;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  display: block;
+  font-size: 1.25em;
+  font-weight: 400;
+  color: #698ADE;
+  text-decoration: none;
+}
+.wp-block-file a::before, .wp-block-file a::after {
+  aspect-ratio: 1/1;
+  width: clamp(1em, 100%, 1.5em);
+  height: auto;
+  display: inline-block;
+  content: "";
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  opacity: 0.9;
+}
+.wp-block-file a::before {
+  margin-right: 10px;
+  background-image: url("../images/ico_pdf.png");
+}
+.wp-block-file a::after {
+  margin-left: auto;
+  background-image: url("../images/ico_link.png");
 }
 
 .wp-block-file a:hover {
-  border: 2px solid #698ADE;
+  border: 3px solid #4A62A0;
   background-color: #698ADE;
   color: white;
 }
-
-.wp-block-file a:first-child:before {
-  content: "[pdf]";
-  margin-right: 10px;
-  opacity: 0.9;
-  color: #698ADE;
+.wp-block-file a:hover::before {
+  background-image: url("../images/ico_pdf--white.png");
 }
-
-.wp-block-file a:first-child:hover:before {
-  color: inherit;
-}
-
-.wp-block-file a {
-  color: inherit;
-  text-decoration: none;
+.wp-block-file a:hover::after {
+  background-image: url("../images/ico_link--white.png");
 }
 
 .wp-block-image img {
@@ -818,8 +832,10 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .single_excerpt {
-  font-size: 1.4em;
   margin-bottom: 2em;
+  font-family: Baskerville;
+  font-size: 1.4em;
+  color: #687BAB;
 }
 
 .single_excerpt,
@@ -839,13 +855,13 @@ ul.sub-menu .menu-item:not(:last-child) {
   color: #687BAB;
   font-size: 3.5em;
 }
-.publication-content .content_text > p {
+.publication-content .content_text > * {
   font-size: 1.8em;
 }
-.publication-content .content_text > p:first-of-type {
+.publication-content .content_text > *:first-of-type {
   margin-top: 0;
 }
-.publication-content .content_text > p:last-of-type {
+.publication-content .content_text > *:last-of-type {
   margin-bottom: 0;
 }
 

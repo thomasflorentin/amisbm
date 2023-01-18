@@ -11,8 +11,11 @@
 
 }
 .single_excerpt {
-    font-size: 1.4em;
     margin-bottom: 2em;
+
+    font-family: Baskerville;
+    font-size: 1.4em;
+    color: misc.$main_font_blue;
 }
 .single_excerpt, 
 .single_content > p {
@@ -39,7 +42,7 @@
 }
 
 .publication-content {
-    .content_text > p {
+    .content_text > * {
         font-size: 1.8em;
 
         &:first-of-type {
