@@ -185,7 +185,7 @@ a.mainBtn, a.mainBtn--darkBgd {
   display: inline-block;
 }
 
-.searchForm, .main_searchForm {
+.searchForm {
   border-radius: 2px;
   overflow: hidden;
   border: 1px solid;
@@ -201,28 +201,24 @@ a.mainBtn, a.mainBtn--darkBgd {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.searchForm form, .main_searchForm form {
+.searchForm form {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
   background-color: white;
 }
-.searchForm form input, .main_searchForm form input {
+.searchForm form input {
   border: none;
 }
-.searchForm form input::placeholder, .main_searchForm form input::placeholder {
+.searchForm form input::placeholder {
   font-family: "QuireSansPro";
   font-size: 1.25em;
   font-weight: 200;
   color: #95A099;
 }
-.searchForm form label, .main_searchForm form label {
+.searchForm form label {
   display: none;
-}
-
-.main_searchForm {
-  border: 1px solid rgb(202, 209, 194) 0, 0, 0;
 }
 
 .post_thumbnail {
@@ -284,6 +280,9 @@ a.mainBtn, a.mainBtn--darkBgd {
 
 .post_hero {
   height: 50vh;
+}
+.post_hero .hero--content {
+  padding-inline: 12.5%;
 }
 .post_hero .hero_title {
   font-size: 3.5em;
