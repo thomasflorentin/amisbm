@@ -30,17 +30,17 @@
     </section>
 
 
-    <section class="publication-content">
+    <section class="publication-content row">
 
         <?php
             if(has_post_thumbnail()):
-                echo '<div class="content_media">';
+                echo '<div class="content_media col_3">';
                     the_post_thumbnail('publication');
                 echo '</div>'; 
             endif;
         ?>
 
-        <div class="content_text">
+        <div class="content_text col_3">
             <?php the_content(); ?>
         </div>
 

@@ -16,11 +16,13 @@
     );
 
     if ( $the_query->have_posts() ) {
-        echo '<div id="publications_posts" class="publications_itemWrapper">';
+        echo '<div id="publications_posts" class="publications_itemWrapper row">';
 
         while ( $the_query->have_posts() ) {
             $the_query->the_post();
+            echo '<div class="col_2">';
             get_template_part('components/blocs/bloc', 'publication');
+            echo '</div>';
         }
         echo '</div>';
 
