@@ -475,7 +475,6 @@ ul.wpcf7-post_image_checkbox {
   top: 0;
   left: 0;
   z-index: 10;
-  overflow-inline: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
