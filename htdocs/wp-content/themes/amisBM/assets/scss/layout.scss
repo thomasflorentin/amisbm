@@ -1,29 +1,61 @@
 
+// GRID
+// https://css-tricks.com/snippets/css/complete-guide-grid/
+
+
 .row {
     display: flex;
-    gap: 2.5%;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat($cols, minmax(0, calc(1fr - 20px) ) );
+    grid-template-columns: repeat($cols, 1fr);
+    grid-row-gap: 0;
 
-    [class^="col_"] {
-        flex: 0 0;
+    @include at-least(medium) {
+        grid-column-gap: $marge_wrapper;
     }
+    @include up-to(medium) {
+        grid-column-gap: 20px;
+    }
+}
 
-    .col_1 {
-        width: calc(100% / 6);
-    }
-    .col_2 {
-        width: calc(100% / 6 * 2);
-    }
-    .col_3 {
-        width: calc(100% / 6 * 3);
-    }
-    .col_4 {
-        width: calc(100% / 6 * 4);
-    }
-    .col_5 {
-        width: calc(100% / 6 * 5);
-    }
-    .col_1 {
-        width: calc(100%);
-    }
 
+.m_last {
+    grid-row-end: $cols;
+}
+
+
+
+@mixin parse-columns($suffix: ''){
+
+        .#{$suffix}_0col {
+            display: none;
+        }
+        .#{$suffix}_hide {
+            display: none;
+        }
+        .#{$suffix}_show {
+            display: block;
+        }
+        
+        @for $i from 1 through $cols {
+
+            .#{$suffix}_#{$i}col {
+                grid-column: span #{$i};
+                max-width: 100%;
+                display: block;
+            }
+
+        }
+}
+
+
+@include at-least(minimal) {
+    @include parse-columns('s');
+}
+@include at-least(medium) {
+    @include parse-columns('m');
+}
+@include at-least(large) {
+    @include parse-columns('l');
 }
