@@ -1,10 +1,11 @@
-/* Error: Undefined variable.
+/* Error: Undefined mixin.
  *    ,
- * 10 |     grid-template-columns: repeat($cols, minmax(0, calc(1fr - 20px) ) );
- *    |                                   ^^^^^
+ * 17 | /     @include at-least(medium) {
+ * 18 | |         grid-column-gap: $marge_wrapper;
+ * 19 | \     }
  *    '
- *   assets\scss\layout.scss 10:35  @use
- *   assets\scss\index.scss 8:1     root stylesheet */
+ *   assets\scss\layout.scss 17:5  @use
+ *   assets\scss\index.scss 8:1    root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -14,5 +15,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a    \2577 \a 10 \2502      grid-template-columns: repeat($cols, minmax(0, calc(1fr - 20px) ) );\d\a    \2502                                    ^^^^^\a    \2575 \a   assets\\scss\\layout.scss 10:35  @use\a   assets\\scss\\index.scss 8:1     root stylesheet";
+  content: "Error: Undefined mixin.\a    \2577 \a 17 \2502  \250c      @include at-least(medium) {\a 18 \2502  \2502          grid-column-gap: $marge_wrapper;\a 19 \2502  \2514      }\a    \2575 \a   assets\\scss\\layout.scss 17:5  @use\a   assets\\scss\\index.scss 8:1    root stylesheet";
 }
