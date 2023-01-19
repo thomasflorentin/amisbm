@@ -2,6 +2,9 @@
 // GRID
 // https://css-tricks.com/snippets/css/complete-guide-grid/
 
+$cols: 6;
+$marge_wrapper: 40px;
+
 
 .row {
     display: flex;
