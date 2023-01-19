@@ -76,15 +76,12 @@
 }
 
 .publications_txtWrapper {
-    display: flex;
-    gap: 10%;
-
     margin-bottom: 50px;
 
     font-size: 1.45em;
     font-weight: 200;
 }
-.publications_txtWrapper > p {
+.publications_txtWrapper > div {
     margin: 0;
     flex-basis: 100%;
     color: white;

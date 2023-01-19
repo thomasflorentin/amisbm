@@ -6,9 +6,9 @@
     <div class="publications--content section_padding">
         <h2 class="h2--light sectionTitle_margins"><?php the_sub_field('section_title'); ?></h2>
     
-        <div class="publications_txtWrapper">
-            <p><?php the_sub_field('section_p1'); ?></p>
-            <p><?php the_sub_field('section_p2'); ?></p>
+        <div class="publications_txtWrapper row">
+            <div class="s_6col m_3col"><?php the_sub_field('section_p1'); ?></div>
+            <div class="s_6col m_3col"><?php the_sub_field('section_p2'); ?></div>
         </div>
     
         <?php 
