@@ -1,6 +1,7 @@
 // Misc : Variables, fonts, resets & atomic styles
 // MUST BE IMPORTED ON THE OTHER FILES (for variables use)
 @use 'miscellaneous';
+@use 'mixins';
 
 // OOCSS classes : wp-block classes, heroes, forms, page sections, components, etc...
 @use 'OOCSS';

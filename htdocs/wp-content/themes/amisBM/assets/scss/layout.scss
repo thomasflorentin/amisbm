@@ -1,30 +1,29 @@
+@use 'mixins' as mix;
 
 // GRID
 // https://css-tricks.com/snippets/css/complete-guide-grid/
 
-$cols: 6;
-$marge_wrapper: 40px;
 
 
 .row {
     display: flex;
     flex-wrap: wrap;
     display: grid;
-    grid-template-columns: repeat($cols, minmax(0, calc(1fr - 20px) ) );
-    grid-template-columns: repeat($cols, 1fr);
+    grid-template-columns: repeat(6, minmax(0, calc(1fr - 20px) ) );
+    grid-template-columns: repeat(6, 1fr);
     grid-row-gap: 0;
 
-    @include at-least(medium) {
-        grid-column-gap: $marge_wrapper;
+    @include mix.at-least(medium) {
+        grid-column-gap: 40px;
     }
-    @include up-to(medium) {
+    @include mix.up-to(medium) {
         grid-column-gap: 20px;
     }
 }
 
 
 .m_last {
-    grid-row-end: $cols;
+    grid-row-end: 6;
 }
 
 
@@ -41,7 +40,7 @@ $marge_wrapper: 40px;
             display: block;
         }
         
-        @for $i from 1 through $cols {
+        @for $i from 1 through 6 {
 
             .#{$suffix}_#{$i}col {
                 grid-column: span #{$i};
@@ -53,12 +52,12 @@ $marge_wrapper: 40px;
 }
 
 
-@include at-least(minimal) {
+@include mix.at-least(minimal) {
     @include parse-columns('s');
 }
-@include at-least(medium) {
+@include mix.at-least(medium) {
     @include parse-columns('m');
 }
-@include at-least(large) {
+@include mix.at-least(large) {
     @include parse-columns('l');
 }
