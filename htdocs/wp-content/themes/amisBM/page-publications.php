@@ -12,7 +12,7 @@ get_header();
 
         <section class="section_padding">
 
-            <?php the_title( '<h1 class="page-title section_title--bigger">', '</h1>' ); ?>
+            <?php the_title( '<h1 class="page-title h1 sectionTitle_margins">', '</h1>' ); ?>
 
             <!-- <div class="page_intro">
                 <p><strong>Depuis ses débuts et ce chaque année, l'association publie bulletins, catalogues et livres chroniquant sa vie, celle du village ainsi que son histoire.</strong></p>

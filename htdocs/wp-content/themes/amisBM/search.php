@@ -9,7 +9,7 @@
 <main class="main no-hero section_padding search-content">
 
     <div class="search_introSection">
-        <h1 class="section_title">Recherche : </h1>
+        <h1 class="h1 sectionTitle_margin">Recherche : </h1>
         <span class="results_searchQuery"><?php echo get_search_query(); ?></span>
     
         <div class="main_searchForm searchForm">

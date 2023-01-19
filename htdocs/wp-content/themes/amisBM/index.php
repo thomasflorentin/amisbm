@@ -8,7 +8,7 @@ get_template_part('components/blocs/bloc', 'hero');
 <main class="main">
 
 <section class="home_actus section_padding">
-    <h2 class="section_title"><?php the_sub_field('section_title'); ?></h2>
+    <h2 class="h2 sectionTitle_margins"><?php the_sub_field('section_title'); ?></h2>
             
     <div class="actus_itemWrapper">
 

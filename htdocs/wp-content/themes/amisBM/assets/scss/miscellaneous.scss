@@ -65,6 +65,18 @@ img {
     border-radius: 100%;
     background-color: #BDC8C1;
 }
+.hidden {
+    visibility: hidden;
+    height: 0px;
+    display: block;
+    width: 0px;
+}
+.fixed-margin-top {
+    margin-top: 30px;
+}
+
+
+// Various Font classes
 .baskerville {
     font-family: "Baskerville";
     font-weight: normal;
@@ -84,18 +96,50 @@ img {
 .greyFont {
     color: $main_font_grey;
 }
-.hidden {
-    visibility: hidden;
-    height: 0px;
-    display: block;
-    width: 0px;
-}
-.fixed-margin-top {
-    margin-top: 30px;
+
+// Titles font styles
+.h {
+    @extend .baskerville;
+    font-size: 3.25em;
+    font-weight: normal;
+    color: $main_font_blue;
+
+    &1, &2, &3 {
+        @extend .h;
+        
+        &--light {
+            @extend .h;
+            color: $light_font_blue;
+        }
+        &--commonFont {
+            @extend .h;
+            @extend .quireSansPro;
+        }
+        &--hero {
+            text-align: center;
+            color: white
+        }
+    }
+    &1 {
+        font-size: 5em;
+        &--hero {
+            @extend .h1;
+        }
+    }
+    &2 {
+        &--hero {
+            @extend .h2;
+        }
+    }
+    &3 {
+        font-size: 1.75em;
+        &--commonFont {
+            @extend .h3;
+        }
+    }
 }
 
-
-// Fonts
+/* Fonts declaration */
 // Baskerville
 @font-face {
     font-family: "Baskerville";

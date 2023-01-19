@@ -1,5 +1,5 @@
 <section class="home_sujetDuMois section_padding">
-                    <h2 class="section_title"><?php the_sub_field('section_title'); ?></h2>
+                    <h2 class="h2 sectionTitle_margins"><?php the_sub_field('section_title'); ?></h2>
 
                     <div class="sujetDuMois_wrapper">
                         <?php
@@ -15,7 +15,7 @@
 
                                 <div class="sujetDuMois_txt">
                                     <div class="sujetDuMois_txt_content">
-                                        <?php the_title( "<h3>", "</h3>") ?>
+                                        <?php the_title( "<h3 class='h3--commonFont'>", "</h3>") ?>
                                         <?php the_excerpt(); ?>
                                     </div>
                                     <a href="<?php the_permalink(); ?>" class="mainBtn">Découvrir le sujet</a>

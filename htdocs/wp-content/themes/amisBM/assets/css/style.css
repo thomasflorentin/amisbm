@@ -49,26 +49,6 @@ img {
   background-color: #BDC8C1;
 }
 
-.baskerville, .single_event_meta, .section_title, .section_title--bigger, .section_title--light {
-  font-family: "Baskerville";
-  font-weight: normal;
-}
-.baskerville--italic {
-  font-style: italic;
-}
-
-.quireSansPro {
-  font-family: "QuireSansPro";
-  font-style: normal;
-}
-.quireSansPro--italic {
-  font-style: italic;
-}
-
-.greyFont, .publication-header .post_otherInfos {
-  color: #95A099;
-}
-
 .hidden {
   visibility: hidden;
   height: 0px;
@@ -80,6 +60,45 @@ img {
   margin-top: 30px;
 }
 
+.baskerville, .single_event_meta, .h, .h1--commonFont, .h2--commonFont, .h3--commonFont, .h1--light, .h2--light, .h3--light, .h1, .h1--hero, .h2, .h2--hero, .h3 {
+  font-family: "Baskerville";
+  font-weight: normal;
+}
+.baskerville--italic {
+  font-style: italic;
+}
+
+.quireSansPro, .h1--commonFont, .h2--commonFont, .h3--commonFont {
+  font-family: "QuireSansPro";
+  font-style: normal;
+}
+.quireSansPro--italic {
+  font-style: italic;
+}
+
+.greyFont, .publication-header .post_otherInfos {
+  color: #95A099;
+}
+
+.h, .h1--commonFont, .h2--commonFont, .h3--commonFont, .h1--light, .h2--light, .h3--light, .h1, .h1--hero, .h2, .h2--hero, .h3 {
+  font-size: 3.25em;
+  font-weight: normal;
+  color: #687BAB;
+}
+.h1--light, .h2--light, .h3--light {
+  color: #D9E4FF;
+}
+.h1--hero, .h2--hero, .h3--hero {
+  text-align: center;
+  color: white;
+}
+.h1, .h1--hero {
+  font-size: 5em;
+}
+.h3, .h3--commonFont {
+  font-size: 1.75em;
+}
+/* Fonts declaration */
 @font-face {
   font-family: "Baskerville";
   src: url("../fonts/baskerville/Baskerville-regular.otf") format("opentype");
@@ -129,18 +148,9 @@ img {
   font-style: normal;
 }
 /* Sections styles */
-.section_title, .section_title--light, .section_title--bigger {
+.sectionTitle_margins {
   margin-top: 0;
   margin-bottom: 5rem;
-  color: #687BAB;
-  font-size: 3.25em;
-  font-weight: normal;
-}
-.section_title--bigger {
-  font-size: 5em;
-}
-.section_title--light {
-  color: #D9E4FF;
 }
 
 main.main {
@@ -525,7 +535,6 @@ ul.sub-menu .menu-item:not(:last-child) {
   aspect-ratio: 1/1;
   width: clamp(1em, 100%, 2em);
   height: auto;
-  margin-left: auto;
   display: none;
   justify-content: center;
   align-items: center;
@@ -678,9 +687,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 .sujetDuMois_txt h3 {
   margin: 0;
-  font-size: 1.75em;
   font-weight: 600;
-  color: #687BAB;
 }
 .sujetDuMois_txt p {
   font-size: 1.4em;
@@ -754,7 +761,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 .search_introSection {
   margin-bottom: 2em;
 }
-.search_introSection .section_title {
+.search_introSection .h1, .search_introSection .h2 {
   display: inline-block;
 }
 .search_introSection .results_searchQuery {
@@ -902,7 +909,16 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 @media screen and (max-width: 800px) {
+  body {
+    font-size: 12px;
+  }
+
+  .h1--hero {
+    font-size: 4em;
+  }
+
   .header_wrapper {
+    width: 80%;
     display: flex;
     justify-content: end;
     align-items: center;
@@ -910,6 +926,7 @@ ul.sub-menu .menu-item:not(:last-child) {
   }
 
   .header_searchForm {
+    width: 100%;
     margin: 0;
   }
 
@@ -937,7 +954,7 @@ ul.sub-menu .menu-item:not(:last-child) {
     width: 90vw;
     font-size: 2em;
     text-align: end;
-    color: #95A099;
+    color: #687BAB;
     transition: 0.25s ease-out;
   }
   .header_nav--displayed .menu-item {
@@ -957,12 +974,16 @@ ul.sub-menu .menu-item:not(:last-child) {
     background-color: inherit;
     border: none;
     font-size: 0.8em;
-    color: #BDC8C1;
+    color: #95A099;
   }
 
   .header_nav_close {
     display: flex;
     margin-right: -1em;
+  }
+
+  .hero--content {
+    padding-inline: 2em;
   }
 }
 @media screen and (max-width: 782px) {

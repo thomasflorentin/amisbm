@@ -4,24 +4,9 @@
 
 
 /* Sections styles */
-.section_title {
+.sectionTitle_margins {
     margin-top: 0;
     margin-bottom: 5rem;
-
-    color: misc.$main_font_blue;
-    font-size: 3.25em;
-    font-weight: normal;
-    
-    @extend .baskerville;
-    
-    &--bigger {
-        @extend .section_title;
-        font-size: 5em;
-    }
-    &--light {
-        @extend .section_title;
-        color: misc.$light_font_blue;
-    }
 }
 main.main {
     width: clamp(300px, 90%, 1400px);

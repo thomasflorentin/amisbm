@@ -4,7 +4,7 @@
     </div>
 
     <div class="publications--content section_padding">
-        <h2 class="section_title section_title--light"><?php the_sub_field('section_title'); ?></h2>
+        <h2 class="h2--light sectionTitle_margins"><?php the_sub_field('section_title'); ?></h2>
     
         <div class="publications_txtWrapper">
             <p><?php the_sub_field('section_p1'); ?></p>

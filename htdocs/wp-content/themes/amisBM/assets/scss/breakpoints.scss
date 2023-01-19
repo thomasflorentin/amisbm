@@ -1,13 +1,23 @@
 @use 'miscellaneous' as misc;
 
 @media screen and (max-width: 800px) {
+    body {
+        font-size: 12px;
+    }
+    .h1--hero {
+        font-size: 4em;
+    }
+
     .header_wrapper {
+        width: 80%;
+
         display: flex;
         justify-content: end;
         align-items: center;
         gap: 1.5em;
     }
     .header_searchForm  {
+        width: 100%;
         margin: 0;
     }
     .header_burger {
@@ -41,7 +51,7 @@
             
             font-size: 2em;
             text-align: end;
-            color: misc.$main_font_grey;
+            color: misc.$main_font_blue;
             
             transition: .25s ease-out;
             
@@ -66,13 +76,17 @@
                 border: none;
 
                 font-size: .8em;
-                color: misc.$light_font_grey;
+                color: misc.$main_font_grey;
             }
         }
     }
     .header_nav_close {
         display: flex;
         margin-right: -1em;
+    }
+
+    .hero--content {
+        padding-inline: 2em;
     }
 }
 @media screen and (max-width: 782px) {
