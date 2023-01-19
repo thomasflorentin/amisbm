@@ -32,43 +32,6 @@ img {
   object-fit: cover;
 }
 
-
-
-.row {
-  display: flex;
-  gap: 2.5%;
-}
-
-[class*="col_"] {
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-.col_1 {
-  width: calc(100% / 6);
-}
-.col_2 {
-  width: calc(100% / 6 * 2);
-}
-.col_3 {
-  width: calc(100% / 6 * 3);
-}
-.col_4 {
-  width: calc(100% / 6 * 4);
-}
-.col_5 {
-  width: calc(100% / 6 * 5);
-}
-.col_6 {
-  width: calc(100%);
-}
-.block_post {
-  margin-bottom: 2.5%;
-  border: 3px solid #BDC8C1;
-}
-
-
-
 .link-block {
   display: flex;
   text-decoration: none;
@@ -504,6 +467,32 @@ ul.wpcf7-post_image_checkbox {
   margin: 0 auto;
 }
 
+.row {
+  display: flex;
+  gap: 2.5%;
+}
+.row [class^=col_] {
+  flex: 0 0;
+}
+.row .col_1 {
+  width: 16.6666666667%;
+}
+.row .col_2 {
+  width: 33.3333333333%;
+}
+.row .col_3 {
+  width: 50%;
+}
+.row .col_4 {
+  width: 66.6666666667%;
+}
+.row .col_5 {
+  width: 83.3333333333%;
+}
+.row .col_1 {
+  width: 100%;
+}
+
 .header {
   width: 100%;
   max-width: 100vw;
@@ -685,7 +674,10 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 /* News Sections */
-
+.block_post {
+  margin-bottom: 2.5%;
+  border: 3px solid #BDC8C1;
+}
 
 /* Monthly Subject Section */
 .home_sujetDuMois {
