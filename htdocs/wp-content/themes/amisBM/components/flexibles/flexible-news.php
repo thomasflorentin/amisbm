@@ -13,7 +13,7 @@
         if( $section_items ): ?>
             <?php foreach( $section_items as $post ): 
                 setup_postdata($post);
-                echo '<div class="col_2">';
+                echo '<div class="s_6col m_3col l_2col">';
                     get_template_part('components/blocs/bloc', 'post');
                 echo '</div>';
             endforeach; ?>

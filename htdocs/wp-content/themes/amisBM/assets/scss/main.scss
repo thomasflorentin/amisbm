@@ -18,8 +18,6 @@
 }
 
 .sujetDuMois_wrapper {
-    display: flex;
-    gap: 2rem;
 }
 
 .sujetDuMois_img img {
@@ -28,10 +26,6 @@
 }
 
 .sujetDuMois_txt {
-    // width: clamp(200px, 95%, 1200px);
-    max-width: 66%;
-    min-height: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
