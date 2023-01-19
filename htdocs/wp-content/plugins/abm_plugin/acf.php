@@ -50,21 +50,21 @@ function add_my_options_page()
             'position' => 2
         ));
 
-        /* acf_add_options_sub_page(array(
-            'page_title'     => 'Géneral Settings',
+        acf_add_options_sub_page(array(
+            'page_title'     => 'Paramètres généraux',
             'menu_title'    => 'Géneral',
             'parent_slug'    => 'theme-general-settings',
-        )); */
+        )); 
 
         acf_add_options_sub_page(array(
-            'page_title'     => 'Header Settings',
+            'page_title'     => 'Paramètres du Header',
             'menu_title'    => 'Header',
             'parent_slug'    => 'theme-general-settings',
         ));
 
 
         acf_add_options_sub_page(array(
-            'page_title'     => 'Footer Settings',
+            'page_title'     => 'Paramètres du Footer',
             'menu_title'    => 'Footer',
             'parent_slug'    => 'theme-general-settings',
         ));

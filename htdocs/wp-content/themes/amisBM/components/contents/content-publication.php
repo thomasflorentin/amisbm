@@ -47,7 +47,7 @@
     </section>
 
     <section class="publication-action">
-        <a href="#" class="mainBtn">Commander</a>
+        <a href="<?php the_field('page_commandes', 'options'); ?>" class="mainBtn">Commander</a>
     </section>
 
 </article>
