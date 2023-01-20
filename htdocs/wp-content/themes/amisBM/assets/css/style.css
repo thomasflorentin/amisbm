@@ -829,8 +829,6 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .sujetDuMois_wrapper {
-  display: flex;
-  gap: 2rem;
 }
 
 .sujetDuMois_img img {
@@ -839,7 +837,6 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .sujetDuMois_txt {
-  max-width: 66%;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -888,14 +885,12 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .publications_txtWrapper {
-  display: flex;
-  gap: 10%;
   margin-bottom: 50px;
   font-size: 1.45em;
   font-weight: 200;
 }
 
-.publications_txtWrapper > p {
+.publications_txtWrapper > div {
   margin: 0;
   flex-basis: 100%;
   color: white;
