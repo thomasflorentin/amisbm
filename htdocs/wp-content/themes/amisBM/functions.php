@@ -119,19 +119,9 @@ add_action( 'admin_enqueue_scripts', 'wptutsplus_admin_styles' );
         );
 
         ob_start();
-
-            // The Loop
-            if ( $the_query->have_posts() ) {
-                while ( $the_query->have_posts() ) {
-                    $the_query->the_post();
-                    echo '<div class="col_2">';
-                        get_template_part('components/blocs/bloc', 'publication');
-                    echo '</div>';                }
-            } else {
-                echo "<h2>Désolé, nous n'avons rien trouvé...</h2>";
-            }
-
-            wp_reset_postdata();
+        
+        set_query_var('the_query', $the_query);
+        get_template_part('components/loops/loop', 'publications');
 
         $response = ob_get_clean();
         die(json_encode($response));

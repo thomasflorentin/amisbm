@@ -1059,14 +1059,17 @@ ul.sub-menu .menu-item:not(:last-child) {
 .copy p {
   font-size: 1.8rem;
 }
+.copy figure {
+  margin: 2em 0;
+}
 .excerpt {
   font-family: Baskerville;
 }
 .excerpt p {
   font-size: 2.4rem;
   color: #687BAB;
-  
 }
+
 
 @media screen and (max-width: 800px) {
   body {

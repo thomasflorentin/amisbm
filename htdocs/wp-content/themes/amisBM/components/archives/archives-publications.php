@@ -15,19 +15,12 @@
         $args
     );
 
-    if ( $the_query->have_posts() ) {
-        echo '<div id="publications_posts" class="publications_itemWrapper row">';
+    echo '<div id="publications_posts" class="publications_itemWrapper row">';
+        set_query_var('the_query', $the_query);
+        get_template_part('components/loops/loop', 'publications');
+    echo '</div>';
 
-        while ( $the_query->have_posts() ) {
-            $the_query->the_post();
-            echo '<div class="s_6col m_3col l_2col">';
-                get_template_part('components/blocs/bloc', 'publication');
-            echo '</div>';
-        }
-        echo '</div>';
-
-    }
-    wp_reset_postdata(); ?>
+ ?>
 
     <div class="posts_navigation">
         <div><?php previous_posts_link( 'Publications plus anciennes' ); ?></div>
