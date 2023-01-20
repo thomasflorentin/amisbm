@@ -18,6 +18,10 @@ body {
   font-weight: 300;
   color: #363636;
 }
+p {
+  margin-top: 0;
+}
+
 
 ul[class] {
   list-style: none;
@@ -986,13 +990,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .publication-content {
-  display: flex;
-  gap: 2.5%;
   margin-bottom: 70px;
-}
-
-.content_media, .content_text {
-  width: 50%;
 }
 
 .publications_itemWrapper {
@@ -1029,9 +1027,6 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .single_excerpt {
   margin-bottom: 2em;
-  font-family: Baskerville;
-  font-size: 1.4em;
-  color: #687BAB;
 }
 
 .single_excerpt,
@@ -1051,14 +1046,23 @@ ul.sub-menu .menu-item:not(:last-child) {
   color: #687BAB;
   font-size: 3.5em;
 }
-.publication-content .content_text > * {
-  font-size: 1.8em;
-}
 .publication-content .content_text > *:first-of-type {
   margin-top: 0;
 }
 .publication-content .content_text > *:last-of-type {
   margin-bottom: 0;
+}
+
+.copy p {
+  font-size: 1.8rem;
+}
+.excerpt {
+  font-family: Baskerville;
+}
+.excerpt p {
+  font-size: 2.4rem;
+  color: #687BAB;
+  
 }
 
 @media screen and (max-width: 800px) {

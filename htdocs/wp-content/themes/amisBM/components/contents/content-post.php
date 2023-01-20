@@ -27,14 +27,14 @@
     
 
     <?php if( has_excerpt() ) : ?>
-        <div class="single_excerpt">
+        <div class="single_excerpt excerpt">
             <?php the_excerpt(); ?>
         </div>
     <?php endif; ?>
 
 
 
-    <div class="single_content">
+    <div class="single_content copy">
         <?php the_content(); ?>
     </div>
 

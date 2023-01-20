@@ -34,14 +34,15 @@
 
         <?php
             if(has_post_thumbnail()):
-                echo '<div class="content_media col_3">';
+                echo '<div class="content_media s_6col m_3col">';
                     the_post_thumbnail('publication');
                 echo '</div>'; 
             endif;
         ?>
 
-        <div class="content_text col_3">
-            <?php the_content(); ?>
+        <div class="content_text s_6col m_3col">
+            <div class="excerpt"><?php the_excerpt(); ?></div>
+            <div class="copy"><?php the_content(); ?></div>
         </div>
 
     </section>
