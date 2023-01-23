@@ -1,5 +1,5 @@
 <section class="home_sujetDuMois section_padding">
-                    <h2 class="h2 sectionTitle_margins"><?php the_sub_field('section_title'); ?></h2>
+                    <h2 class="h2 sectionTitle_margins--bigger"><?php the_sub_field('section_title'); ?></h2>
 
                     <div class="sujetDuMois_wrapper row">
                         <?php

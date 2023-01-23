@@ -85,12 +85,98 @@
         margin-right: -1em;
     }
 
+
+
     .hero--content {
         padding-inline: 2em;
+    }
+    .post_hero .hero--content {
+        padding-inline: 5%;
+    }
+
+
+
+    .sujetDuMois_txt  {
+        margin-top: 1.5em;
+    }
+
+
+
+    // Section Home-publications
+    .publications--bgdImg > img {
+        height: 100%;
+        // width: auto;
+        object-fit: cover;
+    }
+    .publications_txtWrapper {
+        > div:not(:first-child) {
+            margin-top: 1.5em;
+        }
+    }
+
+
+
+    // Footer
+    .footer {
+        flex-wrap: wrap;
+        gap: 2.5rem;
+
+        // text-align: center;
+
+        > div {
+            width: 100%;
+        }
+    }
+    .footer_supporters {
+        margin: 0 auto;
+    }
+    .footer_newsletterWrapper {
+        flex-wrap: wrap;
+
+        form {
+            margin: 0 auto;
+        }
+    }
+
+
+
+    // Archives Publications
+    .publications_filters  {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+    .filters_group {
+        width: 100%;
+        margin-top: 1em;
+    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 @media screen and (max-width: 782px) {
     .fixed-margin-top {
         margin-top: 45px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .wp-block-group__inner-container {
+        flex-direction: column;
+
+        .wp-block-file {
+            width: 100%;
+        }
+    }
+}
+@media screen and (max-width: 450px) {
+    .hero--content p {
+        margin: 0 7.5%;
+    }
+
+
+
+    .filters_group button {
+        margin: 0;
+        padding: .5em 1em;
     }
 }

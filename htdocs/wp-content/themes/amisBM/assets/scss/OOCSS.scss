@@ -7,6 +7,11 @@
 .sectionTitle_margins {
     margin-top: 0;
     margin-bottom: 5rem;
+    
+    &--bigger {
+        @extend .sectionTitle_margins;
+        margin-bottom: 6.5rem;
+    }
 }
 main.main {
     width: clamp(300px, 90%, 1400px);
@@ -162,7 +167,7 @@ a.mainBtn {
 /* Hero Sections */
 .home_hero, .post_hero {
     width: 100%;
-    height: 70vh;
+    height: 85vh;
 
     position: relative;
 
