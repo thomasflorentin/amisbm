@@ -6,13 +6,17 @@
             <div class="post_otherInfos">
                 <span><?php the_field('publication_date'); ?></span>
                 <div class="separator--dot"></div>
-                <?php
 
+                <?php
                     $term_obj_list = get_the_terms( $post->ID, 'publication_type' );
                     $terms_string = join(', ', wp_list_pluck($term_obj_list, 'name'));
                     echo $terms_string;
-
                 ?>
+
+                <?php if( get_field('publication_prix') !== '' ) : ?>
+                    <div class="separator--dot"></div>
+                    <span><?php the_field('publication_prix'); ?> €</span>
+                <?php endif; ?>
             </div>
 
             <?php
