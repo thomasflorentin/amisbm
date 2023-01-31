@@ -830,6 +830,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 .block_post {
   margin-bottom: 2.5%;
   border: 3px solid #BDC8C1;
+  min-height: fit-content;
 }
 
 /* Monthly Subject Section */
@@ -850,6 +851,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 .sujetDuMois_txt h3 {
   margin: 0;
+  margin-bottom: 2.5rem;
   font-weight: 600;
 }
 .sujetDuMois_txt p {
@@ -934,6 +936,13 @@ ul.sub-menu .menu-item:not(:last-child) {
 .main_searchForm {
   margin-bottom: 0.5em;
   border: 1px solid rgb(202, 209, 194) 0, 0, 0;
+}
+
+.archive-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 /* PUBLICATIONS ARCHIVES */

@@ -22,7 +22,7 @@
 
     <?php if(have_posts()): ?>
     
-        <div class="actus_itemWrapper ">
+        <div class="actus_itemWrapper row">
 
 
             <?php
@@ -31,12 +31,16 @@
                 get_template_part('components/blocs/bloc', 'post');
 
             endwhile;
-
-            echo paginate_links([
-                'prev_text' => esc_html__('Précédent'),
-                'next_text' => esc_html__('Suivant')
-            ])
             ?>
+
+            <div class="archive-nav s_6col m_6col l_6col">
+                <?php
+                echo paginate_links([
+                    'prev_text' => esc_html__('Précédent'),
+                    'next_text' => esc_html__('Suivant')
+                ])
+                ?>
+            </div>
         </div>
 
     <?php else: ?>

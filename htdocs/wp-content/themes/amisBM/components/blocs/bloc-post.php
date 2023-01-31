@@ -1,4 +1,4 @@
-<article class="block_post" id="post-<?php the_ID(); ?>">
+<article class="block_post s_6col m_3col l_2col" id="post-<?php the_ID(); ?>">
     <a href="<?php the_permalink(); ?>" class="link-block">
         <div class="post_thumbnail">
             <?php
