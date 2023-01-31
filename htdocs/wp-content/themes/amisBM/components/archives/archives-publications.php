@@ -23,8 +23,8 @@
  ?>
 
     <div class="posts_navigation">
-        <div><?php previous_posts_link( 'Publications plus anciennes' ); ?></div>
-        <div><?php next_posts_link( 'Publications plus récentes', $the_query->max_num_pages ); ?></div>
+        <div><?php previous_posts_link( 'Page précédente' ); ?></div>
+        <div><?php next_posts_link( 'Page suivante', $the_query->max_num_pages ); ?></div>
     </div>
 </section>
 

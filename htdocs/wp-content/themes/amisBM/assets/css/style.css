@@ -1041,6 +1041,9 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .posts_navigation {
+  width: 60%;
+  margin-inline: auto;
+  margin-top: 2.75rem;
   display: flex;
   justify-content: space-around;
 }
