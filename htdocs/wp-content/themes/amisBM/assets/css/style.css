@@ -64,7 +64,7 @@ img {
   margin-top: 30px;
 }
 
-.baskerville, .single_event_meta, .h, .h1--commonFont, .h2--commonFont, .h3--commonFont, .h1--light, .h2--light, .h3--light, .h1, .h1--hero, .h2, .h2--hero, .h3 {
+.baskerville, .single_event_meta, .wp-block-quote p, .wp-block-pullquote p, .h, .h1--commonFont, .h2--commonFont, .h3--commonFont, .h1--light, .h2--light, .h3--light, .h1, .h1--hero, .h2, .h2--hero, .h3 {
   font-family: "Baskerville";
   font-weight: normal;
 }
@@ -474,6 +474,21 @@ ul.wpcf7-post_image_checkbox {
 .wp-block-image img {
   display: block;
   margin: 0 auto;
+}
+
+.wp-block-quote, .wp-block-pullquote {
+  color: #687BAB;
+}
+.wp-block-quote p, .wp-block-pullquote p {
+  font-size: 2.5rem !important;
+}
+.wp-block-quote cite, .wp-block-pullquote cite {
+  color: #95A099;
+}
+
+.wp-block-pullquote {
+  margin: 0;
+  padding: 0;
 }
 
 .row {

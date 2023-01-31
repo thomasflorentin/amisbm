@@ -350,3 +350,19 @@ ul.wpcf7-post_image_checkbox {
     margin: 0 auto;
 
 }
+.wp-block-quote, .wp-block-pullquote {
+    color: misc.$main_font_blue;
+
+    p {
+        @extend .baskerville;
+        // Rentre en conflit avec une règle déclarée dans singles.scss
+        font-size: 2.5rem !important;
+    }
+    cite {
+        color: misc.$main_font_grey;
+    }
+}
+.wp-block-pullquote {
+    margin: 0;
+    padding: 0;
+}
