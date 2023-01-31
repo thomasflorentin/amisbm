@@ -356,10 +356,11 @@ ul.wpcf7-post_image_checkbox {
     p {
         @extend .baskerville;
         // Rentre en conflit avec une règle déclarée dans singles.scss
-        font-size: 2.5rem !important;
+        font-size: 2.2rem !important;
     }
     cite {
         color: misc.$main_font_grey;
+        font-size: 1.8rem;
     }
 }
 .wp-block-pullquote {

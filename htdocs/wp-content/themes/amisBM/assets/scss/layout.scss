@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: repeat(6, minmax(0, calc(1fr - 20px) ) );
     grid-template-columns: repeat(6, 1fr);
-    grid-row-gap: 0;
+    grid-row-gap: 30px;
 
     @include mix.at-least(medium) {
         grid-column-gap: 40px;

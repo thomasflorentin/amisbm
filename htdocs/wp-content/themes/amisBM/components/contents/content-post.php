@@ -9,17 +9,17 @@
         <div class="single_event_meta">
             <?php 
                 if ( ! empty( $categories ) ) { 
-                    echo "<div class='single_type'><span class='greyFont'>Type d'événement : </span>" . esc_html( $categories[0]->name ) . "</div>";	
+                    echo "<div class='single_type'>" . esc_html( $categories[0]->name ) . "</div>";	
                 } 
             ?>
             <div class="single_date">
-                <span class="greyFont">Date & horaire : </span>
+                <!--<span class="greyFont">Date & horaire : </span>-->
                 <?php the_event_date(get_field('event_date')); ?>
             </div>
 
-            <div class="single_date">
-                <span class="greyFont">Lieu : </span>
-                <?php the_event_date(get_field('event_date')); ?>
+            <div class="single_place">
+                <!--<span class="greyFont">Lieu : </span>-->
+                <?php the_field('event_place'); ?>
             </div>
         </div>
 

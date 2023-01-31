@@ -480,10 +480,11 @@ ul.wpcf7-post_image_checkbox {
   color: #687BAB;
 }
 .wp-block-quote p, .wp-block-pullquote p {
-  font-size: 2.5rem !important;
+  font-size: 2.2rem !important;
 }
 .wp-block-quote cite, .wp-block-pullquote cite {
   color: #95A099;
+  font-size: 1.8rem;
 }
 
 .wp-block-pullquote {
@@ -497,7 +498,7 @@ ul.wpcf7-post_image_checkbox {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, calc(1fr - 20px)));
   grid-template-columns: repeat(6, 1fr);
-  grid-row-gap: 0;
+  grid-row-gap: 30px;
 }
 @media (min-width: 800px) {
   .row {
@@ -1049,6 +1050,11 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 2em;
   text-align: center;
   font-size: 1.4em;
+}
+
+.single_type {
+  font-size: 2.75rem;
+  font-weight: 500;
 }
 
 .single_excerpt {
