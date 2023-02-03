@@ -46,6 +46,7 @@
             "key": "field_63c018519df57",
             "label": "Visuels de la couverture",
             "name": "hero_images",
+            "aria-label": "",
             "type": "gallery",
             "instructions": "",
             "required": 0,
@@ -68,6 +69,28 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_63dce1d188ab2",
+            "label": "Délai de transition des images",
+            "name": "hero_timer",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "A entrer en millisecondes.\r\nex: 5000 pour 5s sur chaque image",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 5000,
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "en ms",
+            "append": ""
         }
     ],
     "location": [
@@ -88,5 +111,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1673534405
+    "modified": 1675420211
 }
