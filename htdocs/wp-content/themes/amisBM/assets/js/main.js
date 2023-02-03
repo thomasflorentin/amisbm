@@ -65,8 +65,7 @@ function init() {
      * Slide on fade
      */
     const slides = document.querySelectorAll(".slide");
-    const hero = document.querySelector('.home_hero');
-    const timer = hero.valueOf(dataset.timer)
+    const timer = document.querySelector('.home_hero').dataset.timer;
     console.log(timer);
     if(slides.length !== 0 ) {
         let current = 0;

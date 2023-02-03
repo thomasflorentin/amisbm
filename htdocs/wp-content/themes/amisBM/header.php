@@ -11,9 +11,12 @@
 <body <?php body_class(); ?>>
 
     <header <?php if(is_user_logged_in()) {echo 'class="header fixed-margin-top"';} else {echo 'class="header"';} ?>>
+        
+        <?php if(!is_front_page()): ?>
         <div class="header_logo">
             <?php the_custom_logo(); ?>
         </div>
+        <?php endif; ?>
 
         <div class="header_wrapper">
             <div class="header_searchForm searchForm">
