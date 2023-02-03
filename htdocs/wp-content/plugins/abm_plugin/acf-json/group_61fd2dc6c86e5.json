@@ -71,12 +71,12 @@
             "mime_types": ""
         },
         {
-            "key": "field_63dce564d379e",
-            "label": "Timing de défilement des visuels",
+            "key": "field_63dce1d188ab2",
+            "label": "Délai de transition des images",
             "name": "hero_timer",
             "aria-label": "",
             "type": "number",
-            "instructions": "",
+            "instructions": "A entrer en millisecondes.\r\nex: 5000 pour 5s sur chaque image",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -89,7 +89,7 @@
             "max": "",
             "placeholder": "",
             "step": "",
-            "prepend": "",
+            "prepend": "en ms",
             "append": ""
         }
     ],
