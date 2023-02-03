@@ -662,10 +662,10 @@ ul.wpcf7-post_image_checkbox {
     display: block;
   }
 }
-.header {
+.header, .header--home {
   width: 100%;
   max-width: 100vw;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -678,8 +678,15 @@ ul.wpcf7-post_image_checkbox {
   color: white;
   transition: 0.5s;
 }
-.header .header_searchForm, .header .custom-logo {
+.header .header_searchForm, .header--home .header_searchForm, .header .custom-logo, .header--home .custom-logo {
   transition: 0.5s;
+}
+.header--home {
+  justify-content: flex-end;
+}
+
+.header_nav {
+  margin-top: 0.666rem;
 }
 
 .header_nav .menu {
@@ -695,6 +702,28 @@ ul.wpcf7-post_image_checkbox {
 }
 
 /* Styles for ::after nav el with submenu */
+.header_nav .menu-item-has-children {
+  position: relative;
+  margin-right: 1rem;
+  transition: all 0.25s;
+}
+.header_nav .menu-item-has-children::after {
+  width: 1em;
+  height: 0.4em;
+  position: absolute;
+  right: -1.25em;
+  top: 50%;
+  transform: translateY(-50%);
+  content: "";
+  background-image: url("../images/ico_navArrow--grey.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.header_nav .menu-item-has-children:hover::after {
+  transform: rotate(180deg) translateY(50%);
+}
+
 ul.sub-menu {
   height: 0;
   display: none;
@@ -715,13 +744,12 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .header_searchForm {
-  margin-bottom: 2rem;
   margin-left: auto;
   max-width: 75%;
 }
 
 .header_logo img {
-  height: 100px;
+  height: 75px;
   width: auto;
 }
 

@@ -10,7 +10,7 @@
 
 <body <?php body_class(); ?>>
 
-    <header <?php if(is_user_logged_in()) {echo 'class="header fixed-margin-top"';} else {echo 'class="header"';} ?>>
+    <header class="header<?php if(is_front_page()){echo "--home";} if(is_user_logged_in()) {echo ' fixed-margin-top';}?>">
         
         <?php if(!is_front_page()): ?>
         <div class="header_logo">
@@ -27,7 +27,7 @@
                 <button style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_burger--white.png"; ?>);"></button>
             </div>
 
-            <nav data-display="hidden" <?php if(is_user_logged_in()) {echo 'class="header_nav fixed-margin-top"';} else {echo 'class="header_nav"';} ?>>
+            <nav data-display="hidden" class="header_nav">
                 <?php wp_nav_menu('Header nav'); ?>
 
                 <div class="header_nav_close">

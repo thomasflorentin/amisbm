@@ -105,12 +105,14 @@ function findScrollDirectionOtherBrowsers(event){
     }
     if (delta < 0){
         // console.log("down");
-        headerSearch.style.display = "none"
+        headerSearch.style.maxHeight = "0"
+        headerSearch.style.opacity = "0"
         logo.style.height = "40px"
     }else if (delta > 0){
         // console.log("up");
-        headerSearch.style.display = "block"
-        logo.style.height = "100px"
+        headerSearch.style.maxHeight = "50px"
+        headerSearch.style.opacity = "1"
+        logo.style.height = "75px"
     }
 }
 

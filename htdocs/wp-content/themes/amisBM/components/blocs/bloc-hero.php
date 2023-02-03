@@ -4,6 +4,7 @@
 
 
 <section data-timer="<?php the_field('hero_timer'); ?>" class="<?php echo is_front_page() ? 'home_hero' : 'post_hero'; ?>">
+    <??>
     <div class="hero--img">
         <?php 
             if(has_post_thumbnail()) {
