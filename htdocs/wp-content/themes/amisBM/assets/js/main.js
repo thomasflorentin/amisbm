@@ -65,6 +65,9 @@ function init() {
      * Slide on fade
      */
     const slides = document.querySelectorAll(".slide");
+    const hero = document.querySelector('.home_hero');
+    const timer = hero.valueOf(dataset.timer)
+    console.log(timer);
     if(slides.length !== 0 ) {
         let current = 0;
 
@@ -74,7 +77,7 @@ function init() {
         }
         current = (current != slides.length - 1) ? current + 1 : 0;
         slides[current].style.opacity = 1;
-        }, 5000);
+        }, timer);
     }
 
 
