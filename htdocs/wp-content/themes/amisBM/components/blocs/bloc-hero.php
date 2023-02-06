@@ -3,8 +3,7 @@
 
 
 
-<section data-timer="<?php if(get_field('hero_timer')){the_field('hero_timer');} else {echo 5000;}?>" class="<?php echo is_front_page() ? 'home_hero' : 'post_hero'; ?>">
-    <p></p>
+<section data-timer="<?php if(!get_field('hero_timer', get_option('page_on_front'))){ echo 5000;} else { the_field('hero_timer', get_option('page_on_front'));}?>" class="<?php echo is_front_page() ? 'home_hero' : 'post_hero'; ?>">
     <div class="hero--img">
         <?php 
             if(has_post_thumbnail()) {
