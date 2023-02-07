@@ -27,7 +27,7 @@
         <div><?php next_posts_link( 'Page suivante', $the_query->max_num_pages ); ?></div>
     </div>
     
-    <button id="loadMore" class="mainBtn hidden">Charger plus de publications</button>
+    <button id="loadMore" class="mainBtn hidden">Voir plus de publications</button>
 
 </section>
 
