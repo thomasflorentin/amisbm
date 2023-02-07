@@ -1,5 +1,29 @@
 @use 'miscellaneous' as misc;
 
+@media screen and (max-width: 1500px) {
+    .footer_newsletterWrapper {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .hero--content {
+        p {font-size: 1.75em;}
+    }
+
+    // Titles font styles
+    .h {
+        &1 {font-size: 4em;
+            &--hero {font-size: 4em;}}
+        &2 {font-size: 3em;}
+        &3 {font-size: 1.65em;}
+    }
+
+    .footer_newsletterWrapper {
+        span {font-size: 1.20em;}
+    }
+}
+
 @media screen and (max-width: 800px) {
     body {
         font-size: 12px;
@@ -150,7 +174,7 @@
         margin-top: 1em;
     
         display: flex;
-        justify-content: space-between;
+        justify-content: end;
         align-items: center;
     }
 }
