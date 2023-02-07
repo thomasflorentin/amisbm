@@ -22,10 +22,13 @@
 
  ?>
 
-    <div class="posts_navigation">
+    <div id="posts_nav" class="posts_navigation">
         <div><?php previous_posts_link( 'Page précédente' ); ?></div>
         <div><?php next_posts_link( 'Page suivante', $the_query->max_num_pages ); ?></div>
     </div>
+    
+    <button id="loadMore" class="mainBtn hidden">Voir plus de publications</button>
+
 </section>
 
 <?php echo "<script type='text/javascript'>const ajaxurl = '".admin_url('admin-ajax.php')."'</script>"; ?>

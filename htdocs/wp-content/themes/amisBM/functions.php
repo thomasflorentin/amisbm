@@ -98,10 +98,12 @@ add_action( 'admin_enqueue_scripts', 'wptutsplus_admin_styles' );
 
         $term = $_POST['term'];
         $termID = $_POST['termID'];
+        $offset = $_POST['offset'];
 
         $args = array( 
-            'post_type' => 'publication',
-            'posts_per_page' => 12,
+            'post_type'         => 'publication',
+            'posts_per_page'    => $offset,
+            'offset'            => $offset
         );
 
         if( $term != "all" ) {

@@ -5,6 +5,7 @@
 function init() {
     console.log('hello');
 
+    const load_more = document.querySelector('#loadMore');
 
     
     /*
@@ -15,43 +16,87 @@ function init() {
 
         for (const el of els) {
             el.addEventListener('click', function (e) {
-                console.log('please do filter');
+                //console.log('please do filter');
 
                 els.forEach(element => {
                     element.classList.remove('active');
                 });
                 this.classList.add('active');
 
-                const data = new FormData();
+                const posts_nav = document.querySelector('#posts_nav');
+                const grid = document.querySelector('#publications_posts');
+                const query_data = new FormData();
                 const term = this.getAttribute('data-term');
                 const termID = this.getAttribute('data-termID');
-                console.log(term);
+                const step = 12;
 
-                data.append( 'action', 'loadpublications' );
-                data.append( 'nonce', ajax_var.nonce );
-                data.append( 'term', term);
-                data.append( 'termID', termID);
+                console.log('term: ', term);
 
-                console.log(data);
+                query_data.append( 'action', 'loadpublications' );
+                query_data.append( 'nonce', ajax_var.nonce );
+                query_data.append( 'term', term);
+                query_data.append( 'termID', termID);
+                query_data.append( 'offset', 0);
+
+                console.log('data: ', query_data);
 
                 fetch(ajax_var.ajax_url, {
                   method: "POST",
                   credentials: 'same-origin',
-                  body: data
+                  body: query_data
                 })
                 .then((response) => {
-                    console.log(response);
                     return response.json()
                 })
                 .then((data) => {
-                    console.log(data);
-                    document.querySelector('#publications_posts').innerHTML = data;
+                    grid.innerHTML = data;
+
+                    if( term !== 'all' ) {
+                        posts_nav.classList.add('hidden');                    
+                        load_more.classList.remove('hidden'); 
+                    }
+                    else {
+                        posts_nav.classList.remove('hidden');                    
+                        load_more.classList.add('hidden');   
+                    }
+
+                    load_more.addEventListener('click', function() {
+
+                        grid.style.opacity = '.5';
+
+                        let current_offset = parseInt(query_data.get('offset'));
+                        let new_offset = parseInt(current_offset + step)
+                        query_data.set('offset', new_offset);
+
+                        fetch(ajax_var.ajax_url, {
+                                method: "POST",
+                                credentials: 'same-origin',
+                                body: query_data
+                            })
+                            .then((response) => {
+                                return response.json()
+                            })
+                            .then((data) => {
+                                if(data === '') {
+                                    load_more.classList.add('hidden'); 
+                                }
+                                else {
+                                    grid.insertAdjacentHTML("beforeend", data);
+                                }
+                                grid.style.opacity = '1';
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+
+                    });
+
                 })
                 .catch((error) => {
                   console.log(error);
                 });
 
-            })
+            });
         }
     }
 
