@@ -25,17 +25,8 @@
     .header_searchForm, .custom-logo {
         transition: .5s;
     }
-
-    &--home {
-        @extend .header;
-        justify-content: flex-end;
-
-
-    }
 }
-.header_nav {
-    margin-top: .666rem;
-}
+
 .header_nav .menu {
     display: flex;
     gap: 1.5em;
@@ -95,7 +86,7 @@ ul.sub-menu {
 
 .header_searchForm {
     // margin-bottom: 2rem;
-    margin-left: auto;
+    margin-right: auto;
     max-width: 75%;
 }
 .header_logo img{
@@ -163,7 +154,7 @@ ul.sub-menu {
     flex-wrap: nowrap;
 
     img {
-        width: 50%;
+        width: 33%;
         height: auto;
 
         object-fit: contain;

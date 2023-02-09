@@ -10,19 +10,12 @@
 
 <body <?php body_class(); ?>>
 
-    <header class="header<?php if(is_front_page()){echo "--home";} if(is_user_logged_in()) {echo ' fixed-margin-top';}?>">
-        
-        <?php if(!is_front_page()): ?>
-        <div class="header_logo">
-            <?php the_custom_logo(); ?>
+    <header class="header<?php if(is_user_logged_in()) {echo ' fixed-margin-top';}?>">
+        <div class="header_searchForm searchForm">
+            <?php get_search_form(); ?>
         </div>
-        <?php endif; ?>
 
         <div class="header_wrapper">
-            <div class="header_searchForm searchForm">
-                <?php get_search_form(); ?>
-            </div>
-
             <div class="header_burger">
                 <button style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_burger--white.png"; ?>);"></button>
             </div>

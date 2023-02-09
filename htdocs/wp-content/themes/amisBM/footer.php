@@ -1,6 +1,7 @@
     <footer class="footer">
         <div class="footer_leftCol">
             <div class="footer_supporters">
+                <img style="padding: 10px" src="<?php echo get_template_directory_uri() . "/assets/images/logo_ABM.png"; ?>" alt="Logo du département de Seine-et-Marne">
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_BM.png"; ?>" alt="Logo de la mairie de Bourron-Marlotte">
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_77.png"; ?>" alt="Logo du département de Seine-et-Marne">
             </div>
