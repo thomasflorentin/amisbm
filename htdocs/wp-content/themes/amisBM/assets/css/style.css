@@ -276,8 +276,10 @@ a.mainBtn, a.mainBtn--darkBgd {
 .post_title, .post_title > .post-title {
   margin-top: 0;
   color: #687BAB;
-  font-size: 1.25em;
+  font-size: 1.2em;
   font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 4px;
 }
 
 .post-title > a {
