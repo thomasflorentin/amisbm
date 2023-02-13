@@ -176,6 +176,7 @@
         display: flex;
         justify-content: end;
         align-items: center;
+        flex-wrap: wrap;
     }
 }
 @media screen and (max-width: 782px) {
