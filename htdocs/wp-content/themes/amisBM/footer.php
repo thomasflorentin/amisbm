@@ -21,11 +21,9 @@
         </div>
 
         <div class="footer_rightCol">
-            <span> <strong>Les Amis de Bourron-Marlotte</strong> </span>
-            <span>135 rue du Général de Gaulle 77780, Bourron-Marlotte</span>
-            <span>Tél : 01 64 45 91 44</span>
-            <span>Email : amisdebm@gmail.com</span>
+            <span><?php the_field('infos_footer', 'options'); ?></span>
         </div>
+
     </footer>
         
     <?php wp_footer(); ?>

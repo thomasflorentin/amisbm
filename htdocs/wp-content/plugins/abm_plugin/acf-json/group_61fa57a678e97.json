@@ -6,6 +6,7 @@
             "key": "field_61fa57aaa0c94",
             "label": "Logo du footer",
             "name": "logo_footer",
+            "aria-label": "",
             "type": "image",
             "instructions": "Image du footer",
             "required": 0,
@@ -30,7 +31,8 @@
             "key": "field_61fa57d0f3c45",
             "label": "Coordonnée & Adresse",
             "name": "infos_footer",
-            "type": "textarea",
+            "aria-label": "",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -39,11 +41,11 @@
                 "class": "",
                 "id": ""
             },
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
             "default_value": "",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": "",
-            "new_lines": "wpautop"
+            "delay": 0
         }
     ],
     "location": [
@@ -64,5 +66,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1671444744
+    "modified": 1676275296
 }
