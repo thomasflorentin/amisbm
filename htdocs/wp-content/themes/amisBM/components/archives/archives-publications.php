@@ -3,8 +3,10 @@
     <?php 
 
     $args = array( 
-        'post_type' => 'publication',
-        'posts_per_page' => 12,
+        'post_type'         => 'publication',
+        'posts_per_page'    => 12,
+        'orderby'           => 'date',
+        'order'             => 'DESC'
     );
 
     $args['paged'] = get_query_var( 'paged' ) 
