@@ -729,7 +729,6 @@ ul.sub-menu {
   min-width: 200px;
   transition: all 0.3s;
   min-width: 275px;
-  margin-top: 8px;
 }
 ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 0.35rem;
