@@ -141,7 +141,7 @@ document.addEventListener('wheel', findScrollDirectionOtherBrowsers);
 
 function findScrollDirectionOtherBrowsers(event){
     const headerSearch = document.querySelector('.header_searchForm')        
-    const logo = document.querySelector('.custom-logo')        
+    //const logo = document.querySelector('.custom-logo')        
     let delta;
     if (event.wheelDelta){
     	delta = event.wheelDelta;
@@ -152,12 +152,12 @@ function findScrollDirectionOtherBrowsers(event){
         // console.log("down");
         headerSearch.style.maxHeight = "0"
         headerSearch.style.opacity = "0"
-        logo.style.height = "40px"
+        //logo.style.height = "40px"
     }else if (delta > 0){
         // console.log("up");
         headerSearch.style.maxHeight = "50px"
         headerSearch.style.opacity = "1"
-        logo.style.height = "75px"
+        //logo.style.height = "75px"
     }
 }
 
