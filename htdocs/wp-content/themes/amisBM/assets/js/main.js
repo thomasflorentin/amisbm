@@ -28,7 +28,7 @@ function init() {
                 const query_data = new FormData();
                 const term = this.getAttribute('data-term');
                 const termID = this.getAttribute('data-termID');
-                const step = 12;
+                const step = grid.getAttribute('data-step');
 
                 console.log('term: ', term);
 
