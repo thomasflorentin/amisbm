@@ -1,13 +1,13 @@
     <footer class="footer">
         <div class="footer_leftCol">
             <div class="footer_supporters">
-                <img style="padding: 10px" src="<?php echo get_template_directory_uri() . "/assets/images/logo_ABM.png"; ?>" alt="Logo du département de Seine-et-Marne">
+                <img style="padding: 10px" src="<?php echo get_template_directory_uri() . "/assets/images/Logo_ABM.png"; ?>" alt="Logo du département de Seine-et-Marne">
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_BM.png"; ?>" alt="Logo de la mairie de Bourron-Marlotte">
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_77.png"; ?>" alt="Logo du département de Seine-et-Marne">
             </div>
 
             <div class="footer_newsletterWrapper">
-                <span>Suivez nos actualités en vous abonnant à notre newsletter !</span>
+                <span>Recevez nos informations en indiquant votre adresse électronique !</span>
 
                 <form action="" class="footer_newsletterForm">
                     <input type="email" name="" id="" placeholder="Entrez votre adresse mail">
