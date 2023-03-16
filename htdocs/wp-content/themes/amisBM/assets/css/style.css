@@ -904,6 +904,14 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 5px;
 }
 
+.block_overlay ul {
+  padding-left: 15px;
+}
+
+.block_overlay h4 {
+  margin-top: 0;
+}
+
 
 /* Monthly Subject Section */
 .home_sujetDuMois {

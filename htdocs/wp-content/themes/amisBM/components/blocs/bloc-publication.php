@@ -30,6 +30,7 @@
 
 
         <div class="block_overlay">
+            <h4>Sommaire</h4>
             <?php the_content(); ?>
         </div>
 
