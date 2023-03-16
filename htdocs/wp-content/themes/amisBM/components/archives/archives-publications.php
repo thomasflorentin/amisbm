@@ -2,9 +2,11 @@
     
     <?php 
 
+    $step = 20;
+
     $args = array( 
         'post_type'         => 'publication',
-        'posts_per_page'    => 12,
+        'posts_per_page'    => $step,
         'orderby'           => 'date',
         'order'             => 'DESC'
     );
@@ -17,7 +19,7 @@
         $args
     );
 
-    echo '<div id="publications_posts" class="publications_itemWrapper row">';
+    echo '<div id="publications_posts" class="publications_itemWrapper row" data-step="' . $step . '">';
         set_query_var('the_query', $the_query);
         get_template_part('components/loops/loop', 'publications');
     echo '</div>';

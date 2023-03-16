@@ -28,7 +28,7 @@ function init() {
                 const query_data = new FormData();
                 const term = this.getAttribute('data-term');
                 const termID = this.getAttribute('data-termID');
-                const step = grid.getAttribute('data-step');
+                const step = parseInt(grid.getAttribute('data-step'));
 
                 console.log('term: ', term);
 
@@ -37,6 +37,7 @@ function init() {
                 query_data.append( 'term', term);
                 query_data.append( 'termID', termID);
                 query_data.append( 'offset', 0);
+                query_data.append( 'step', step);
 
                 console.log('data: ', query_data);
 
@@ -67,6 +68,9 @@ function init() {
                         let current_offset = parseInt(query_data.get('offset'));
                         let new_offset = parseInt(current_offset + step)
                         query_data.set('offset', new_offset);
+
+                        console.log('data: ', query_data);
+
 
                         fetch(ajax_var.ajax_url, {
                                 method: "POST",
@@ -110,9 +114,10 @@ function init() {
      * Slide on fade
      */
     const slides = document.querySelectorAll(".slide");
-    const timer = document.querySelector('.home_hero').dataset.timer;
-    console.log(timer);
-    if(slides.length !== 0 ) {
+    const timer_el = document.querySelector('.home_hero');
+
+    if( slides.length !== 0 && timer_el !== null ) {
+        const timer = timer_el.dataset.timer;
         let current = 0;
 
         setInterval(function() {

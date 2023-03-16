@@ -99,10 +99,11 @@ add_action( 'admin_enqueue_scripts', 'wptutsplus_admin_styles' );
         $term = $_POST['term'];
         $termID = $_POST['termID'];
         $offset = $_POST['offset'];
+        $step = $_POST['step'];
 
         $args = array( 
             'post_type'         => 'publication',
-            'posts_per_page'    => $offset,
+            'posts_per_page'    => $step,
             'offset'            => $offset
         );
 
