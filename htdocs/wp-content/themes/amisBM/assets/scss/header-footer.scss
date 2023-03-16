@@ -130,7 +130,8 @@ ul.sub-menu {
 // FOOTER
 .footer {
     padding-top: 150px;
-    padding-inline: clamp(1em, 10%, 200px);
+    padding-right: clamp(1em, 10%, 200px);
+    padding-left: clamp(1em, 10%, 200px);
     padding-bottom: 100px;
 
     display: flex;

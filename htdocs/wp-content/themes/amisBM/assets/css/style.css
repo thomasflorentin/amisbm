@@ -310,7 +310,8 @@ a.mainBtn, a.mainBtn--darkBgd {
   height: 50vh;
 }
 .post_hero .hero--content {
-  padding-inline: 12.5%;
+  padding-right: 12.5%;
+  padding-left: 12.5%;
 }
 .post_hero .hero_title {
   font-size: 3.5em;
@@ -777,7 +778,8 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .footer {
   padding-top: 150px;
-  padding-inline: clamp(1em, 10%, 200px);
+  padding-right: clamp(1em, 10%, 200px);
+  padding-left: clamp(1em, 10%, 200px);
   padding-bottom: 100px;
   display: flex;
   justify-content: space-between;
@@ -1247,11 +1249,13 @@ ul.sub-menu .menu-item:not(:last-child) {
   }
 
   .hero--content {
-    padding-inline: 2em;
+    padding-right: 2em;
+    padding-left: 2em;
   }
 
   .post_hero .hero--content {
-    padding-inline: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .sujetDuMois_txt {
