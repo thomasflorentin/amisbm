@@ -874,7 +874,36 @@ ul.sub-menu .menu-item:not(:last-child) {
   margin-bottom: 2.5%;
   border: 3px solid #BDC8C1;
   min-height: fit-content;
+  position: relative;
 }
+
+.block_post a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.block_post:hover .block_overlay {
+  display: block;
+}
+.block_overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: 20px;
+  background: rgba(255, 255, 255, .5);
+  font-size: .9em;
+  overflow: scroll;
+}
+
+.block_overlay p {
+  margin-bottom: 5px;
+}
+
 
 /* Monthly Subject Section */
 .home_sujetDuMois {

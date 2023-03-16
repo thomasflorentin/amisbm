@@ -1,17 +1,17 @@
-<article class="block_post" id="post-<?php the_ID(); ?>">
+<article class="block_post block-publication" id="post-<?php the_ID(); ?>">
+
     <a href="<?php the_permalink(); ?>">
+
         <div class="publication_thumbnail">
-            <?php
-            if(has_post_thumbnail()):
-                the_post_thumbnail('bloc'); //full, large, medium or custom size
-            endif;
-            ?>
+            <?php if(has_post_thumbnail()):
+                the_post_thumbnail('bloc'); 
+            endif; ?>
         </div>
 
         <div class="post_content">
             <!-- Post Title -->
             <div class="post_title">
-                <?php the_title( '<h3 class="post-title"> <a href="' . esc_url( get_permalink() ) . '" class="post-link">', '</a> </h3>' ); ?>
+                <?php the_title( '<h3 class="post-title" class="post-link">', ' </h3>' ); ?>
             </div>
 
             <!-- Post Meta-Datas -->
@@ -27,5 +27,12 @@
                 ?>
             </div>
         </div>
+
+
+        <div class="block_overlay">
+            <?php the_content(); ?>
+        </div>
+
     </a>
+
 </article>
