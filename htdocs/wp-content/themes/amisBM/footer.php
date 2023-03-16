@@ -5,19 +5,6 @@
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_BM.png"; ?>" alt="Logo de la mairie de Bourron-Marlotte">
                 <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_77.png"; ?>" alt="Logo du département de Seine-et-Marne">
             </div>
-
-            <div class="footer_newsletterWrapper">
-                <span>Recevez nos informations en indiquant votre adresse électronique !</span>
-
-                <form action="" class="footer_newsletterForm">
-                    <input type="email" name="" id="" placeholder="Entrez votre adresse mail">
-
-                    <div class="wrapper--flex">
-                        <div class="separator--vertical"></div>
-                        <input type="submit" value="" style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_send.png"; ?>); margin-left: 0.75em;">
-                    </div>
-                </form>
-            </div>
         </div>
 
         <div class="footer_rightCol">
