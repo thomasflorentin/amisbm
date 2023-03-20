@@ -19,6 +19,7 @@
 }
 .single_excerpt, 
 .single_content > p,
+.single_content > ul,
 .single_content > h2,
 .single_content > h3,
 .single_content > h4 {
@@ -27,6 +28,14 @@
     margin-right: auto;
     margin-bottom: 2rem;
     margin-top: 0;
+}
+.single_content {
+    h2 {
+        font-size: 3rem;
+        line-height: 1;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
 }
 .copy {
     p {

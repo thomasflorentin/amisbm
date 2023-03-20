@@ -1155,6 +1155,7 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .single_excerpt, 
 .single_content > p,
+.single_content > ul,
 .single_content > h2,
 .single_content > h3,
 .single_content > h4 {
@@ -1167,6 +1168,11 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .copy p {
   font-size: 1.8rem;
+}
+.single_content h2 {
+      font-size: 3rem;
+      line-height: 1;
+      margin-top: 4rem;
 }
 .copy figure {
   margin: 2em 0;
