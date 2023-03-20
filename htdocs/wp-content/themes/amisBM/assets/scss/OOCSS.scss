@@ -254,21 +254,21 @@ textarea {
 }
 
 label {
-    text-transform: uppercase;
-    font-size: 14px;
-    color: misc.$light-bg-blue
+    font-size: 1.8rem;
 }
 
 .wpcf7-form {
     width: 700px;
-    margin: auto;
+    margin: 40px auto 80px;
 }
-.wpcf7-form input,
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="password"],
+.wpcf7-form input[type="email"],
 .wpcf7-form textarea {
     width: 100%;
 }
 .wpcf7-form p {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 .wpcf7-form p + ul {
     margin-top: -2rem;
@@ -286,6 +286,12 @@ ul.wpcf7-post_image_checkbox {
 }
 .wpcf7-list-item-content {
     display: none;
+}
+
+.wpcf7-form strong {
+    font-weight: bold;
+    display: inline-block;
+    padding-bottom: 10px;
 }
 
 
