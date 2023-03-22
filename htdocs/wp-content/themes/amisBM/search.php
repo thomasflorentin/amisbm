@@ -28,7 +28,16 @@
             <?php
             while(have_posts()):
                 the_post();
-                get_template_part('components/blocs/bloc', 'post');
+                if( get_post_type() === 'publication' ) {
+                    echo "<div class='s_6col m_3col l_2col'>";
+                    get_template_part('components/blocs/bloc','publication' );
+                    echo "</div>";
+
+                }
+                else {
+                    get_template_part('components/blocs/bloc', 'post');
+
+                }
 
             endwhile;
             ?>

@@ -1173,6 +1173,7 @@ ul.sub-menu .menu-item:not(:last-child) {
       font-size: 3rem;
       line-height: 1;
       margin-top: 4rem;
+      margin-bottom: 4rem;
 }
 .copy figure {
   margin: 2em 0;
