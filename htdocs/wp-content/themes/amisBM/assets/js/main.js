@@ -131,6 +131,30 @@ function init() {
 
 
 
+    $search_term = document.querySelector('.results_searchQuery');
+    if( $search_term !== null ) {
+        const search_term_text = $search_term.textContent;
+
+        let search_results_contents = document.querySelectorAll('.post_content');
+        let search_results_overlays = document.querySelectorAll('.block_overlay');
+
+        let regEx = new RegExp(search_term_text, "ig");
+        let replaceMask = '<span class="searched">' + search_term_text + '</span>';
+
+        for (const content of search_results_contents) {
+            var new_html = content.innerHTML.replace(regEx, replaceMask);
+            content.innerHTML = new_html; 
+            console.log(new_html);
+        }
+
+        for (const content of search_results_overlays) {
+            var new_html = content.innerHTML.replace(regEx, replaceMask);
+            content.innerHTML = new_html; 
+            console.log(new_html);
+        }
+
+
+    }
 
 
 } // end init()

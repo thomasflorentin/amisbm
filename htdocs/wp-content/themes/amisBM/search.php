@@ -22,7 +22,7 @@
 
     <?php if(have_posts()): ?>
     
-        <div class="actus_itemWrapper row">
+        <div class="search_itemWrapper row">
 
 
             <?php

@@ -20,7 +20,9 @@
         grid-column-gap: 20px;
     }
 }
-
+.search_itemWrapper {
+    align-items: flex-start;
+}
 
 .m_last {
     grid-row-end: 6;
