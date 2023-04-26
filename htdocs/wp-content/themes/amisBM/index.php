@@ -8,28 +8,24 @@ get_template_part('components/blocs/bloc', 'hero');
 <main class="main">
 
 	<section class="home_actus section_padding">
-				
-		<div class="actus_itemWrapper row">
-
 
 			<?php
-				if ( have_posts() ) :
+				if ( have_posts() ) : ?>
+					<div class="actus_itemWrapper row" style="margin-bottom: 100px;">
 
-					/* Start the Loop */
-					while ( have_posts() ) :
+					<?php while ( have_posts() ) :
 						the_post();
 
 						get_template_part( 'components/blocs/bloc', get_post_type() );
 
-					endwhile;
+					endwhile; ?>
+					</div>
 
-					the_posts_navigation();
+					<?php the_posts_navigation();
 
 
-				endif;
-				?>
+				endif; ?>
 
-		</div>
 	</section>
 
 </main>
