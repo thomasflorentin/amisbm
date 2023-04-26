@@ -34,6 +34,17 @@ body {
     color: $main_font_black;
 }
 
+a {
+    color: $light-bg-blue;
+
+    &:hover {
+        color: $main_bg_blue;
+    }
+    &:visited {
+        color: $light-bg-blue;
+    }
+}
+
 p {
     margin-top: 0;
 }

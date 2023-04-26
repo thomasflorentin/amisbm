@@ -19,6 +19,16 @@ body {
   color: #363636;
 }
 
+a {
+  color: #698ADE;
+}
+a:hover {
+  color: #4A62A0;
+}
+a:visited {
+  color: #698ADE;
+}
+
 p {
   margin-top: 0;
 }
