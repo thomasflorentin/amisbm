@@ -212,11 +212,11 @@ main.main {
   border: 1px solid white;
 }
 
-.mainBtn:hover, .mainBtn--darkBgd:hover {
+a.mainBtn:hover, a.mainBtn--darkBgd:hover {
   background: none;
   color: #698ADE;
 }
-.mainBtn:visited {
+a.mainBtn:visited, a.mainBtn--darkBgd:visited {
   color: white;
 }
 
