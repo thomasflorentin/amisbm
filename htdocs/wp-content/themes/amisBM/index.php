@@ -7,35 +7,30 @@ get_template_part('components/blocs/bloc', 'hero');
 
 <main class="main">
 
-<section class="home_actus section_padding">
-            
-    <div class="actus_itemWrapper row">
+	<section class="home_actus section_padding">
+				
+		<div class="actus_itemWrapper row">
 
 
-		<?php
-			if ( have_posts() ) :
+			<?php
+				if ( have_posts() ) :
 
-				/* Start the Loop */
-				while ( have_posts() ) :
-					the_post();
+					/* Start the Loop */
+					while ( have_posts() ) :
+						the_post();
 
-					get_template_part( 'components/blocs/bloc', get_post_type() );
+						get_template_part( 'components/blocs/bloc', get_post_type() );
 
-				endwhile;
+					endwhile;
 
-				the_posts_navigation();
-
-
-			endif;
-			?>
-
-    </div>
-</section>
+					the_posts_navigation();
 
 
+				endif;
+				?>
 
-
-
+		</div>
+	</section>
 
 </main>
 

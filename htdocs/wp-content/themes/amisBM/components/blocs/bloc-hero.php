@@ -28,6 +28,8 @@
             if( is_front_page() ) { ?>
                 <h1 class="h1--hero"><?php the_field('page_title'); ?></h1>
                 <p><?php the_field('page_introduction'); ?></p>
+            <?php else if (is_home) { ?>
+                <h1 class="h1--hero">Actualités</h1>
             <?php } else {
                 the_title( '<h1 class="single-title h2--hero">', '</h1>' ); 
             }
