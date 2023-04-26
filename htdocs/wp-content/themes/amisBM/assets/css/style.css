@@ -216,6 +216,9 @@ main.main {
   background: none;
   color: #698ADE;
 }
+.mainBtn:visited {
+  color: white;
+}
 
 a.mainBtn, a.mainBtn--darkBgd {
   display: inline-block;

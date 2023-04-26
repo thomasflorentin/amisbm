@@ -67,6 +67,9 @@ main.main {
     background: none;
     color: misc.$light-bg-blue;
 }
+.mainBtn:visited {
+    color: white;
+}
 a.mainBtn {
     display: inline-block;
 }
