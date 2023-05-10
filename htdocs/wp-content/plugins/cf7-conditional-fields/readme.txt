@@ -5,8 +5,8 @@ Author: Jules Colle
 Website: http://bdwm.be
 Tags: wordpress, contact form 7, forms, conditional fields
 Requires at least: 5.0
-Tested up to: 6.1.1
-Stable tag: 2.3.2
+Tested up to: 6.2
+Stable tag: 2.3.8
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,26 @@ Because the nature of the changes introduced in version 5.7 of Contact Form 7 yo
 Reverted autop-fix because it was causing addional errors. Bottom line: Make sure you are om Conditional Fields version 2.2.11 and CF7 version 5.6.4
 
 == Changelog ==
+
+= 2.3.8 (2023-04-23) =
+* Fully tested with Contact Form 7 version 5.7.6
+
+= 2.3.7 (2023-04-13) =
+* PRO: Fix obscure bug with disable_on_hide. Disabled fields didn't get recognized after calling reset() on the form element or after adding a repeater, causing conditions relying on disabled fields to malfunction.
+
+= 2.3.6 (2023-04-11) =
+* Fully tested with WP version 6.2
+
+= 2.3.5 (2023-03-24) =
+* Fully tested with Contact Form 7 version 5.7.5.1
+* Note: Previously it was possible to add a contact-form shortcode with only the title and not the ID. But since the last update of CF7 this seems to throw an error. Use the official shortcode provided by CF7 to prevent this.
+
+= 2.3.4 (2023-02-19) =
+* Fully tested with Contact Form 7 version 5.7.4
+
+= 2.3.3 (2023-01-26) =
+* PRO: Fix [summary]. CF7 5.7.3 introduced a tag-check function which [summary] did not pass.
+* Fully tested with Contact Form 7 version 5.7.3
 
 = 2.3.2 (2022-12-28) =
 * Fully tested with Contact Form 7 version 5.7.2
