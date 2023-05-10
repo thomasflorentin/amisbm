@@ -32,6 +32,9 @@ body {
     font-size: 16px;
     font-weight: 300;
     color: $main_font_black;
+
+    overflow-y: hidden;
+    max-width: 100vw;
 }
 
 a {
