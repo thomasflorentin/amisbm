@@ -29,7 +29,8 @@ if (!function_exists('ABM_setup')){
 
         // Lets us register menus in the wp back office
         register_nav_menus([
-            'primary' => 'Header nav'
+            'primary' => 'Navigation Principale',
+            'footer' => 'Navigation en pied de page'
         ]);
 
         add_image_size( 'hero', 1500 ); // 1500 pixels wide (and unlimited height)

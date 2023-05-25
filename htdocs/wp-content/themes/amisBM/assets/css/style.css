@@ -806,15 +806,33 @@ ul.sub-menu .menu-item:not(:last-child) {
   padding-top: 150px;
   padding-right: clamp(1em, 10%, 200px);
   padding-left: clamp(1em, 10%, 200px);
-  padding-bottom: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10%;
+  padding-bottom: 50px;
   background-color: #5D5D5D;
   color: white;
   z-index: 1;
   position: relative;
+}
+
+.subfooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10%;
+}
+.underfooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 75px;
+}
+.underfooter .menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.underfooter .menu a {
+  text-decoration: none;
+  color: #C4D4FC
 }
 
 .footer_leftCol {

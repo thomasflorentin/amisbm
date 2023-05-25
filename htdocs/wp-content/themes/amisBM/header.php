@@ -21,8 +21,9 @@
             </div>
 
             <nav data-display="hidden" class="header_nav">
-                <?php wp_nav_menu('Header nav'); ?>
-
+            <?php wp_nav_menu( array(
+            'theme_location' => 'primary',
+            )); ?>
                 <div class="header_nav_close">
                     <button style="background-image: url(<?php echo get_template_directory_uri() . "/assets/images/ico_close.png"; ?>);"></button>
                 </div>
