@@ -157,6 +157,20 @@ function init() {
     }
 
 
+
+        // REPLACE LINKS
+
+        let staginLinks = document.querySelectorAll('a[href*="https://abm.stagingserver.fr"]');
+
+        for( let link of staginLinks ) {
+            // console.log(link);
+            let url = link.getAttribute('href');
+            let updatedUrl = url.replace("https://abm.stagingserver.fr", "https://amisdebourronmarlotte.fr");
+            link.setAttribute('href', updatedUrl);
+        }
+
+
+
 } // end init()
 
 document.addEventListener('DOMContentLoaded', function(e) {
