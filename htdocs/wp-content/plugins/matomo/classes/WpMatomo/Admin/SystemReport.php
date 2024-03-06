@@ -71,33 +71,7 @@ class SystemReport {
 	const TROUBLESHOOT_RUN_UPDATER        = 'matomo_troubleshooting_action_run_updater';
 
 	private $not_compatible_plugins = [
-		'background-manager',
-		// Uses an old version of Twig and plugin is no longer maintained.
-		'all-in-one-event-calendar',
-		// Uses an old version of Twig
-		'tweet-old-post-pro',
-		// uses a newer version of monolog
-		'wp-rss-aggregator',
-		// twig conflict
-		'age-verification-for-woocommerce',
-		// see https://github.com/matomo-org/wp-matomo/issues/428
 		'minify-html-markup',
-		// see https://wordpress.org/support/topic/graphs-are-not-displayed-in-the-visits-overview-widget/#post-14298068
-		'bigbuy-wc-dropshipping-connector',
-		// see https://wordpress.org/support/topic/20-total-errors-during-this-script-execution/
-		'google-listings-and-ads',
-		// see https://wordpress.org/support/topic/20-total-errors-during-this-script-execution/
-		'post-smtp',
-		// see https://wordpress.org/support/topic/activation-of-another-plugin-breaks-matomo/#post-15045079
-		'adshares',
-		// see https://github.com/matomo-org/matomo-for-wordpress/issues/618
-		'bluehost-wordpress-plugin',
-		// see https://wordpress.org/support/topic/archive-error-with-wp-rocket/
-		'wp-rocket',
-		// see https://github.com/matomo-org/matomo-for-wordpress/issues/697
-		'backwpup',
-		// see https://github.com/matomo-org/matomo-for-wordpress/issues/710
-		'fs-poster',
 	];
 
 	private $valid_tabs = [ 'troubleshooting' ];
@@ -120,9 +94,14 @@ class SystemReport {
 	 */
 	public $db_settings;
 	/**
-	 * @var string the php binary used by Matomo
+	 * @var string the php binary used by Matomo (use get_php_binary() to access)
 	 */
 	private $binary;
+
+	/**
+	 * @var string
+	 */
+	private $path_to_plugin;
 
 	private static $matomo_tables;
 
@@ -131,11 +110,7 @@ class SystemReport {
 		$this->logger               = new Logger();
 		$this->db_settings          = new \WpMatomo\Db\Settings();
 		$this->shell_exec_available = function_exists( 'shell_exec' );
-		if ( ! WpMatomo::is_safe_mode() ) {
-			Bootstrap::do_bootstrap();
-			$cli_php      = new CliPhp();
-			$this->binary = $cli_php->findPhpBinary();
-		}
+		$this->path_to_plugin       = $this->get_abs_path_to_plugin();
 	}
 
 	public function get_not_compatible_plugins() {
@@ -187,6 +162,8 @@ class SystemReport {
 						echo '<br/>';
 					}
 					echo '</p></div>';
+				} else {
+					echo '<div class="notice notice-success"><p>' . esc_html__( 'Matomo Archiving completed successfully!', 'matomo' ) . '</p></div>';
 				}
 			}
 
@@ -285,20 +262,31 @@ class SystemReport {
 	}
 
 	public function errors_present() {
-		$matomo_tables = $this->get_error_tables();
+		$cache_key   = 'matomo_system_report_has_errors';
+		$cache_value = get_transient( $cache_key );
 
-		$matomo_tables = apply_filters( 'matomo_systemreport_tables', $matomo_tables );
-		$matomo_tables = $this->add_errors_first( $matomo_tables );
+		if ( false === $cache_value ) {
+			// pre-record that there were no errors found. in case the system report fails to execute, this will
+			// allow the rest of Matomo for WordPress to continue to still be usable.
+			set_transient( $cache_key, 0, WEEK_IN_SECONDS );
 
-		foreach ( $matomo_tables as $report_table ) {
-			foreach ( $report_table['rows'] as $row ) {
-				if ( ! empty( $row['is_error'] ) || ! empty( $row['is_warning'] ) ) {
-					return true;
+			$matomo_tables = $this->get_error_tables();
+
+			$matomo_tables = apply_filters( 'matomo_systemreport_tables', $matomo_tables );
+			$matomo_tables = $this->add_errors_first( $matomo_tables );
+
+			foreach ( $matomo_tables as $report_table ) {
+				foreach ( $report_table['rows'] as $row ) {
+					if ( ! empty( $row['is_error'] ) || ! empty( $row['is_warning'] ) ) {
+						$cache_value = true;
+					}
 				}
 			}
+
+			set_transient( $cache_key, (int) $cache_value, WEEK_IN_SECONDS );
 		}
 
-		return false;
+		return 1 === (int) $cache_value;
 	}
 
 	public function show() {
@@ -398,8 +386,8 @@ class SystemReport {
 		$rows = [];
 
 		if ( $this->shell_exec_available ) {
-			$phpcli_version = $this->get_phpcli_output( '-v | grep built | cut -d " " -f 2' );
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+			$phpcli_version = $this->get_phpcli_output( '-r "echo phpversion();"' );
+            // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 			global $piwik_minimumPHPVersion;
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 			if ( version_compare( $phpcli_version, $piwik_minimumPHPVersion ) <= 0 ) {
@@ -416,16 +404,13 @@ class SystemReport {
 				'is_error' => $is_error,
 			];
 
-			switch ( $this->get_phpcli_output( '-m | grep mysqli' ) ) {
-				case 'mysqli':
-					$is_error = false;
-					$value    = __( 'ok', 'matomo' );
-					$comment  = '';
-					break;
-				default:
-					$value    = __( 'missing', 'matomo' );
-					$is_error = true;
-					$comment  = esc_html__( 'Your PHP cli does not load the MySQLi extension. You might have archiving problems in Matomo but also others problems in your WordPress cron tasks. You should enable this extension', 'matomo' );
+			$is_error = false;
+			$value    = __( 'ok', 'matomo' );
+			$comment  = '';
+			if ( ! intval( $this->get_phpcli_output( '-r "echo extension_loaded(\'mysqli\');"' ) ) ) {
+				$value    = __( 'missing', 'matomo' );
+				$is_error = true;
+				$comment  = esc_html__( 'Your PHP cli does not load the MySQLi extension. You might have archiving problems in Matomo but also others problems in your WordPress cron tasks. You should enable this extension', 'matomo' );
 			}
 
 			$rows[] = [
@@ -434,16 +419,67 @@ class SystemReport {
 				'comment'  => $comment,
 				'is_error' => $is_error,
 			];
+
+			$this->check_wp_can_be_loaded_in_php_cli( $rows );
 		}
 
 		return $rows;
 	}
 
+	private function check_wp_can_be_loaded_in_php_cli( &$rows ) {
+		if ( ! $this->binary ) {
+			return;
+		}
+
+		$wp_load_path = $this->find_wp_load_path();
+		if ( ! $wp_load_path ) {
+			return;
+		}
+
+		try {
+			$cli_multi = new CliMulti();
+
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$supports_async = $cli_multi->supportsAsync;
+		} catch ( \Exception $ex ) {
+			$rows[] = [
+				'name'       => esc_html__( 'PHP CLI configuration', 'matomo' ),
+				'value'      => esc_html__( 'Unexpected error', 'matomo' ),
+				'is_warning' => true,
+				'comment'    => sprintf( esc_html__( 'Could not detect whether async archiving is enabled: %s', 'matomo' ), $ex->getMessage() ),
+			];
+		}
+
+		if ( ! $supports_async ) {
+			return;
+		}
+
+		$command = "-r 'require_once( \"$wp_load_path\" );'";
+		$output  = $this->get_phpcli_output( $command );
+		if ( empty( $output ) ) {
+			$rows[] = [
+				'name'  => esc_html__( 'PHP CLI configuration', 'matomo' ),
+				'value' => esc_html__( 'Configured correctly', 'matomo' ),
+			];
+		} else {
+			$error_message = esc_html__(
+				'WordPress cannot be loaded via PHP CLI. Please ensure both WordPress and PHP CLI are correctly configured. Note: If you are using get_cfg_var() in your wp-config.php, you will need to make sure the php.ini file for PHP CLI has the correct values. You may need to contact your hosting provider for these changes to be made.',
+				'matomo'
+			);
+
+			$rows[] = [
+				'name'    => esc_html__( 'PHP CLI configuration', 'matomo' ),
+				'value'   => esc_html__( 'warning', 'matomo' ),
+				'comment' => $error_message,
+			];
+		}
+	}
+
 	private function get_phpcli_output( $phpcli_params ) {
 		$output = '';
-		if ( $this->shell_exec_available && $this->binary ) {
+		if ( $this->shell_exec_available && $this->get_php_cli_binary() ) {
 			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_shell_exec
-			$output = trim( '' . @shell_exec( $this->binary . ' ' . $phpcli_params ) );
+			$output = trim( '' . @shell_exec( $this->get_php_cli_binary() . ' ' . $phpcli_params ) );
 		}
 
 		return $output;
@@ -516,9 +552,10 @@ class SystemReport {
 				];
 			} catch ( Exception $e ) {
 				$rows[] = [
-					'name'    => esc_html__( 'Matomo System Check', 'matomo' ),
-					'value'   => 'Failed to run Matomo system check.',
-					'comment' => $e->getMessage(),
+					'name'     => esc_html__( 'Matomo System Check', 'matomo' ),
+					'value'    => 'Failed to run Matomo system check.',
+					'comment'  => $e->getMessage(),
+					'is_error' => true,
 				];
 			}
 		}
@@ -663,32 +700,59 @@ class SystemReport {
 			];
 			$rows   = $this->add_diagnostic_results( $rows, $report->getOptionalDiagnosticResults() );
 
-			$cli_multi     = new CliMulti();
-			$suports_async = $cli_multi->supportsAsync();
+			try {
+				$cli_multi     = new CliMulti();
+				$suports_async = $cli_multi->supportsAsync();
+
+				$rows[] = [
+					'name'    => esc_html__( 'Supports Async Archiving', 'matomo' ),
+					'value'   => $suports_async,
+					'comment' => '',
+				];
+			} catch ( \Exception $e ) {
+				$rows[] = [
+					'name'     => esc_html__( 'Supports Async Archiving', 'matomo' ),
+					'value'    => 'Could not check if async archiving is supported.',
+					'comment'  => $e->getMessage(),
+					'is_error' => true,
+				];
+			}
 
 			$rows[] = [
-				'name'    => 'Supports Async Archiving',
-				'value'   => $suports_async,
+				'name'    => 'Async Archiving Disabled in Setting',
+				'value'   => $this->settings->is_async_archiving_disabled_by_option(),
 				'comment' => '',
 			];
 
 			$location_provider = LocationProvider::getCurrentProvider();
 			if ( $location_provider ) {
-				$rows[] = [
-					'name'    => 'Location provider ID',
-					'value'   => $location_provider->getId(),
-					'comment' => '',
-				];
-				$rows[] = [
-					'name'    => 'Location provider available',
-					'value'   => $location_provider->isAvailable(),
-					'comment' => '',
-				];
-				$rows[] = [
-					'name'    => 'Location provider working',
-					'value'   => $location_provider->isWorking(),
-					'comment' => '',
-				];
+				try {
+					$location_provider = LocationProvider::getCurrentProvider();
+					if ( $location_provider ) {
+						$rows[] = [
+							'name'    => 'Location provider ID',
+							'value'   => $location_provider->getId(),
+							'comment' => '',
+						];
+						$rows[] = [
+							'name'    => 'Location provider available',
+							'value'   => $location_provider->isAvailable(),
+							'comment' => '',
+						];
+						$rows[] = [
+							'name'    => 'Location provider working',
+							'value'   => $location_provider->isWorking(),
+							'comment' => '',
+						];
+					}
+				} catch ( \Exception $e ) {
+					$rows[] = [
+						'name'     => 'Location provider ID',
+						'value'    => 'Failed to get the configured Location Provider.',
+						'comment'  => $e->getMessage(),
+						'is_error' => true,
+					];
+				}
 			}
 
 			if ( ! WpMatomo::is_safe_mode() ) {
@@ -707,19 +771,32 @@ class SystemReport {
 						}
 					}
 				}
-				$incompatible_plugins = Plugin\Manager::getInstance()->getIncompatiblePlugins( Version::VERSION );
-				if ( ! empty( $incompatible_plugins ) ) {
+
+				try {
+					$incompatible_plugins = Plugin\Manager::getInstance()->getIncompatiblePlugins( Version::VERSION );
+					if ( ! empty( $incompatible_plugins ) ) {
+						$rows[] = [
+							'section' => esc_html__( 'Incompatible Matomo plugins', 'matomo' ),
+						];
+						foreach ( $incompatible_plugins as $plugin ) {
+							$rows[] = [
+								'name'     => 'Plugin has missing dependencies',
+								'value'    => $plugin->getPluginName(),
+								'is_error' => true,
+								'comment'  => sprintf( esc_html__( '%s If the plugin requires a different Matomo version you may need to update it. If you no longer use it consider uninstalling it.', 'matomo' ), $plugin->getMissingDependenciesAsString( Version::VERSION ) ),
+							];
+						}
+					}
+				} catch ( \Exception $e ) {
 					$rows[] = [
 						'section' => esc_html__( 'Incompatible Matomo plugins', 'matomo' ),
 					];
-					foreach ( $incompatible_plugins as $plugin ) {
-						$rows[] = [
-							'name'     => 'Plugin has missing dependencies',
-							'value'    => $plugin->getPluginName(),
-							'is_error' => true,
-							'comment'  => sprintf( esc_html__( '%s If the plugin requires a different Matomo version you may need to update it. If you no longer use it consider uninstalling it.', 'matomo' ), $plugin->getMissingDependenciesAsString( Version::VERSION ) ),
-						];
-					}
+					$rows[] = [
+						'name'     => 'Incompatible Matomo plugin check',
+						'value'    => 'Failed to check for incompatible Matomo plugins.',
+						'is_error' => true,
+						'comment'  => $e->getMessage(),
+					];
 				}
 			}
 
@@ -743,12 +820,44 @@ class SystemReport {
 
 			if ( ! WpMatomo::is_safe_mode() ) {
 				Bootstrap::do_bootstrap();
-				$matomo_url = SettingsPiwik::getPiwikUrl();
-				$rows[]     = [
-					'name'    => 'Matomo URL',
-					'comment' => $matomo_url,
-					'value'   => ! empty( $matomo_url ),
-				];
+
+				try {
+					$matomo_url = SettingsPiwik::getPiwikUrl();
+					$rows[]     = [
+						'name'    => 'Matomo URL',
+						'comment' => $matomo_url,
+						'value'   => ! empty( $matomo_url ),
+					];
+				} catch ( \Exception $e ) {
+					$rows[] = [
+						'name'     => 'Matomo URL',
+						'comment'  => $e->getMessage(),
+						'value'    => 'Failed to fetch the Matomo URL.',
+						'is_error' => true,
+					];
+				}
+			}
+
+			// check that yml files are not accessible
+			$url    = plugins_url( 'app', MATOMO_ANALYTICS_FILE ) . '/vendor/matomo/device-detector/regexes/bots.yml';
+			$result = wp_remote_post(
+				$url,
+				array(
+					'method'    => 'GET',
+					'sslverify' => false,
+					'timeout'   => 2,
+				)
+			);
+			if ( is_array( $result ) ) {
+				$response_code = (int) $result['response']['code'];
+				if ( $response_code >= 200 && $response_code < 300 ) {
+					$rows[] = [
+						'name'       => __( 'YML files should not be accessible', 'matomo' ),
+						'value'      => 'warning',
+						'comment'    => __( 'The .yml files in the wp-content/plugins/matomo/app/vendor directory are accessible from the internet. This can cause some web security tools to flag your website as suspicious. If you are using Apache, it is probably due to your server configuration disabling the use of .htaccess files. If you are instead using nginx, it is due to your nginx configuration allowing .yml files. You may need to contact your hosting provider to fix this.', 'matomo' ),
+						'is_warning' => true,
+					];
+				}
 			}
 		}
 
@@ -759,6 +868,7 @@ class SystemReport {
 		// always show these settings
 		$global_settings_always_show = [
 			'track_mode',
+			'track_ecommerce',
 			'track_codeposition',
 			'track_api_endpoint',
 			'track_js_endpoint',
@@ -940,8 +1050,12 @@ class SystemReport {
 		}
 
 		if ( $print_diff && class_exists( '\Piwik\Metrics\Formatter' ) ) {
-			$formatter = new \Piwik\Metrics\Formatter();
-			$date     .= ' (' . $formatter->getPrettyTimeFromSeconds( $time - time(), true, false ) . ')';
+			try {
+				$formatter = new \Piwik\Metrics\Formatter();
+				$date     .= ' (' . $formatter->getPrettyTimeFromSeconds( $time - time(), true, false ) . ')';
+			} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+				// empty
+			}
 		}
 
 		return $date;
@@ -983,19 +1097,16 @@ class SystemReport {
 	}
 
 	private function get_wordpress_info() {
-		$is_multi_site          = is_multisite();
-		$num_blogs              = 1;
-		$is_network_enabled     = false;
-		$matomo_id_sites_number = 1;
+		$is_multi_site      = is_multisite();
+		$num_blogs          = 1;
+		$is_network_enabled = false;
+
 		if ( $is_multi_site ) {
 			if ( function_exists( 'get_blog_count' ) ) {
 				$num_blogs = get_blog_count();
 			}
 			$settings           = new Settings();
 			$is_network_enabled = $settings->is_network_enabled();
-		} else {
-			$sites_manager_model    = new Model();
-			$matomo_id_sites_number = count( $sites_manager_model->getSitesId() );
 		}
 
 		$rows   = [];
@@ -1045,7 +1156,6 @@ class SystemReport {
 			'WP_CRON_LOCK_TIMEOUT',
 			'WP_DISABLE_FATAL_ERROR_HANDLER',
 			'MATOMO_SUPPORT_ASYNC_ARCHIVING',
-			'MATOMO_TRIGGER_BROWSER_ARCHIVING',
 			'MATOMO_ENABLE_TAG_MANAGER',
 			'MATOMO_SUPPRESS_DB_ERRORS',
 			'MATOMO_ENABLE_AUTO_UPGRADE',
@@ -1096,10 +1206,10 @@ class SystemReport {
 
 		if ( is_plugin_active( 'wp-piwik/wp-piwik.php' ) ) {
 			$rows[] = [
-				'name'       => 'WP-Matomo (WP-Piwik) activated',
+				'name'       => 'Connect Matomo (WP-Matomo) activated',
 				'value'      => true,
 				'is_warning' => true,
-				'comment'    => sprintf( esc_html__( 'It is usually not recommended or needed to run Matomo for WordPress and WP-Matomo at the same time. To learn more about the differences between the two plugins view this %s', 'matomo' ), sprintf( '<a href="%s" target="_blank">%s</a>', 'https://matomo.org/faq/wordpress/why-are-there-two-different-matomo-for-wordpress-plugins-what-is-the-difference-to-wp-matomo-integration-plugin/', esc_html__( 'URL', 'matomo' ) ) ),
+				'comment'    => sprintf( esc_html__( 'It is usually not recommended or needed to run Matomo for WordPress and Connect Matomo at the same time. To learn more about the differences between the two plugins view this %s', 'matomo' ), sprintf( '<a href="%s" target="_blank">%s</a>', 'https://matomo.org/faq/wordpress/why-are-there-two-different-matomo-for-wordpress-plugins-what-is-the-difference-to-wp-matomo-integration-plugin/', esc_html__( 'URL', 'matomo' ) ) ),
 			];
 
 			$mode = get_option( 'wp-piwik_global-piwik_mode' );
@@ -1108,10 +1218,10 @@ class SystemReport {
 			}
 			if ( ! empty( $mode ) ) {
 				$rows[] = [
-					'name'       => 'WP-Matomo mode',
+					'name'       => 'Connect Matomo mode',
 					'value'      => $mode,
 					'is_warning' => 'php' === $mode || 'PHP' === $mode,
-					'comment'    => esc_html__( 'WP-Matomo is configured in "PHP mode". This is known to cause issues with Matomo for WordPress. We recommend you either deactivate WP-Matomo or you go "Settings => WP-Matomo" and change the "Matomo Mode" in the "Connect to Matomo" section to "Self-hosted HTTP API".', 'matomo' ),
+					'comment'    => esc_html__( 'Connect Matomo is configured in "PHP mode". This is known to cause issues with Matomo for WordPress. We recommend you either deactivate Connect Matomo or you go "Settings => Connect Matomo" and change the "Matomo Mode" in the "Connect to Matomo" section to "Self-hosted HTTP API".', 'matomo' ),
 				];
 			}
 		}
@@ -1130,6 +1240,19 @@ class SystemReport {
 				'comment'    => esc_html__( 'It looks like you are maybe using a custom WordPress content directory. The Matomo reporting/admin pages might not work. You may be able to workaround this.', 'matomo' ) . ' ' . sprintf( '<a href="%s" target="_blank">%s</a>', 'https://matomo.org/faq/wordpress/how-do-i-make-matomo-for-wordpress-work-when-i-have-a-custom-content-directory/', esc_html__( 'Learn more', 'matomo' ) ),
 			];
 		}
+
+		$paths = new Paths();
+		$paths->get_file_system();
+
+		$filesystem_init_succeeded = $paths->get_host_init_filesystem_succeeded();
+		$rows[]                    = [
+			'name'       => 'WP_Filesystem Initialized',
+			'value'      => $filesystem_init_succeeded,
+			'is_warning' => ! $filesystem_init_succeeded,
+			'comment'    => $filesystem_init_succeeded
+				? null
+				: esc_html__( 'The WordPress Filesystem abstraction was not initialized correctly (WP_Filesystem() returned false). This indicates a WordPress or server configuration issue which may cause problems in Matomo and other plugins. To resolve it, contact your hosting provider.', 'matomo' ),
+		];
 
 		return $rows;
 	}
@@ -1161,7 +1284,7 @@ class SystemReport {
 					array(
 						'method'    => 'GET',
 						'sslverify' => false,
-						'timeout'   => 2,
+						'timeout'   => defined( 'MATOMO_LOCAL_ENVIRONMENT' ) && MATOMO_LOCAL_ENVIRONMENT ? 5 : 2,
 					)
 				);
 				if ( is_array( $result ) ) {
@@ -1220,10 +1343,10 @@ class SystemReport {
 			'value' => $this->initial_error_reporting . ' After bootstrap: ' . @error_reporting(),
 		];
 
-		if ( ! empty( $this->binary ) ) {
+		if ( ! empty( $this->get_php_cli_binary() ) ) {
 			$rows[] = [
 				'name'  => 'PHP Found Binary',
-				'value' => $this->binary,
+				'value' => $this->get_php_cli_binary(),
 			];
 		}
 		$rows[] = [
@@ -1360,7 +1483,12 @@ class SystemReport {
 					}
 				}
 			} catch ( Exception $e ) {
-				$this->logger->log( $e->getMessage() );
+				$rows[] = [
+					'name'     => 'Browser Compatibility',
+					'is_error' => true,
+					'value'    => 'Failed to use Device Detector.',
+					'comment'  => $e->getMessage(),
+				];
 			}
 
 			$rows[] = [
@@ -1634,11 +1762,13 @@ class SystemReport {
 	private function get_actives_plugins() {
 		$active_plugins = get_option( 'active_plugins', [] );
 		if ( ! empty( $active_plugins ) && is_array( $active_plugins ) ) {
+			$plugins        = get_plugins();
 			$active_plugins = array_map(
-				function ( $active_plugin ) {
-					$parts = explode( '/', trim( $active_plugin ) );
-
-					return trim( $parts[0] );
+				function ( $active_plugin ) use ( $plugins ) {
+					$plugin_version = isset( $plugins[ $active_plugin ]['Version'] ) ? $plugins[ $active_plugin ]['Version'] : null;
+					$result_suffix  = $plugin_version ? ( ':' . $plugin_version ) : '';
+					$parts          = explode( '/', trim( $active_plugin ) );
+					return trim( $parts[0] ) . $result_suffix;
 				},
 				$active_plugins
 			);
@@ -1675,11 +1805,17 @@ class SystemReport {
 
 		$plugins = get_plugins();
 
-		foreach ( $plugins as $plugin ) {
+		foreach ( $plugins as $plugin_file => $plugin ) {
 			$comment = '';
 			if ( ! empty( $plugin['Network'] ) ) {
 				$comment = esc_html__( 'Network enabled', 'matomo' );
 			}
+
+			if ( strpos( $plugin_file, 'ninjafirewall/' ) === 0 ) {
+				$comment .= '<br/><br/>' . esc_html__( 'We noticed you are using Matomo with Ninja Firewall. This can result in Matomo cache file changes showing up in Ninja Firewall which likely undesired.', 'matomo' ) . '
+	<a href="https://matomo.org/faq/wordpress/how-do-i-prevent-matomo-cache-file-changes-to-show-up-in-ninja-firewall/" rel="noreferrer noopener" target="_blank">' . esc_html__( 'Read our FAQ to learn how to prevent these entries.', 'matomo' ) . '</a>';
+			}
+
 			$rows[] = [
 				'name'    => $plugin['Name'],
 				'value'   => $plugin['Version'],
@@ -1687,49 +1823,33 @@ class SystemReport {
 			];
 		}
 
-		$active_plugins = $this->get_actives_plugins();
+		$active_plugins_with_version = $this->get_actives_plugins();
 
-		if ( ! empty( $active_plugins ) && is_array( $active_plugins ) ) {
+		if ( ! empty( $active_plugins_with_version ) && is_array( $active_plugins_with_version ) ) {
 			$rows[] = [
 				'name'    => 'Active Plugins',
-				'value'   => count( $active_plugins ),
-				'comment' => implode( ' ', $active_plugins ),
+				'value'   => count( $active_plugins_with_version ),
+				'comment' => implode( ' ', $active_plugins_with_version ),
 			];
 
-			$used_not_compatible = array_intersect( $active_plugins, $this->not_compatible_plugins );
-			if ( in_array( 'wp-rocket', $used_not_compatible, true ) ) {
-				if ( defined( 'WP_ROCKET_VERSION' ) && ( version_compare( WP_ROCKET_VERSION, '3.11.5' ) <= 0 ) ) {
-					unset( $used_not_compatible[ array_search( 'wp-rocket', $used_not_compatible, true ) ] );
-				}
-			}
+			$active_plugins = array_map(
+				function ( $plugin_with_version ) {
+					$parts = explode( ':', $plugin_with_version );
+					return $parts[0];
+				},
+				$active_plugins_with_version
+			);
 
+			$used_not_compatible = array_intersect( $active_plugins, $this->not_compatible_plugins );
 			if ( ! empty( $used_not_compatible ) ) {
 				$additional_comment = '';
-				if ( in_array( 'tweet-old-post-pro', $used_not_compatible, true ) ) {
-					$additional_comment .= '<br><br>' . esc_html__( 'A workaround for Revive Old Posts Pro may be to add the following line to your "wp-config.php"', 'matomo' ) . '<br><code>define( \'MATOMO_SUPPORT_ASYNC_ARCHIVING\', false );</code>.';
-				}
-				if ( in_array( 'post-smtp', $used_not_compatible, true ) ) {
-					$additional_comment .= '<br><br>' . esc_html__( 'The PDF report files from the email reports will be missing when the PostSMTP mode is selected but it works when the PHPMailer mode is selected.', 'matomo' );
-				}
-				if ( in_array( 'wp-rocket', $used_not_compatible, true ) ) {
-					$additional_comment .= '<br><br>' . sprintf( esc_html__( 'WP-Rocket is incompatible from version 3.12. Until fixes, please reinstall version 3.11.5 if you have a newer version. For more information please visit %s', 'matomo' ), sprintf( '<a href="%s" target="_blank">%s</a>', 'https://github.com/matomo-org/matomo-for-wordpress/wiki/Downgrade-wp-rocket-to-a-version-compatible-with-the-Matomo-plugin', esc_html__( 'How to downgrade Wp-rocket to be compatible with Matomo', 'matomo' ) ) );
-				}
-				$is_warning = false;
-				$is_error   = false;
 				if ( count( $used_not_compatible ) ) {
-					$is_warning = true;
-					$is_error   = false;
-					if ( in_array( 'cookiebot', $used_not_compatible, true ) ) {
-						$is_warning = false;
-						$is_error   = true;
-					}
-
 					$rows[] = [
 						'name'       => __( 'Not compatible plugins', 'matomo' ),
 						'value'      => count( $used_not_compatible ),
 						'comment'    => implode( ', ', $used_not_compatible ) . '<br><br>' . sprintf( esc_html__( 'Matomo may work fine when using these plugins but there may be some issues. For more information %1$sSee %2$s', 'matomo' ), '<br/>', sprintf( '<a href="%s" target="_blank">%s</a>', 'https://matomo.org/faq/wordpress/which-plugins-is-matomo-for-wordpress-known-to-be-not-compatible-with/', esc_html__( 'this FAQ', 'matomo' ) ) ) . $additional_comment,
-						'is_warning' => $is_warning,
-						'is_error'   => $is_error,
+						'is_warning' => true,
+						'is_error'   => false,
 					];
 				}
 			}
@@ -1830,5 +1950,40 @@ class SystemReport {
 		}
 
 		return $content;
+	}
+
+	private function get_abs_path_to_plugin() {
+		if ( is_dir( ABSPATH . '/wp-content/plugins/matomo' ) ) {
+			return ABSPATH . '/wp-content/plugins/matomo';
+		} elseif ( is_dir( ABSPATH . '/wp-content/mu-plugins/matomo' ) ) {
+			return ABSPATH . '/wp-content/mu-plugins/matomo';
+		} else {
+			return __DIR__ . '/../../..';
+		}
+	}
+
+	private function find_wp_load_path() {
+		$abs_path   = rtrim( ABSPATH, '/' );
+		$search_dir = $this->get_abs_path_to_plugin();
+
+		while ( ! is_file( $search_dir . '/wp-load.php' ) && strpos( $search_dir, $abs_path ) === 0 ) {
+			$search_dir = dirname( $search_dir );
+		}
+
+		if ( strpos( $search_dir, $abs_path ) !== 0 ) {
+			return null;
+		}
+
+		return $search_dir . '/wp-load.php';
+	}
+
+	private function get_php_cli_binary() {
+		if ( ! $this->binary && ! WpMatomo::is_safe_mode() ) {
+			Bootstrap::do_bootstrap();
+			$cli_php      = new CliPhp();
+			$this->binary = $cli_php->findPhpBinary();
+		}
+
+		return $this->binary;
 	}
 }

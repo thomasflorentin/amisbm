@@ -24,10 +24,6 @@ class Woocommerce extends Base {
 	private $order_status_ignore = MATOMO_WOOCOMMERCE_IGNORED_ORDER_STATUS;
 
 	public function register_hooks() {
-		if ( is_admin() ) {
-			return;
-		}
-
 		parent::register_hooks();
 
 		add_action( 'wp_head', [ $this, 'maybe_track_order_complete' ], 99999 );
@@ -37,6 +33,7 @@ class Woocommerce extends Base {
 		add_action( 'woocommerce_cart_item_restored', [ $this, 'on_cart_updated_safe' ], 99999, 0 );
 		add_action( 'woocommerce_cart_item_set_quantity', [ $this, 'on_cart_updated_safe' ], 99999, 0 );
 		add_action( 'woocommerce_thankyou', [ $this, 'anonymise_orderid_in_url' ], 1, 1 );
+		add_action( 'woocommerce_order_status_changed', [ $this, 'on_order_status_change' ], 10, 3 );
 
 		if ( ! $this->should_track_background() ) {
 			// prevent possibly executing same event twice where eg first a PHP Matomo tracker request is created
@@ -58,15 +55,33 @@ class Woocommerce extends Base {
 		add_action( 'woocommerce_removed_coupon', [ $this, 'on_coupon_updated_safe' ], 99999, 0 );
 	}
 
+	public function on_order_status_change( $order_id, $old_status, $new_status ) {
+		$order = wc_get_order( $order_id );
+		if ( empty( $order ) ) {
+			return;
+		}
+
+		if ( $this->isOrderFromBackOffice( $order ) ) {
+			return;
+		}
+
+		if ( 'pending' === $old_status && 'processing' === $new_status ) {
+			$this->logger->log( sprintf( 'Order ID = %s status changed from pending to processing, attempting to track it', $order_id ) );
+
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->on_order( $order_id );
+		}
+	}
+
 	public function anonymise_orderid_in_url( $order_id ) {
 		if ( ! empty( $order_id ) && is_numeric( $order_id ) ) {
 			$order_id = (int) $order_id;
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo "<script>(function () {
-	if (location.href) { 
+	if (location.href) {
 		window._paq = window._paq || [];
 	    var url = location.href;
-		if (url.indexOf('?') > 0) { 
+		if (url.indexOf('?') > 0) {
 		    url = url.substr(0, url.indexOf('?')); // remove order key
 		}
 		window._paq.push(['setCustomUrl', url.replace('$order_id', 'orderid_anonymised')]);
@@ -180,7 +195,18 @@ class Woocommerce extends Base {
 	}
 
 	public function on_order( $order_id ) {
-		if ( $this->has_order_been_tracked_already( $order_id ) ) {
+		$order = wc_get_order( $order_id );
+		// @see https://github.com/matomo-org/matomo-for-wordpress/issues/514
+		if ( ! $order ) {
+			return;
+		}
+
+		if ( $this->isOrderFromBackOffice( $order ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		if ( $this->get_order_meta( $order, $this->key_order_tracked ) == 1 ) {
 			$this->logger->log( sprintf( 'Ignoring already tracked order %d', $order_id ) );
 
 			return '';
@@ -188,11 +214,6 @@ class Woocommerce extends Base {
 
 		$this->logger->log( sprintf( 'Matomo new order %d', $order_id ) );
 
-		$order = wc_get_order( $order_id );
-		// @see https://github.com/matomo-org/matomo-for-wordpress/issues/514
-		if ( ! $order ) {
-			return;
-		}
 		$order_id_to_track = $order_id;
 		if ( method_exists( $order, 'get_order_number' ) ) {
 			$order_id_to_track = $order->get_order_number();
@@ -244,7 +265,12 @@ class Woocommerce extends Base {
 
 		$this->logger->log( sprintf( 'Tracked ecommerce order %s with number %s', $order_id, $order_id_to_track ) );
 
-		$this->set_order_been_tracked( $order_id );
+		$this->save_order_metadata(
+			$order,
+			[
+				$this->key_order_tracked => 1,
+			]
+		);
 
 		return $this->wrap_script( $tracking_code );
 	}
@@ -283,8 +309,8 @@ class Woocommerce extends Base {
 	}
 
 	/**
-	 * @param WC_Order $order
-	 * @param $item
+	 * @param WC_Order       $order
+	 * @param \WC_Order_Item $item
 	 *
 	 * @return mixed
 	 */
@@ -378,5 +404,57 @@ class Woocommerce extends Base {
 		// we're not using wc_enqueue_js eg to prevent sometimes this code from being minified on some JS minifier plugins
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->wrap_script( $this->make_matomo_js_tracker_call( $params ) );
+	}
+
+	/**
+	 * @param \WC_Order|\WC_Order_Refund $order
+	 * @return bool
+	 */
+	private function isOrderFromBackOffice( $order ) {
+		// for recent versions of woocommerce (4.0+) use is_created_via(), otherwise default to is_admin() (which will provide false positives
+		// when using a theme that uses admin-ajax.php to add orders)
+		return method_exists( $order, 'is_created_via' ) ? $order->is_created_via( 'admin' ) : is_admin();
+	}
+
+	protected function has_order_been_tracked_already( $order_id ) {
+		throw new \Exception( 'has_order_been_tracked_already() should not be used in Woocommerce, use wc_get_order()->get_meta() instead' );
+	}
+
+	protected function set_order_been_tracked( $order_id ) {
+		throw new \Exception( 'set_order_been_tracked() should not be used in Woocommerce, use wc_get_order()->update_meta_data() instead' );
+	}
+
+	/**
+	 * @param \WC_Order $order
+	 * @param string    $name
+	 * @return mixed
+	 */
+	private function get_order_meta( $order, $name ) {
+		if ( method_exists( $order, 'get_meta' ) ) {
+			return $order->get_meta( $name );
+		} else {
+			$id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+			return get_post_meta( $id, $name, true );
+		}
+	}
+
+	/**
+	 * @param \WC_Order $order
+	 * @param array     $metadata
+	 * @return void
+	 */
+	private function save_order_metadata( $order, $metadata ) {
+		foreach ( $metadata as $name => $value ) {
+			if ( method_exists( $order, 'update_meta_data' ) ) {
+				$order->update_meta_data( $name, $value );
+			} else {
+				$id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+				update_post_meta( $id, $name, $value );
+			}
+		}
+
+		if ( method_exists( $order, 'save' ) ) {
+			$order->save();
+		}
 	}
 }

@@ -58,12 +58,12 @@ class Updater {
 		$keys         = [];
 		$plugin_files = $GLOBALS['MATOMO_PLUGIN_FILES'];
 		if ( ! in_array( MATOMO_ANALYTICS_FILE, $plugin_files, true ) ) {
-			$plugin_files[] = MATOMO_ANALYTICS_FILE;
+			array_unshift( $plugin_files, MATOMO_ANALYTICS_FILE );
 			// making sure this plugin is in the list so when itself gets updated
 			// it will execute the core updates
 		}
 
-		foreach ( $GLOBALS['MATOMO_PLUGIN_FILES'] as $plugin_file ) {
+		foreach ( $plugin_files as $plugin_file ) {
 			$plugin_data = get_plugin_data( $plugin_file, $markup = false, $translate = false );
 
 			$key           = Settings::OPTION_PREFIX . 'plugin-version-' . basename( str_ireplace( '.php', '', $plugin_file ) );
@@ -152,7 +152,7 @@ class Updater {
 		$upload_dir = $paths->get_upload_base_dir();
 
 		$wp_filesystem = $paths->get_file_system();
-		if ( is_dir( $upload_dir ) && is_writable( $upload_dir ) ) {
+		if ( $paths->is_upload_dir_writable() ) {
 			$wp_filesystem->put_contents( $upload_dir . '/index.php', '//hello' );
 			$wp_filesystem->put_contents( $upload_dir . '/index.html', '//hello' );
 			$wp_filesystem->put_contents( $upload_dir . '/index.htm', '//hello' );
@@ -167,7 +167,7 @@ class Updater {
 			);
 		}
 		$config_dir = $paths->get_config_ini_path();
-		if ( is_dir( $config_dir ) && is_writable( $config_dir ) ) {
+		if ( $paths->is_upload_dir_writable() ) {
 			$wp_filesystem->put_contents( $config_dir . '/index.php', '//hello' );
 			$wp_filesystem->put_contents( $config_dir . '/index.html', '//hello' );
 			$wp_filesystem->put_contents( $config_dir . '/index.htm', '//hello' );

@@ -13,6 +13,7 @@ use Exception;
 use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\FrontController;
+use Piwik\Option;
 use Piwik\Piwik;
 use Piwik\Plugin;
 use Piwik\Plugin\Manager;
@@ -21,9 +22,19 @@ use Piwik\Scheduler\Task;
 use Piwik\Url;
 use Piwik\Widget\WidgetsList;
 use WpMatomo\Bootstrap;
+use WpMatomo\Settings;
+use WpOrg\Requests\Utility\CaseInsensitiveDictionary;
 
 if (!defined( 'ABSPATH')) {
     exit; // if accessed directly
+}
+
+// undo the error_reporting(E_ALL) in app/core/bootstrap.php
+// since we're not running Matomo in isolation, we don't want to
+// override the user's configured error_reporting value, which
+// may be set to hide errors from other WordPress plugins
+if (isset($GLOBALS['MATOMO_WP_ORIGINAL_ERROR_REPORTING'])) {
+    error_reporting($GLOBALS['MATOMO_WP_ORIGINAL_ERROR_REPORTING']);
 }
 
 class WordPress extends Plugin
@@ -50,25 +61,13 @@ class WordPress extends Plugin
             'API.TagManager.getContainerInstallInstructions.end' => 'addInstallInstructions',
             'API.Tour.getChallenges.end' => 'modifyTourChallenges',
 	        'API.ScheduledReports.generateReport.end' => 'onGenerateReportEnd',
+            'API.CorePluginsAdmin.getSystemSettings.end' => 'onGetSystemSettingsEnd',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
             'CustomJsTracker.manipulateJsTracker' => 'updateHeatmapTrackerPath',
             'Visualization.beforeRender' => 'onBeforeRenderView',
             'AssetManager.getStylesheetFiles'  => 'getStylesheetFiles',
-            'Controller.PrivacyManager.usersOptOut.end' => 'onUserOptOutRender',
         );
     }
-
-	public function onUserOptOutRender(&$result)
-	{
-		$result = preg_replace('/<div [a-z-]+="PrivacyManager.OptOutCustomizer".*?>/s', '<div class="WordPressOptOutCustomizer">
-    <p>
-        Use the short code <code>[matomo_opt_out]</code> to embed the opt out into your website.<br>
-        You can use these short code options:</p>
-    <ul style="margin:20px;">
-        <li style="list-style: disc">language - eg de or en. By default the language is detected automatically based on the user\'s browser</li>
-    </ul>
-    <p>Example: <code>[matomo_opt_out language=de]</code></p>', $result);
-	}
 
     public function onBeforeRenderView (Plugin\ViewDataTable $view)
     {
@@ -90,6 +89,11 @@ class WordPress extends Plugin
 	public function getClientSideTranslationKeys(&$translationKeys)
 	{
 		$translationKeys[] = 'Feedback_SearchOnMatomo';
+        $translationKeys[] = 'WordPress_UseShortCode';
+        $translationKeys[] = 'WordPress_UseShortCodeDesc1';
+        $translationKeys[] = 'WordPress_UseShortCodeDesc2';
+        $translationKeys[] = 'WordPress_UseShortCodeOptionLanguage';
+        $translationKeys[] = 'WordPress_Example';
 	}
 
     public function modifyTourChallenges(&$challenges)
@@ -155,10 +159,10 @@ class WordPress extends Plugin
     public function supportsAsync(&$supportsAsync)
     {
         if (is_multisite()
-            || (defined('WP_DEBUG') && WP_DEBUG)
             || !empty($_SERVER['MATOMO_WP_ROOT_PATH'])
             || !matomo_has_compatible_content_dir()
-	        || (defined( 'MATOMO_SUPPORT_ASYNC_ARCHIVING') && !MATOMO_SUPPORT_ASYNC_ARCHIVING)
+            || (defined( 'MATOMO_SUPPORT_ASYNC_ARCHIVING') && !MATOMO_SUPPORT_ASYNC_ARCHIVING)
+            || $this->isAsyncArchivingDisabledBySetting()
         ) {
             // console wouldn't really work in multi site mode... therefore we prefer to archive in the same request
             // WP_DEBUG also breaks things since it's logging things to stdout and then safe unserialise doesn't work
@@ -166,6 +170,12 @@ class WordPress extends Plugin
             // but not on the CLI
             $supportsAsync = false;
         }
+    }
+
+    private function isAsyncArchivingDisabledBySetting()
+    {
+        $settings = \WpMatomo::$settings;
+        return $settings->is_async_archiving_disabled_by_option();
     }
 
     public function onHeader(&$out)
@@ -274,13 +284,16 @@ class WordPress extends Plugin
 
         $status = wp_remote_retrieve_response_code($wpResponse);
         $headers = wp_remote_retrieve_headers($wpResponse);
+        if ($headers instanceof CaseInsensitiveDictionary) {
+            $headers = $headers->getAll();
+        }
         $response = wp_remote_retrieve_body($wpResponse);
     }
 
     public function onGenerateReportEnd()
     {
     	if (Request::isCurrentApiRequestTheRootApiRequest() && !headers_sent()) {
-    		// fix https://github.com/matomo-org/wp-matomo/issues/98
+    		// fix https://github.com/matomo-org/matomo-for-wordpress/issues/98
 		    // When some plugin does an ob_start before the API is being executed then the following happens:
 		    // * PDF is generated and sent
 		    // * We send the application/pdf content-type header
@@ -293,6 +306,14 @@ class WordPress extends Plugin
 			    ob_end_flush();
 		    }
 	    }
+    }
+
+    public function onGetSystemSettingsEnd(&$settings)
+    {
+        // users are synced from wordpress, so we don't display matomo user settings anywhere
+        $settings = array_filter($settings, function ($pluginSettings) {
+            return $pluginSettings['pluginName'] !== 'UsersManager';
+        });
     }
 
     public function onDispatchRequestEnd(&$result, $module, $action, $parameters) {
@@ -312,20 +333,25 @@ class WordPress extends Plugin
 	        }
         }
 
-	    $requestedModule = !empty($module) ? Common::mb_strtolower($module) : '';
-	    $requestedAction = !empty($action) ? Common::mb_strtolower($action) : '';
+        $requestedModule = !empty($module) ? Common::mb_strtolower($module) : '';
+        $requestedAction = !empty($action) ? Common::mb_strtolower($action) : '';
 
-	    if (!WordPress::$is_archiving
-	        && !Common::isPhpCliMode()
-	        && $requestedModule === 'api'
-	        && (empty($requestedAction) || $requestedAction === 'index')) {
-		    $tokenRequest = Common::getRequestVar('token_auth', false, 'string');
-		    $tokenUser = Piwik::getCurrentUserTokenAuth();
+        if (!WordPress::$is_archiving
+            && !Common::isPhpCliMode()
+            && $requestedModule === 'api'
+            && (empty($requestedAction) || $requestedAction === 'index')
+        ) {
+            $tokenRequest = Common::getRequestVar('token_auth', false, 'string');
+            $tokenUser = Piwik::getCurrentUserTokenAuth();
 
-		    if (!$tokenRequest || $tokenRequest !== $tokenUser) {
-			    throw new Exception(Piwik::translate('General_ExceptionInvalidToken'));
-		    }
-	    }
+            if (!$tokenRequest) {
+                throw new Exception(Piwik::translate('Wordpress_TokenAuthMissing'));
+            }
+
+            if ($tokenRequest !== $tokenUser) {
+                throw new Exception(Piwik::translate('Wordpress_ExceptionInvalidToken'));
+            }
+        }
 
         if ($requestedModule === 'login') {
             if ($action === 'ajaxNoAccess' || $action === 'bruteForceLog') {
@@ -360,7 +386,7 @@ class WordPress extends Plugin
 	            throw new Exception( 'This feature '.$requestedModule. ' / ' .$requestedAction .' is not available' );
             }
         }
-        
+
         if ($requestedModule === 'sitesmanager' && $requestedAction === 'sitewithoutdata') {
             // we don't want the no data message to appear as it contains integration instructions which aren't needed
             // and links to not existing sites
@@ -410,11 +436,11 @@ class WordPress extends Plugin
         throw new \Exception('This feature is not available');
     }
 
-	public function getStylesheetFiles(&$files)
-	{
-		$files[] = "../plugins/WordPress/stylesheets/user.css";
-		$files[] = "../plugins/WordPress/stylesheets/optout.css";
-		$files[] = "../plugins/WordPress/stylesheets/export.css";
-	}
-
+    public function getStylesheetFiles(&$files)
+    {
+        $files[] = "../plugins/WordPress/stylesheets/user.css";
+        $files[] = "../plugins/WordPress/stylesheets/optout.css";
+        $files[] = "../plugins/WordPress/stylesheets/export.css";
+        $files[] = "../plugins/WordPress/stylesheets/blogselection.css";
+    }
 }

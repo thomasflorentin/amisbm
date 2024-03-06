@@ -1,10 +1,9 @@
 === Matomo Analytics - Ethical Stats. Powerful Insights. ===
 Contributors: matomoteam
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5EJ2LHATAKCJ4&source=url
 Tags: matomo,piwik,analytics,statistics,stats,tracking,ecommerce
 Requires at least: 4.8
-Tested up to: 6.2.0
-Stable tag: 4.14.2
+Tested up to: 6.4.3
+Stable tag: 5.0.5
 Requires PHP: 7.2.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -13,7 +12,13 @@ Matomo is the #1 Google Analytics alternative that gives you full control over y
 
 == Description ==
 
-Already Matomo On-Premise or Matomo Cloud user? You need to use the [WP-Matomo plugin](https://wordpress.org/plugins/wp-piwik/) instead of this plugin. 
+_Already a Matomo On-Premise or Matomo Cloud user? You need to use the [Connect Matomo plugin](https://wordpress.org/plugins/wp-piwik/) instead of this plugin._
+
+**New in Matomo 5.0:**
+
+* Improved compatibility with other WordPress plugins.
+* Important security fixes.
+* Many other bug fixes and performance improvements.
 
 For all you WordPress website owners wanting an easier way to get customer insights to grow your business, you can now get the solution the professionals use, for free!
 
@@ -92,7 +97,7 @@ Running Matomo Analytics on your server can use significant resources. Whenever 
 
 * The minimum PHP memory limit is 128Mb, but we recommend to use a higher limit (memory_limit = 256M).
 * PHP 7.2 at minimum is required.
-* If you have high traffic website, or manage a lot of websites with WordPress MultiSite, we recommend installing [Matomo On-Premise](https://matomo.org/docs/installation/) or signup to [Matomo Cloud](https://matomo.org/hosting/) and install the [WP-Matomo plugin](https://wordpress.org/plugins/wp-piwik/) instead.
+* If you have high traffic website, or manage a lot of websites with WordPress MultiSite, we recommend installing [Matomo On-Premise](https://matomo.org/docs/installation/) or signup to [Matomo Cloud](https://matomo.org/hosting/) and install the [Connect Matomo plugin](https://wordpress.org/plugins/wp-piwik/) instead.
 * Needing to know more before you install? Have a [read through the most popular FAQs to ensure you’re making the right choice for you](https://matomo.org/faq/wordpress/what-are-the-requirements-for-matomo-for-wordpress/).
 
 Over 1 million websites in over 190 countries are using Matomo already. Join the revolution too! Install Matomo on your Wordpress website completely free and take back full control of your data!
@@ -120,10 +125,10 @@ Over 1 million websites in over 190 countries are using Matomo already. Join the
 
 = Manual installation =
 
-* Downloading the plugin 
+* Downloading the plugin
 * Upload it to your web server using an FTP application. [Learn more](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation)
 
-= Once installed = 
+= Once installed =
 
 * Go to "Matomo Analytics" in the WordPress Admin Dashboard.
 * Click on "Activate tracking" in the "Get started" page.
@@ -167,7 +172,7 @@ Contact us: [matomo.org/contact/](https://matomo.org/contact/)
 
 = Can I import reports from WP Statistics plugin?
 
-Yes, you can [import historical data from WP Statistics](https://matomo.org/faq/wordpress/how-do-i-import-data-from-wp-statistics-plugin-into-matomo-for-wordpress/) so you don't lose any data when migrating to our plugin. 
+Yes, you can [import historical data from WP Statistics](https://matomo.org/faq/wordpress/how-do-i-import-data-from-wp-statistics-plugin-into-matomo-for-wordpress/) so you don't lose any data when migrating to our plugin.
 
 = Where do I find all other available FAQs? =
 
@@ -176,7 +181,7 @@ Needing to know more? [Click here to view all of our FAQs on our website](https:
 == Credits ==
 
 * The entire Matomo team and everyone who contributed
-* Andr&eacute; Br&auml;kling who is the Author of the [WP-Matomo plugin](https://github.com/braekling/WP-Matomo)
+* Andr&eacute; Br&auml;kling who is the Author of the [Connect Matomo plugin](https://github.com/braekling/WP-Matomo)
 
 == Screenshots ==
 
@@ -194,4 +199,4 @@ Needing to know more? [Click here to view all of our FAQs on our website](https:
 
 == Changelog ==
 
-[See changelog for all versions](https://github.com/matomo-org/wp-matomo/blob/develop/CHANGELOG.md).
+[See changelog for all versions](https://github.com/matomo-org/matomo-for-wordpress/blob/develop/CHANGELOG.md).

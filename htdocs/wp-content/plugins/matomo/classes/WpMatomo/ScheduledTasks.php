@@ -71,7 +71,7 @@ class ScheduledTasks {
 		$looks_installed = $installer->looks_like_it_is_installed(); // we only schedule events when Matomo looks installed but we still listen to the actions in case the app triggers a one time update.
 
 		foreach ( $this->get_all_events() as $event_name => $event_config ) {
-			if ( $looks_installed && ! wp_next_scheduled( $event_name ) ) {
+			if ( $looks_installed && wp_next_scheduled( $event_name ) === false ) {
 				wp_schedule_event( time(), $event_config['interval'], $event_name );
 			}
 
@@ -300,6 +300,12 @@ class ScheduledTasks {
 		$archiver->concurrentRequestsPerWebsite = 1;
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$archiver->maxConcurrentArchivers = 1;
+
+		// see https://github.com/matomo-org/matomo/pull/21216
+		if ( ! CronArchive\SharedSiteIds::isSupported() ) {
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$archiver->shouldArchiveAllSites = true;
+		}
 
 		if ( $force ) {
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase

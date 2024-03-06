@@ -18,7 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Paths {
 
-	private static $host_init_filesystem = false;
+	private static $host_init_filesystem           = false;
+	private static $host_init_filesystem_succeeded = false;
 
 	public function get_file_system() {
 		if ( ! function_exists( 'WP_Filesystem' ) ) {
@@ -26,15 +27,20 @@ class Paths {
 		}
 
 		if ( ! self::$host_init_filesystem ) {
-			self::$host_init_filesystem = true;
-			WP_Filesystem();
+			self::$host_init_filesystem           = true;
+			self::$host_init_filesystem_succeeded = WP_Filesystem();
 		}
+
 		if ( ! class_exists( '\WP_Filesystem_Direct' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/class-wp-filesystem-base.php';
 			require_once ABSPATH . '/wp-admin/includes/class-wp-filesystem-direct.php';
 		}
 
 		return new WP_Filesystem_Direct( new stdClass() );
+	}
+
+	public function get_host_init_filesystem_succeeded() {
+		return self::$host_init_filesystem_succeeded;
 	}
 
 	public function get_upload_base_url() {
@@ -119,54 +125,14 @@ class Paths {
 	/**
 	 * parameter matomo_file is required for the unit test cases (when checking with a path including the string matomo)
 	 *
-	 * @param $target_dir
-	 * @param string     $matomo_file
+	 * @param string $target_dir
+	 * @param string $matomo_file
 	 *
 	 * @return string
 	 */
 	public function get_relative_dir_to_matomo( $target_dir, $matomo_file = MATOMO_ANALYTICS_FILE ) {
-		$matomo_dir         = plugin_dir_path( $matomo_file ) . 'app';
-		$matomo_dir_parts   = explode( DIRECTORY_SEPARATOR, $matomo_dir );
-		$target_dir_parts   = explode( DIRECTORY_SEPARATOR, $target_dir );
-		$relative_directory = '';
-		$add_at_the_end     = [];
-		$was_previous_same  = false;
-		$path               = '';
-
-		/*
-		 * don't use DOCUMENT_ROOT as it does not work for cli access
-		 * don't use ABSPATH as it does not match when running unit test cases
-		 *
-		 * hide php errors for open_basedir restrictions
-		 */
 		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		$root = @realpath( plugin_dir_path( $matomo_file ) . '/../../../' ) . '/';
-		foreach ( $target_dir_parts as $index => $part ) {
-			$path .= $part . '/';
-
-			/*
-			 * exclude the document root which could contains matomo
-			 * @see https://github.com/matomo-org/matomo-for-wordpress/issues/515
-			 */
-			if ( strpos( $root, $path ) === 0 ) {
-				continue;
-			}
-			if ( isset( $matomo_dir_parts[ $index ] )
-				 && 'matomo' !== $part // not when matomo is same part cause it's the plugin name but eg also the upload folder name and it would generate wrong path
-				 && $matomo_dir_parts[ $index ] === $part
-				 && ! $was_previous_same ) {
-				continue;
-			}
-
-			$was_previous_same = true;
-
-			if ( isset( $matomo_dir_parts[ $index ] ) ) {
-				$relative_directory .= '../';
-			}
-			$add_at_the_end[] = $part;
-		}
-
-		return $relative_directory . implode( '/', $add_at_the_end );
+		return matomo_rel_path( $target_dir, dirname( $matomo_file ) . '/app' );
 	}
 
 	public function get_gloal_upload_dir_if_possible( $file_to_look_for = '' ) {
@@ -249,5 +215,22 @@ class Paths {
 		if ( $global_dir && $global_dir !== $dir ) {
 			$file_system_direct->rmdir( $dir );
 		}
+	}
+
+	/**
+	 * Must be called after Paths::get_file_system().
+	 *
+	 * @return bool
+	 */
+	public function is_upload_dir_writable() {
+		$upload_dir = $this->get_upload_base_dir();
+
+		// the WP direct filesystem abstraction may not be available based on user
+		// configuration. in this case, we can't write to the upload dir using WP_Filesystem
+		$is_filesystem_direct_available = defined( 'FS_CHMOD_FILE' );
+		return is_dir( $upload_dir )
+			&& is_writable( $upload_dir )
+			&& $this->get_host_init_filesystem_succeeded()
+			&& $is_filesystem_direct_available;
 	}
 }

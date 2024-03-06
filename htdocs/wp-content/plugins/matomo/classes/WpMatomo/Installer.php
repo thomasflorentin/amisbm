@@ -45,7 +45,8 @@ class Installer {
 	}
 
 	public function register_hooks() {
-		add_action( 'activate_matomo', [ $this, 'install' ] );
+		add_action( 'activate_matomo/matomo.php', [ $this, 'install' ] ); // if activate_plugin is invoked with the path to the plugin entrypoint
+		add_action( 'activate_matomo', [ $this, 'install' ] ); // if activate_plugin is invoked with the plugin slug
 	}
 
 	public function looks_like_it_is_installed() {
@@ -257,7 +258,16 @@ class Installer {
 
 	private function create_config( $db_info ) {
 		$this->logger->log( 'Matomo is now creating the config' );
-		$domain  = home_url();
+		$home_url = home_url();
+		$domain   = wp_parse_url( $home_url, PHP_URL_HOST );
+		if ( $domain ) {
+			$port = wp_parse_url( $home_url, PHP_URL_PORT );
+			if ( $port ) {
+				$domain .= ':' . $port;
+			}
+		} else {
+			$domain = $home_url;
+		}
 		$general = [
 			'trusted_hosts' => [ $domain ],
 			'salt'          => Common::generateUniqId(),

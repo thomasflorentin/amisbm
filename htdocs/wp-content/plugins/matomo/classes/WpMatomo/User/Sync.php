@@ -73,6 +73,10 @@ class Sync {
 	public function sync_all() {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			foreach ( get_sites() as $site ) {
+				if ( 1 === (int) $site->deleted ) {
+					continue;
+				}
+
 				switch_to_blog( $site->blog_id );
 
 				$idsite = Site::get_matomo_site_id( $site->blog_id );
@@ -100,7 +104,7 @@ class Sync {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) && ! empty( $current_user->user_login ) ) {
-			// refs https://github.com/matomo-org/wp-matomo/issues/365
+			// refs https://github.com/matomo-org/matomo-for-wordpress/issues/365
 			// some other plugins may under circumstances overwrite the get_users query and not return all users
 			// as a result we would delete some users in the matomo users table. this way we make sure at least the current
 			// user will be added and not deleted even if the list of users is not complete
@@ -176,8 +180,8 @@ class Sync {
 	 * Sync all users. Make sure to always pass all sites that exist within a given site... you cannot just sync an individual
 	 * user... we would delete all other users
 	 *
-	 * @param WP_User[] $users
-	 * @param $idsite
+	 * @param WP_User[]  $users
+	 * @param int|string $idsite
 	 */
 	protected function sync_users( $users, $idsite ) {
 		Bootstrap::do_bootstrap();
@@ -307,6 +311,17 @@ class Sync {
 		if ( $matomo_user_login ) {
 			$user_in_matomo = $user_model->getUser( $matomo_user_login );
 		} else {
+			$user_by_email = $user_model->getUserByEmail( $wp_user->user_email );
+
+			// the user was deleted without matomo being notified. delete user so we can recreate it
+			// below.
+			//
+			// note: it's also possible there are multiple users with the same email address,
+			// but this is currently unsupported in matomo so we don't take that into consideration.
+			if ( $user_by_email ) {
+				$user_model->deleteUser( $user_by_email['login'] );
+			}
+
 			// wp usernames may include whitespace etc
 			$login = preg_replace( '/[^A-Za-zÄäÖöÜüß0-9_.@+-]+/D', '_', $login );
 			$login = substr( $login, 0, self::MAX_USER_NAME_LENGTH );
