@@ -1,6 +1,9 @@
+<?php
+    $section_link = get_sub_field('section_link');
+?>
 <section class="home_publications">
     <div class="publications--bgdImg">
-        <img src="<?php echo get_template_directory_uri() . "/assets/images/home-publication.jpg"; ?>" alt='Image de fond de la section "les publications"'>
+        <img src="<?php echo get_the_post_thumbnail_url( $section_link->ID, 'publication' ); ?>" alt='Image de fond de la section "les publications"'>
     </div>
 
     <div class="publications--content section_padding">
@@ -12,7 +15,6 @@
         </div>
     
         <?php 
-            $section_link = get_sub_field('section_link');
             if( $section_link ): ?>
                 <a class="mainBtn--darkBgd" href="<?php the_permalink( $section_link->ID); ?>"><?php the_sub_field('section_link_label'); ?></a>
         <?php endif; ?>
