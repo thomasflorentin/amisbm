@@ -39,7 +39,7 @@ if (!function_exists('ABM_setup')){
 
     }
 }
-add_action( 'after_setup_theme', 'ABM_setup' );
+add_action( 'after_setup_theme', 'ABM_setup' ); 
 
 
 function ABM_public_scripts() {
