@@ -2,10 +2,16 @@
         
         <div class="subfooter">
             <div class="footer_leftCol">
-                <div class="footer_supporters">
-                    <img style="padding: 10px" src="<?php echo get_template_directory_uri() . "/assets/images/Logo_ABM.png"; ?>" alt="Logo du département de Seine-et-Marne">
-                    <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_BM.png"; ?>" alt="Logo de la mairie de Bourron-Marlotte">
-                    <img src="<?php echo get_template_directory_uri() . "/assets/images/logo_77.png"; ?>" alt="Logo du département de Seine-et-Marne">
+                <div class="footer_supporters flex">
+
+                    <?php 
+                        $images = get_field('footer_logos', 'options');
+                        if( $images ):  ?>
+                            <?php foreach( $images as $image ): ?>
+                                <img src="<?php echo esc_url($image['sizes']['medium']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
+                            <?php endforeach; ?>
+                    <?php endif; ?>
+
                 </div>
             </div>
 

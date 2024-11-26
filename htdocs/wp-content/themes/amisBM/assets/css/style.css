@@ -840,8 +840,8 @@ ul.sub-menu .menu-item:not(:last-child) {
 }
 
 .footer_supporters {
-  width: clamp(200px, 75%, 400px);
   display: flex;
+  gap: 10px;
   flex-wrap: nowrap;
 }
 .footer_supporters img {
