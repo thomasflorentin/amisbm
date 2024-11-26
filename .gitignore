@@ -11,3 +11,5 @@
 /htdocs/wp-content/wflogs
 /htdocs/wp-content/updraft
 /htdocs/wp-content/cache
+htdocs/wp-content/advanced-cache.php
+/htdocs/wp-content/wpo-cache
