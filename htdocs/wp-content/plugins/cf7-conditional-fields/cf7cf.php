@@ -5,6 +5,7 @@ class CF7CF {
     private $visible_groups = array();
     private $hidden_groups = array();
     private $repeaters = array();
+    private $steps = array();
 
     function __construct() {
 
@@ -75,17 +76,15 @@ class CF7CF {
 		    // TODO 2: Dirty hack. Because of TODO 2 we are just going to kill the error message if we detect the string '[/'
 		    //         Start removing here.
 		    if (strpos($prop_val, '[/') !== false) {
-			    $wpcf7_config_validator->remove_error($err_type, WPCF7_ConfigValidator::error_invalid_mailbox_syntax);
+                if ( defined( 'WPCF7_ConfigValidator::error_invalid_mailbox_syntax' ) ) {
+                    // Pre CF7 v5.8
+			        $wpcf7_config_validator->remove_error($err_type, WPCF7_ConfigValidator::error_invalid_mailbox_syntax);
+                } else {
+                    // CF7 v5.8+
+					$wpcf7_config_validator->remove_error($err_type, 'invalid_mail_header');
+                }
 				continue;
 		    }
-		    // TODO 2: Stop removing here. and uncomment code below.
-
-//		    foreach ($all_group_tags as $form_tag) {
-//				if (strpos($prop_val, '['.$form_tag->name.']') !== false) {
-//					$wpcf7_config_validator->remove_error($err_type, WPCF7_ConfigValidator::error_invalid_mailbox_syntax);
-//				}
-//		    }
-
 	    }
 
     	return new WPCF7_ConfigValidator($wpcf7_config_validator->contact_form());
@@ -122,16 +121,16 @@ class CF7CF {
 
 
     public static function tag_generator() {
-        if (! function_exists( 'wpcf7_add_tag_generator'))
-            return;
+        // if (! function_exists( 'wpcf7_add_tag_generator'))
+        //     return;
 
-        wpcf7_add_tag_generator('group',
-            __('Conditional Fields Group', 'cf7-conditional-fields'),
-            'wpcf7-tg-pane-group',
-            array(__CLASS__, 'tg_pane')
-        );
+        // wpcf7_add_tag_generator('group',
+        //     __('Conditional Fields Group', 'cf7-conditional-fields'),
+        //     'wpcf7-tg-pane-group',
+        //     array(__CLASS__, 'tg_pane')
+        // );
 
-        do_action('wpcf7cf_tag_generator');
+        // do_action('wpcf7cf_tag_generator');
     }
 
     static function tg_pane( $contact_form, $args = '' ) {
@@ -523,7 +522,7 @@ function wpcf7cf_do_enqueue_scripts() {
 
 function wpcf7cf_enqueue_scripts() {
 	if (is_admin()) return;
-	wp_enqueue_script('wpcf7cf-scripts', plugins_url('js/scripts.js', __FILE__), array('jquery'), WPCF7CF_VERSION, true);
+	wp_enqueue_script('wpcf7cf-scripts', plugins_url('js/scripts.js', __FILE__), array('jquery', 'contact-form-7'), WPCF7CF_VERSION, true);
 	wp_localize_script('wpcf7cf-scripts', 'wpcf7cf_global_settings',
 		array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
