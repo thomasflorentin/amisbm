@@ -3,9 +3,8 @@
 /**
  * Matomo - free/libre analytics platform
  *
- * @link https://matomo.org
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
+ * @link    https://matomo.org
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 namespace Piwik;
 
@@ -193,7 +192,7 @@ class DbHelper
      * @return string
      * @throws Tracker\Db\DbException
      */
-    public static function getDefaultCharset()
+    public static function getDefaultCharset() : string
     {
         $result = \Piwik\Db::get()->fetchRow("SHOW CHARACTER SET LIKE 'utf8mb4'");
         if (empty($result)) {
@@ -211,6 +210,18 @@ class DbHelper
             // innodb_file_per_table is required for utf8mb4
         }
         return 'utf8mb4';
+    }
+    /**
+     * Returns the default collation for a charset.
+     *
+     * @param string $charset
+     *
+     * @return string
+     * @throws Exception
+     */
+    public static function getDefaultCollationForCharset(string $charset) : string
+    {
+        return Schema::getInstance()->getDefaultCollationForCharset($charset);
     }
     /**
      * Returns sql queries to convert all installed tables to utf8mb4
@@ -257,27 +268,15 @@ class DbHelper
         ArchiveTableCreator::refreshTableList($forceReload = true);
     }
     /**
-     * Adds a MAX_EXECUTION_TIME hint into a SELECT query if $limit is bigger than 1
+     * Adds a MAX_EXECUTION_TIME hint into a SELECT query if $limit is bigger than 0
      *
      * @param string $sql  query to add hint to
-     * @param int $limit  time limit in seconds
+     * @param float $limit  time limit in seconds
      * @return string
      */
-    public static function addMaxExecutionTimeHintToQuery($sql, $limit)
+    public static function addMaxExecutionTimeHintToQuery(string $sql, float $limit) : string
     {
-        if ($limit <= 0) {
-            return $sql;
-        }
-        $sql = trim($sql);
-        $pos = stripos($sql, 'SELECT');
-        $isMaxExecutionTimeoutAlreadyPresent = stripos($sql, 'MAX_EXECUTION_TIME(') !== false;
-        if ($pos !== false && !$isMaxExecutionTimeoutAlreadyPresent) {
-            $timeInMs = $limit * 1000;
-            $timeInMs = (int) $timeInMs;
-            $maxExecutionTimeHint = ' /*+ MAX_EXECUTION_TIME(' . $timeInMs . ') */ ';
-            $sql = substr_replace($sql, 'SELECT ' . $maxExecutionTimeHint, $pos, strlen('SELECT'));
-        }
-        return $sql;
+        return Schema::getInstance()->addMaxExecutionTimeHintToQuery($sql, $limit);
     }
     /**
      * Add an origin hint to the query to identify the main parameters and segment for debugging

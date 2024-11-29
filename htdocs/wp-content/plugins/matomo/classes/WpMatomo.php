@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use WpMatomo\Admin\Admin;
 use WpMatomo\Admin\Chart;
 use WpMatomo\Admin\Dashboard;
+use WpMatomo\Admin\MarketplaceSetupWizard;
 use WpMatomo\Admin\Menu;
 use WpMatomo\AjaxTracker;
 use WpMatomo\Annotations;
@@ -26,6 +27,7 @@ use WpMatomo\Ecommerce\Woocommerce;
 use WpMatomo\Installer;
 use WpMatomo\OptOut;
 use WpMatomo\Paths;
+use WpMatomo\PluginAdminOverrides;
 use WpMatomo\RedirectOnActivation;
 use WpMatomo\Report\Renderer;
 use WpMatomo\Roles;
@@ -74,6 +76,7 @@ class WpMatomo {
 
 		$scheduled_tasks = new ScheduledTasks( self::$settings );
 		$scheduled_tasks->schedule();
+		$scheduled_tasks->register_ajax();
 
 		$privacy_badge = new OptOut();
 		$privacy_badge->register_hooks();
@@ -86,6 +89,7 @@ class WpMatomo {
 
 		if ( is_admin() ) {
 			new Admin( self::$settings );
+			$scheduled_tasks->show_errors_if_admin();
 
 			$dashboard = new Dashboard();
 			$dashboard->register_hooks();
@@ -111,6 +115,9 @@ class WpMatomo {
 			 */
 			$redirect = new RedirectOnActivation( $this );
 			$redirect->register_hooks();
+
+			$plugin_admin_overrides = new PluginAdminOverrides( self::$settings );
+			$plugin_admin_overrides->register_hooks();
 		}
 
 		$tracking_code = new TrackingCode( self::$settings );
@@ -129,6 +136,10 @@ class WpMatomo {
 				'add_settings_link',
 			]
 		);
+
+		// TODO: need better way of doing ajax?
+		MarketplaceSetupWizard::register_ajax();
+		WpMatomo\Admin\TrackingSettings::register_ajax();
 	}
 
 	private function check_compatibility() {
@@ -235,13 +246,13 @@ class WpMatomo {
 			&& ! $tracking_code->is_hidden_user() ) {
 			$tracker = new AjaxTracker( self::$settings );
 
-			$woocommerce = new Woocommerce( $tracker );
+			$woocommerce = new Woocommerce( $tracker, self::$settings );
 			$woocommerce->register_hooks();
 
-			$easy_digital_downloads = new EasyDigitalDownloads( $tracker );
+			$easy_digital_downloads = new EasyDigitalDownloads( $tracker, self::$settings );
 			$easy_digital_downloads->register_hooks();
 
-			$member_press = new MemberPress( $tracker );
+			$member_press = new MemberPress( $tracker, self::$settings );
 			$member_press->register_hooks();
 
 			do_action( 'matomo_ecommerce_init', $tracker );
@@ -257,5 +268,14 @@ class WpMatomo {
 				}
 			}
 		);
+	}
+
+	public static function is_async_archiving_manually_disabled() {
+		return ( defined( 'MATOMO_SUPPORT_ASYNC_ARCHIVING' ) && ! MATOMO_SUPPORT_ASYNC_ARCHIVING )
+			|| self::is_async_archiving_disabled_by_setting();
+	}
+
+	private static function is_async_archiving_disabled_by_setting() {
+		return self::$settings->is_async_archiving_disabled_by_option();
 	}
 }

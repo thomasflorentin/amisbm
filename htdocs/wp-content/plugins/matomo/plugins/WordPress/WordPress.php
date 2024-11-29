@@ -12,6 +12,7 @@ namespace Piwik\Plugins\WordPress;
 use Exception;
 use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\Config;
 use Piwik\FrontController;
 use Piwik\Option;
 use Piwik\Piwik;
@@ -20,7 +21,9 @@ use Piwik\Plugin\Manager;
 use Piwik\Plugins\CoreHome\SystemSummary\Item;
 use Piwik\Scheduler\Task;
 use Piwik\Url;
+use Piwik\Version;
 use Piwik\Widget\WidgetsList;
+use WpMatomo;
 use WpMatomo\Bootstrap;
 use WpMatomo\Settings;
 use WpOrg\Requests\Utility\CaseInsensitiveDictionary;
@@ -62,14 +65,51 @@ class WordPress extends Plugin
             'API.Tour.getChallenges.end' => 'modifyTourChallenges',
 	        'API.ScheduledReports.generateReport.end' => 'onGenerateReportEnd',
             'API.CorePluginsAdmin.getSystemSettings.end' => 'onGetSystemSettingsEnd',
+            'API.SitesManager.updateSite' => 'allowUpdateSiteForMeasurableSettings',
+            'API.SitesManager.updateSite.end' => 'reDisableSitesAdmin',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
             'CustomJsTracker.manipulateJsTracker' => 'updateHeatmapTrackerPath',
             'Visualization.beforeRender' => 'onBeforeRenderView',
             'AssetManager.getStylesheetFiles'  => 'getStylesheetFiles',
+            'Controller.CorePluginsAdmin.safemode.end' => 'modifySafemodeHtml',
         );
     }
 
-    public function onBeforeRenderView (Plugin\ViewDataTable $view)
+    public function allowUpdateSiteForMeasurableSettings($finalParameters)
+    {
+        $filteredParameters = array_filter($finalParameters);
+        if (count($filteredParameters) === 2
+            && !empty($filteredParameters['settingValues'])
+            && !empty($filteredParameters['idSite'])
+        ) {
+            Config::getInstance()->General['enable_sites_admin'] = true;
+        }
+    }
+
+    public function reDisableSitesAdmin()
+    {
+        Config::getInstance()->General['enable_sites_admin'] = false;
+    }
+
+    public function modifySafemodeHtml(&$output)
+    {
+        // add iframeResizer.contentWindow.min.js so it will resize correctly when in an iframe
+        $scriptUrl = plugins_url( 'assets/js/iframeResizer.contentWindow.min.js', MATOMO_ANALYTICS_FILE );
+        $output = str_replace(
+            '<title>',
+            "<script src=\"$scriptUrl\" defer></script><title>",
+            $output
+        );
+
+        // replace core version with MWP version so as to not confuse users
+        $mwpInfo = get_plugin_data(MATOMO_ANALYTICS_FILE) ?: [];
+        $mwpVersion = $mwpInfo['Version'] ?? null;
+        if (!empty($mwpVersion)) {
+            $output = str_replace('(v' . Version::VERSION . ')', '(v' . $mwpVersion . ')', $output);
+        }
+    }
+
+    public function onBeforeRenderView(Plugin\ViewDataTable $view)
     {
     	if ($view->requestConfig->getApiModuleToRequest() === 'UserCountry' && $view->config->show_footer_message && strpos($view->config->show_footer_message, 'href') !== false) {
     		// dont suggest setting up geoip
@@ -94,6 +134,8 @@ class WordPress extends Plugin
         $translationKeys[] = 'WordPress_UseShortCodeDesc2';
         $translationKeys[] = 'WordPress_UseShortCodeOptionLanguage';
         $translationKeys[] = 'WordPress_Example';
+        $translationKeys[] = 'WordPress_SaveChanges';
+        $translationKeys[] = 'WordPress_NoMeasurableSettingsAvailable';
 	}
 
     public function modifyTourChallenges(&$challenges)
@@ -161,8 +203,7 @@ class WordPress extends Plugin
         if (is_multisite()
             || !empty($_SERVER['MATOMO_WP_ROOT_PATH'])
             || !matomo_has_compatible_content_dir()
-            || (defined( 'MATOMO_SUPPORT_ASYNC_ARCHIVING') && !MATOMO_SUPPORT_ASYNC_ARCHIVING)
-            || $this->isAsyncArchivingDisabledBySetting()
+            || WpMatomo::is_async_archiving_manually_disabled()
         ) {
             // console wouldn't really work in multi site mode... therefore we prefer to archive in the same request
             // WP_DEBUG also breaks things since it's logging things to stdout and then safe unserialise doesn't work
@@ -170,12 +211,6 @@ class WordPress extends Plugin
             // but not on the CLI
             $supportsAsync = false;
         }
-    }
-
-    private function isAsyncArchivingDisabledBySetting()
-    {
-        $settings = \WpMatomo::$settings;
-        return $settings->is_async_archiving_disabled_by_option();
     }
 
     public function onHeader(&$out)
@@ -265,6 +300,9 @@ class WordPress extends Plugin
             'body'                => $params['body'],
             'sslverify'           => true,
         );
+        if (defined( 'MATOMO_LOCAL_ENVIRONMENT' ) && MATOMO_LOCAL_ENVIRONMENT) {
+            $args['timeout'] = max($args['timeout'], 8);
+        }
         if (!empty($params['userAgent'])) {
             $args['user-agent'] = $params['userAgent'];
         }
@@ -442,5 +480,6 @@ class WordPress extends Plugin
         $files[] = "../plugins/WordPress/stylesheets/optout.css";
         $files[] = "../plugins/WordPress/stylesheets/export.css";
         $files[] = "../plugins/WordPress/stylesheets/blogselection.css";
+        $files[] = "../plugins/WordPress/vue/src/PluginMeasurableSettings/PluginMeasurableSettings.less";
     }
 }

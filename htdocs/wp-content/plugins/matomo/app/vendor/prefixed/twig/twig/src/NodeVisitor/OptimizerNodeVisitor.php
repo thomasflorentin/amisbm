@@ -14,7 +14,6 @@ use Matomo\Dependencies\Twig\Environment;
 use Matomo\Dependencies\Twig\Node\BlockReferenceNode;
 use Matomo\Dependencies\Twig\Node\Expression\BlockReferenceExpression;
 use Matomo\Dependencies\Twig\Node\Expression\ConstantExpression;
-use Matomo\Dependencies\Twig\Node\Expression\FilterExpression;
 use Matomo\Dependencies\Twig\Node\Expression\FunctionExpression;
 use Matomo\Dependencies\Twig\Node\Expression\GetAttrExpression;
 use Matomo\Dependencies\Twig\Node\Expression\NameExpression;
@@ -23,6 +22,7 @@ use Matomo\Dependencies\Twig\Node\ForNode;
 use Matomo\Dependencies\Twig\Node\IncludeNode;
 use Matomo\Dependencies\Twig\Node\Node;
 use Matomo\Dependencies\Twig\Node\PrintNode;
+use Matomo\Dependencies\Twig\Node\TextNode;
 /**
  * Tries to optimize the AST.
  *
@@ -41,6 +41,7 @@ final class OptimizerNodeVisitor implements NodeVisitorInterface
     public const OPTIMIZE_NONE = 0;
     public const OPTIMIZE_FOR = 2;
     public const OPTIMIZE_RAW_FILTER = 4;
+    public const OPTIMIZE_TEXT_NODES = 8;
     private $loops = [];
     private $loopsTargets = [];
     private $optimizers;
@@ -49,8 +50,11 @@ final class OptimizerNodeVisitor implements NodeVisitorInterface
      */
     public function __construct(int $optimizers = -1)
     {
-        if ($optimizers > (self::OPTIMIZE_FOR | self::OPTIMIZE_RAW_FILTER)) {
-            throw new \InvalidArgumentException(sprintf('Optimizer mode "%s" is not valid.', $optimizers));
+        if ($optimizers > (self::OPTIMIZE_FOR | self::OPTIMIZE_RAW_FILTER | self::OPTIMIZE_TEXT_NODES)) {
+            throw new \InvalidArgumentException(\sprintf('Optimizer mode "%s" is not valid.', $optimizers));
+        }
+        if (-1 !== $optimizers && self::OPTIMIZE_RAW_FILTER === (self::OPTIMIZE_RAW_FILTER & $optimizers)) {
+            trigger_deprecation('twig/twig', '3.11', 'The "Twig\\NodeVisitor\\OptimizerNodeVisitor::OPTIMIZE_RAW_FILTER" option is deprecated and does nothing.');
         }
         $this->optimizers = $optimizers;
     }
@@ -66,10 +70,36 @@ final class OptimizerNodeVisitor implements NodeVisitorInterface
         if (self::OPTIMIZE_FOR === (self::OPTIMIZE_FOR & $this->optimizers)) {
             $this->leaveOptimizeFor($node);
         }
-        if (self::OPTIMIZE_RAW_FILTER === (self::OPTIMIZE_RAW_FILTER & $this->optimizers)) {
-            $node = $this->optimizeRawFilter($node);
-        }
         $node = $this->optimizePrintNode($node);
+        if (self::OPTIMIZE_TEXT_NODES === (self::OPTIMIZE_TEXT_NODES & $this->optimizers)) {
+            $node = $this->mergeTextNodeCalls($node);
+        }
+        return $node;
+    }
+    private function mergeTextNodeCalls(Node $node) : Node
+    {
+        $text = '';
+        $names = [];
+        foreach ($node as $k => $n) {
+            if (!$n instanceof TextNode) {
+                return $node;
+            }
+            $text .= $n->getAttribute('data');
+            $names[] = $k;
+        }
+        if (!$text) {
+            return $node;
+        }
+        if (Node::class === \get_class($node)) {
+            return new TextNode($text, $node->getTemplateLine());
+        }
+        foreach ($names as $i => $name) {
+            if (0 === $i) {
+                $node->setNode($name, new TextNode($text, $node->getTemplateLine()));
+            } else {
+                $node->removeNode($name);
+            }
+        }
         return $node;
     }
     /**
@@ -85,19 +115,12 @@ final class OptimizerNodeVisitor implements NodeVisitorInterface
             return $node;
         }
         $exprNode = $node->getNode('expr');
+        if ($exprNode instanceof ConstantExpression && \is_string($exprNode->getAttribute('value'))) {
+            return new TextNode($exprNode->getAttribute('value'), $exprNode->getTemplateLine());
+        }
         if ($exprNode instanceof BlockReferenceExpression || $exprNode instanceof ParentExpression) {
             $exprNode->setAttribute('output', true);
             return $exprNode;
-        }
-        return $node;
-    }
-    /**
-     * Removes "raw" filters.
-     */
-    private function optimizeRawFilter(Node $node) : Node
-    {
-        if ($node instanceof FilterExpression && 'raw' == $node->getNode('filter')->getAttribute('value')) {
-            return $node->getNode('node');
         }
         return $node;
     }

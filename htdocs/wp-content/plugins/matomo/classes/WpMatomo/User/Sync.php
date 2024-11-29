@@ -56,6 +56,7 @@ class Sync {
 		add_action( 'add_user_to_blog', [ $this, 'sync_current_users_1000' ], $prio = 10, $args = 0 );
 		add_action( 'remove_user_from_blog', [ $this, 'sync_current_users_1000' ], $prio = 10, $args = 0 );
 		add_action( 'user_register', [ $this, 'sync_current_users_1000' ], $prio = 10, $args = 0 );
+		add_action( 'update_option_WPLANG', [ $this, 'on_site_language_change' ], $prio = 10, $args = 0 );
 		add_action( 'profile_update', [ $this, 'sync_maybe_background' ], $prio = 10, $args = 0 );
 	}
 
@@ -68,6 +69,12 @@ class Sync {
 		} else {
 			$this->sync_current_users_1000();
 		}
+	}
+
+	public function on_site_language_change() {
+		unset( $GLOBALS['locale'] ); // same thing that's done after saving in options.php
+
+		$this->sync_current_users_1000();
 	}
 
 	public function sync_all() {
@@ -319,6 +326,17 @@ class Sync {
 			// note: it's also possible there are multiple users with the same email address,
 			// but this is currently unsupported in matomo so we don't take that into consideration.
 			if ( $user_by_email ) {
+				$this->logger->log_exception(
+					'user_sync',
+					new \Exception(
+						'Syncing user with email identical to a user already synced in Matomo. ' .
+						'This means there are multiple WP users with the same email, which Matomo ' .
+						'does not support, or something has deleted the WP option mapping WP user ' .
+						'to Matomo user. Assuming this is a new user to sync and deleting existing user ' .
+						'preferences and options.'
+					)
+				);
+
 				$user_model->deleteUser( $user_by_email['login'] );
 			}
 

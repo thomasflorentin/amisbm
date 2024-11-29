@@ -11,6 +11,9 @@ namespace WpMatomo;
 
 use Exception;
 use Piwik\Cache as PiwikCache;
+use Piwik\Common;
+use Piwik\Config;
+use Piwik\Db;
 use Piwik\Filesystem;
 use Piwik\Option;
 use Piwik\Plugins\Installation\ServerFilesGenerator;
@@ -112,7 +115,7 @@ class Updater {
 		return $executed_updates;
 	}
 
-	public function update() {
+	public function update( $update_from_version = null ) {
 		Bootstrap::do_bootstrap();
 
 		if ( $this->load_plugin_functions() ) {
@@ -142,12 +145,23 @@ class Updater {
 		Option::clearCache();
 		PiwikCache::flushAll();
 
-		\Piwik\Access::doAsSuperUser(
-			function () {
-				self::update_components();
-				self::update_components();
+		$current_version = Option::get( 'version_core' );
+
+		try {
+			if ( ! empty( $update_from_version ) ) {
+				Option::set( 'version_core', $update_from_version );
 			}
-		);
+
+			\Piwik\Access::doAsSuperUser(
+				function () {
+					self::update_components();
+					self::update_components();
+				}
+			);
+		} catch ( \Exception $ex ) {
+			Option::set( 'version_core', $current_version );
+			throw $ex;
+		}
 
 		$upload_dir = $paths->get_upload_base_dir();
 
@@ -236,6 +250,7 @@ class Updater {
 				@ignore_user_abort( true );
 			}
 
+			self::ensure_log_tables_have_correct_row_format();
 			$result = $updater->updateComponents( $components_with_update_file );
 		} catch ( Exception $e ) {
 			self::unlock();
@@ -249,5 +264,37 @@ class Updater {
 
 		\Piwik\Updater::recordComponentSuccessfullyUpdated( 'core', Version::VERSION );
 		Filesystem::deleteAllCacheOnUpdate();
+	}
+
+	private static function ensure_log_tables_have_correct_row_format() {
+		try {
+			// we only care about log tables which can have dimension columns added/removed.
+			// other tables won't have this problem.
+			$core_log_tables = [
+				'log_visit',
+				'log_link_visit_action',
+				'log_conversion',
+				'log_conversion_item',
+			];
+
+			// get table status of all log_ tables
+			$prefix     = Config::getInstance()->database['tables_prefix'];
+			$table_info = \Piwik\Db::fetchAll( 'SHOW TABLE STATUS LIKE ?', [ "{$prefix}log_%" ] );
+			$table_info = array_column( $table_info, null, 'Name' );
+
+			// for every CORE log table that has Compact, switch to Dynamic
+			foreach ( $core_log_tables as $table_name ) {
+				$prefixed_name = Common::prefixTable( $table_name );
+				if ( isset( $table_info[ $prefixed_name ] )
+					&& 'Compact' === $table_info[ $prefixed_name ]['Row_format']
+				) {
+					Db::exec( "ALTER TABLE `$prefixed_name` ROW_FORMAT=Dynamic" );
+				}
+			}
+		} catch ( \Exception $ex ) {
+			// log and ignore
+			$logger = new Logger();
+			$logger->log( 'Failure when trying to ensure log table ROW_FORMATs are Dynamic: ' . $ex->getMessage() . "\n" . $ex->getTraceAsString(), Logger::LEVEL_DEBUG );
+		}
 	}
 }

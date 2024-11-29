@@ -3,9 +3,8 @@
 /**
  * Matomo - free/libre analytics platform
  *
- * @link https://matomo.org
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
+ * @link    https://matomo.org
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 namespace Piwik\Period;
 
@@ -30,7 +29,7 @@ use Piwik\Period;
  */
 class Range extends Period
 {
-    const PERIOD_ID = 5;
+    public const PERIOD_ID = 5;
     protected $label = 'range';
     protected $today;
     /**
@@ -219,6 +218,10 @@ class Range extends Period
                 $timezone = $this->timezone;
             }
             $endDate = Date::factory($strDateEnd, $timezone)->setTime("00:00:00");
+            $maxAllowedEndDate = Date::factory(self::getMaxAllowedEndTimestamp());
+            if ($endDate->isLater($maxAllowedEndDate)) {
+                $endDate = $maxAllowedEndDate;
+            }
         } else {
             throw new Exception($this->translator->translate('General_ExceptionInvalidDateRange', array($this->strDate, ' \'lastN\', \'previousN\', \'YYYY-MM-DD,YYYY-MM-DD\'')));
         }
@@ -463,5 +466,17 @@ class Range extends Period
     public function getParentPeriodLabel()
     {
         return null;
+    }
+    /**
+     * Returns the max allowed end timestamp for a range. If an enddate after this timestamp is provided, Matomo will
+     * automatically lower the end date to the date returned by this method.
+     * The max supported timestamp is always set to end of the current year plus 10 years.
+     *
+     * @return int
+     * @api
+     */
+    public static function getMaxAllowedEndTimestamp() : int
+    {
+        return strtotime(date('Y-12-31 00:00:00', strtotime('+10 year', Date::getNowTimestamp())));
     }
 }

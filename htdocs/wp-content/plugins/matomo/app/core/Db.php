@@ -3,9 +3,8 @@
 /**
  * Matomo - free/libre analytics platform
  *
- * @link https://matomo.org
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
+ * @link    https://matomo.org
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 namespace Piwik;
 
@@ -32,7 +31,7 @@ use Piwik\Db\Adapter;
  */
 class Db
 {
-    const SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+    public const SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
     private static $connection = null;
     private static $readerConnection = null;
     private static $logQueries = true;
@@ -161,6 +160,7 @@ class Db
         $dbConfig['type'] = $masterDbConfig['type'];
         $dbConfig['tables_prefix'] = $masterDbConfig['tables_prefix'];
         $dbConfig['charset'] = $masterDbConfig['charset'];
+        $dbConfig['collation'] = $masterDbConfig['collation'] ?? null;
         $db = @Adapter::factory($dbConfig['adapter'], $dbConfig);
         if (!empty($dbConfig['aurora_readonly_read_committed'])) {
             $db->exec('set session aurora_read_replica_read_committed = ON;set session transaction isolation level read committed;');
@@ -247,6 +247,41 @@ class Db
         } catch (Exception $ex) {
             self::logExtraInfoIfDeadlock($ex);
             throw $ex;
+        }
+    }
+    /**
+     * Executes a callback with potential recovery from a "MySQL server has gone away" error.
+     *
+     * If the callback throws a "MySQL server has gone away" exception
+     * it will be called again after a single reconnection attempt.
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     *
+     * @internal
+     */
+    public static function executeWithDatabaseWriterReconnectionAttempt(callable $callback)
+    {
+        try {
+            return $callback();
+        } catch (Exception $ex) {
+            // only attempt reconnection in a reader/writer configuration
+            if (!self::hasReaderConfigured()) {
+                throw $ex;
+            }
+            // only attempt reconnection if we encounter a "server has gone away" error
+            if (!self::get()->isErrNo($ex, \Piwik\Updater\Migration\Db::ERROR_CODE_MYSQL_SERVER_HAS_GONE_AWAY) && false === stripos($ex->getMessage(), 'server has gone away')) {
+                throw $ex;
+            }
+            // reconnect and retry query
+            // after a 100ms wait (to avoid re-hitting a network problem immediately)
+            self::$connection = null;
+            usleep(100 * 1000);
+            self::createDatabaseObject();
+            return $callback();
         }
     }
     /**

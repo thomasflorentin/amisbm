@@ -3,9 +3,8 @@
 /**
  * Matomo - free/libre analytics platform
  *
- * @link https://matomo.org
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
+ * @link    https://matomo.org
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 namespace Piwik\Plugins\Annotations;
 
@@ -33,7 +32,7 @@ use Piwik\Site;
  */
 class AnnotationList
 {
-    const ANNOTATION_COLLECTION_OPTION_SUFFIX = '_annotations';
+    public const ANNOTATION_COLLECTION_OPTION_SUFFIX = '_annotations';
     /**
      * List of site IDs this instance holds annotations for.
      *
@@ -72,12 +71,12 @@ class AnnotationList
      * @param int $idSite The ID of the site to add an annotation to.
      * @param string $date The date the annotation is in reference to.
      * @param string $note The text of the new annotation.
-     * @param int $starred Either 1 or 0. If 1, the new annotation has been starred,
+     * @param bool $starred If true the new annotation has been starred,
      *                     otherwise it will start out unstarred.
      * @return array The added annotation.
      * @throws Exception if $idSite is not an ID that was supplied upon construction.
      */
-    public function add($idSite, $date, $note, $starred = 0)
+    public function add(int $idSite, string $date, string $note, bool $starred = false) : array
     {
         $this->checkIdSiteIsLoaded($idSite);
         $date = Date::factory($date)->toString('Y-m-d');
@@ -93,7 +92,7 @@ class AnnotationList
      * @param int $idSite The ID of the site to save annotations for.
      * @throws Exception if $idSite is not an ID that was supplied upon construction.
      */
-    public function save($idSite)
+    public function save($idSite) : void
     {
         $this->checkIdSiteIsLoaded($idSite);
         $optionName = self::getAnnotationCollectionOptionName($idSite);
@@ -116,7 +115,7 @@ class AnnotationList
      * @throws Exception if $idSite is not an ID that was supplied upon construction.
      * @throws Exception if $idNote does not refer to valid note for the site.
      */
-    public function update($idSite, $idNote, $date = null, $note = null, $starred = null)
+    public function update($idSite, $idNote, $date = null, $note = null, $starred = null) : void
     {
         $this->checkIdSiteIsLoaded($idSite);
         $this->checkNoteExists($idSite, $idNote);
@@ -175,10 +174,11 @@ class AnnotationList
      *
      * @param int $idSite The ID of the site to get an annotation for.
      * @param int $idNote The ID of the note to get.
+     * @return array
      * @throws Exception if $idSite is not an ID that was supplied upon construction.
      * @throws Exception if $idNote does not refer to valid note for the site.
      */
-    public function get($idSite, $idNote)
+    public function get($idSite, $idNote) : array
     {
         $this->checkIdSiteIsLoaded($idSite);
         $this->checkNoteExists($idSite, $idNote);
@@ -276,10 +276,10 @@ class AnnotationList
      *
      * @param string $date
      * @param string $note
-     * @param int $starred
+     * @param bool $starred
      * @return array
      */
-    private function makeAnnotation($date, $note, $starred = 0)
+    private function makeAnnotation(string $date, string $note, bool $starred = false)
     {
         return array('date' => $date, 'note' => $note, 'starred' => (int) $starred, 'user' => Piwik::getCurrentUserLogin());
     }
@@ -331,9 +331,9 @@ class AnnotationList
      * @param int $idNote
      * @throws Exception
      */
-    private function checkNoteExists($idSite, $idNote)
+    private function checkNoteExists($idSite, $idNote) : void
     {
-        if (empty($this->annotations[$idSite][$idNote])) {
+        if (empty($this->annotations[$idSite][$idNote]) || !is_array($this->annotations[$idSite][$idNote])) {
             throw new Exception("There is no note with id '{$idNote}' for site with id '{$idSite}'.");
         }
     }
