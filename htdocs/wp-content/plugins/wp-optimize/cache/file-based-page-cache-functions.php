@@ -33,8 +33,13 @@ function wpo_cache($buffer, $flags) {
 	}
 
 	// Don't cache pages for logged in users.
-	if (!wpo_cache_loggedin_users() && (!function_exists('is_user_logged_in') || (function_exists('wp_get_current_user') && is_user_logged_in()))) {
-		$no_cache_because[] = __('User is logged in', 'wp-optimize');
+	if (!function_exists('is_user_logged_in') || (function_exists('wp_get_current_user') && is_user_logged_in())) {
+		if (!wpo_cache_loggedin_users()) {
+			$no_cache_because[] = __('User is logged in', 'wp-optimize');
+		} elseif (!empty($GLOBALS['wpo_cache_config']['enable_user_caching'])) {
+			// Will only run when "Serve cached pages to logged in users" is checked
+			$no_cache_because[] = __('User is logged in, this works only when the cache is preloaded', 'wp-optimize');
+		}
 	}
 
 	$restricted_page_type_cache = apply_filters('wpo_restricted_cache_page_type', false);
@@ -396,14 +401,18 @@ function wpo_cache_filename($ext = '.html') {
 		}
 	}
 
-	// add hash of queried cookies and variables to cache file name.
+	// Adding cache key with queried cookies and variables to the cache file name.
 	if ('' !== $cache_key) {
-		$hash = md5($cache_key);
-		$filename .= '-'.$hash;
-		$wpo_cache_filename_debug[] = 'Hash: ' . $hash;
+		// Add human-readable cache key to the filename
+		$filename .= str_replace('--', '-', '-'.$cache_key);
 	}
 
 	$filename = apply_filters('wpo_cache_filename', $filename);
+
+	// Trimming filename if it exceeds 240 characters due to filesystem limitations
+	if (strlen($filename) > 240) {
+		$filename = substr($filename, 0, 199) . '-' . sha1($filename);
+	}
 
 	$wpo_cache_filename_debug[] = 'Extension: ' . $ext;
 	$wpo_cache_filename_debug[] = 'Filename: ' . $filename.$ext;
@@ -614,6 +623,26 @@ if (!function_exists('wpo_is_using_webp_images_redirection')) :
 endif;
 
 /**
+ * Verify if the current request is related to the Activity Stream
+ *
+ * @return bool
+ */
+if (!function_exists('wpo_is_activity_stream_requested')) :
+	function wpo_is_activity_stream_requested() {
+		return (isset($_SERVER['HTTP_ACCEPT']) && false !== strpos($_SERVER['HTTP_ACCEPT'], 'application/activity+json'));
+	}
+endif;
+
+/**
+ * Verify if the current request is robots.txt
+ */
+if (!function_exists('wpo_is_robots_txt_requested')) :
+	function wpo_is_robots_txt_requested() {
+		return (isset($_SERVER['REQUEST_URI']) && 'robots.txt' === basename($_SERVER['REQUEST_URI']));
+	}
+endif;
+
+/**
  * Serves the cache and exits
  */
 if (!function_exists('wpo_serve_cache')) :
@@ -721,6 +750,9 @@ if (!function_exists('wpo_is_canonical_redirection_needed')) :
 	function wpo_is_canonical_redirection_needed() {
 		$permalink_structure = isset($GLOBALS['wpo_cache_config']['permalink_structure']) ? $GLOBALS['wpo_cache_config']['permalink_structure'] : '';
 		$site_url = wpo_site_url();
+
+		// Exit if server variables are not available.
+		if (!isset($_SERVER['HTTP_HOST'])) return false;
 		
 		$schema = isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS'] ? "https" : "http";
 		$url_part = "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -1099,6 +1131,7 @@ function wpo_delete_files($src, $recursive = true) {
 		if (!@unlink($src) && file_exists($src)) { // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- suppress PHP warning in case of failure
 			return false;
 		}
+
 		return true;
 	}
 
@@ -1360,13 +1393,28 @@ endif;
  */
 if (!function_exists('wpo_cache_add_nocache_http_header')) :
 	function wpo_cache_add_nocache_http_header($message = '') {
+		if (!headers_sent()) {
+			header('WPO-Cache-Status: not cached');
+			header('WPO-Cache-Message: '. trim(str_replace(array("\r", "\n", ':'), ' ', strip_tags($message))));
+		}
+	}
+endif;
+
+/**
+ * Add the headers indicating why the page is not cached or served from cache by integrating with the send_headers filter
+ *
+ * @param string $message - The headers
+ *
+ * @return void
+ */
+if (!function_exists('wpo_cache_add_nocache_http_header_with_send_headers_action')) :
+	function wpo_cache_add_nocache_http_header_with_send_headers_action($message = '') {
 		static $buffered_message = null;
 
 		if (function_exists('current_filter') && 'send_headers' === current_filter() && $buffered_message && !headers_sent()) {
-			header('WPO-Cache-Status: not cached');
-			header('WPO-Cache-Message: '. trim(str_replace(array("\r", "\n", ':'), ' ', strip_tags($buffered_message))));
+			wpo_cache_add_nocache_http_header($buffered_message);
 		} else {
-			if (!$buffered_message && function_exists('add_action')) add_action('send_headers', 'wpo_cache_add_nocache_http_header', 11);
+			if (!$buffered_message && function_exists('add_action')) add_action('send_headers', 'wpo_cache_add_nocache_http_header_with_send_headers_action', 11);
 			$buffered_message = $message;
 		}
 	}

@@ -8,26 +8,38 @@ class WP_Optimize_WebP {
 
 	private $_htaccess = null;
 
+	/**
+	 * Set to true when webp is enabled and vice-versa
+	 *
+	 * @var boolean
+	 */
 	private $_should_use_webp = false;
+
+	/**
+	 * The logger for this instance
+	 *
+	 * @var mixed
+	 */
+	private $logger;
 
 	/**
 	 * Constructor
 	 */
 	private function __construct() {
-		$this->_should_use_webp = WP_Optimize()->get_options()->get_option('webp_conversion');
-		if ($this->should_run_webp_conversion_test()) {
-			$this->set_converter_status();
-		}
+		$this->_should_use_webp = (bool) WP_Optimize()->get_options()->get_option('webp_conversion');
 
-		if ($this->get_webp_conversion_test_result()) {
+		if ($this->_should_use_webp && $this->get_webp_conversion_test_result()) {
 			if (!is_admin()) {
-				$this->maybe_decide_webp_serve_method();
+
+				// Allow filters added in theme files to run
+				add_action('after_setup_theme', array($this, 'maybe_decide_webp_serve_method'));
 			}
-		} else {
-			$this->empty_htaccess_file();
 		}
 
-		$this->init_webp_cron_scheduler();
+		$this->logger = new Updraft_File_Logger($this->get_logfile_path());
+
+		add_action('wpo_reset_webp_conversion_test_result', array($this, 'reset_webp_serving_method'));
+		add_action('wpo_prune_webp_logs', array($this, 'prune_webp_logs'));
 	}
 
 	/**
@@ -44,12 +56,35 @@ class WP_Optimize_WebP {
 	}
 
 	/**
+	 * Returns the path to the logfile
+	 *
+	 * @return string - file path
+	 */
+	private function get_logfile_path() {
+		return WP_Optimize_Utils::get_log_file_path('webp');
+	}
+
+	/**
+	 * Logging of interesting messages related to Webp
+	 *
+	 * @param string $message
+	 */
+	public function log($message) {
+		$this->logger->info($message);
+	}
+
+	/**
+	 * Prunes the log file
+	 */
+	public function prune_webp_logs() {
+		$this->log("Pruning the WebP log file");
+		$this->logger->prune_logs();
+	}
+
+	/**
 	 * Test Run and find converter status
 	 */
 	private function set_converter_status() {
-		if (!class_exists('WPO_WebP_Test_Run')) {
-			require_once WPO_PLUGIN_MAIN_PATH . 'webp/class-wpo-webp-test-run.php';
-		}
 		$converter_status = WPO_WebP_Test_Run::get_converter_status();
 		if ($this->is_webp_conversion_successful()) {
 			WP_Optimize()->get_options()->update_option('webp_conversion_test', true);
@@ -58,18 +93,11 @@ class WP_Optimize_WebP {
 	}
 
 	/**
-	 * If webp images should be used, then decide whether it is possible to server webp
-	 * using rewrite rules or using altered html method
+	 * If .htaccess redirection is not possible, attempts to use the alter_html method
 	 */
-	private function maybe_decide_webp_serve_method() {
-		if (!$this->_should_use_webp) {
-			$this->empty_htaccess_file();
-		} else {
-			$this->save_htaccess_rules();
-			if (!$this->is_webp_redirection_possible()) {
-				$this->empty_htaccess_file();
-				$this->maybe_use_alter_html();
-			}
+	public function maybe_decide_webp_serve_method() {
+		if (!$this->is_webp_redirection_possible()) {
+			$this->maybe_use_alter_html();
 		}
 	}
 
@@ -78,6 +106,7 @@ class WP_Optimize_WebP {
 	 */
 	private function maybe_use_alter_html() {
 		if ($this->is_alter_html_possible()) {
+			$this->empty_htaccess_file();
 			$this->use_alter_html();
 		}
 	}
@@ -85,10 +114,15 @@ class WP_Optimize_WebP {
 	/**
 	 * Even if server support .htaccess rewrite, sometimes it is not possible
 	 * to serve webp images. So, find it webp redirection is possible or not
+	 * Also applies `wpo_force_webp_serve_using_altered_html` filter for users to be able to
+	 * force Altered HTML method
 	 *
 	 * @return bool
 	 */
-	private function is_webp_redirection_possible() {
+	public function is_webp_redirection_possible() {
+		if (apply_filters('wpo_force_webp_serve_using_altered_html', false)) {
+			return false;
+		}
 		$redirection_possible = WP_Optimize()->get_options()->get_option('redirection_possible');
 		if (!empty($redirection_possible)) return 'true' === $redirection_possible;
 		return $this->run_webp_serving_self_test();
@@ -119,9 +153,6 @@ class WP_Optimize_WebP {
 	 * Setup alter html method
 	 */
 	private function use_alter_html() {
-		if (!class_exists('WPO_WebP_Alter_HTML')) {
-			require_once WPO_PLUGIN_MAIN_PATH . 'webp/class-wpo-webp-alter-html.php';
-		}
 		WPO_WebP_Alter_HTML::get_instance();
 	}
 
@@ -135,9 +166,6 @@ class WP_Optimize_WebP {
 		if (!file_exists($htaccess_file)) {
 			file_put_contents($htaccess_file, '');
 		}
-		if (!class_exists('WP_Optimize_Htaccess')) {
-			require_once WPO_PLUGIN_MAIN_PATH . 'includes/class-wp-optimize-htaccess.php';
-		}
 		$this->_htaccess = new WP_Optimize_Htaccess($htaccess_file);
 	}
 	
@@ -146,28 +174,33 @@ class WP_Optimize_WebP {
 	 *
 	 * @return void
 	 */
-	private function save_htaccess_rules() {
+	public function save_htaccess_rules() {
 		$this->setup_htaccess_file();
 		$this->add_webp_mime_type();
 		$htaccess_comment_section = 'WP-Optimize WebP Rules';
 		if ($this->_htaccess->is_commented_section_exists($htaccess_comment_section)) return;
 		$this->_htaccess->update_commented_section($this->prepare_webp_htaccess_rules(), $htaccess_comment_section);
 		$this->_htaccess->write_file();
+		WP_Optimize()->get_options()->update_option('htaccess_has_webp_rules', true);
 	}
 
 	/**
 	 * Empty .htaccess file
 	 */
 	public function empty_htaccess_file() {
+		// Setting default to true, so on initial run (when option is not yet present in the DB) we don't break the function here
+		if (!WP_Optimize()->get_options()->get_option('htaccess_has_webp_rules', true)) return;
 		$this->setup_htaccess_file();
 		$htaccess_comment_sections = array(
 			'WP-Optimize WebP Rules',
 			'Register webp mime type',
 		);
 		foreach ($htaccess_comment_sections as $htaccess_comment_section) {
+			if (!$this->_htaccess->is_commented_section_exists($htaccess_comment_section)) continue;
 			$this->_htaccess->remove_commented_section($htaccess_comment_section);
 			$this->_htaccess->write_file();
 		}
+		WP_Optimize()->get_options()->update_option('htaccess_has_webp_rules', false);
 	}
 
 	/**
@@ -250,7 +283,7 @@ class WP_Optimize_WebP {
 	 *
 	 * @return bool
 	 */
-	private function is_webp_conversion_successful() {
+	public function is_webp_conversion_successful() {
 		$upload_dir = wp_upload_dir();
 		$destination =  $upload_dir['basedir']. '/wpo/images/wpo_logo_small.png.webp';
 		return file_exists($destination);
@@ -261,16 +294,18 @@ class WP_Optimize_WebP {
 	 *
 	 * @return bool Returns true if sample test should be run, false otherwise
 	 */
-	private function should_run_webp_conversion_test() {
+	public function should_run_webp_conversion_test() {
 		$webp_conversion_test = $this->get_webp_conversion_test_result();
-		return (true != $webp_conversion_test);
+		return (true !== $webp_conversion_test);
 	}
 
 	/**
 	 * Returns webp conversion test result
+	 *
+	 * @return boolean Returns the value of the webp_conversion_test saved in the options table
 	 */
 	private function get_webp_conversion_test_result() {
-		return WP_Optimize()->get_options()->get_option('webp_conversion_test');
+		return (bool) WP_Optimize()->get_options()->get_option('webp_conversion_test');
 	}
 
 	/**
@@ -294,11 +329,16 @@ class WP_Optimize_WebP {
 	 * Resets webp serving method by running self test, if needed purges cache and empties `uploads/.htaccess` file
 	 */
 	public function reset_webp_serving_method() {
-		$this->reset_webp_options();
-		$this->run_self_test();
-		list($old_redirection_possible, $new_redirection_possible) = $this->get_old_and_new_redirection_possibility();
-		$this->maybe_purge_cache($old_redirection_possible, $new_redirection_possible);
-		$this->maybe_empty_htaccess_file($new_redirection_possible);
+		if ($this->shell_functions_available() && $this->_should_use_webp) {
+			$this->reset_webp_options();
+			$this->run_self_test();
+			list($old_redirection_possible, $new_redirection_possible) = $this->get_old_and_new_redirection_possibility();
+			$this->maybe_purge_cache($old_redirection_possible, $new_redirection_possible);
+			$this->maybe_empty_htaccess_file($new_redirection_possible);
+		} else {
+			$this->disable_webp_conversion();
+			$this->log("Reset WebP Serving method failed, disabling WebP conversion");
+		}
 	}
 	
 	/**
@@ -310,6 +350,7 @@ class WP_Optimize_WebP {
 		$options->update_option('webp_conversion_test', false);
 		$options->update_option('webp_converters', false);
 		$options->update_option('redirection_possible', false);
+		$this->remove_webp_test_image_file();
 	}
 	
 	/**
@@ -320,6 +361,9 @@ class WP_Optimize_WebP {
 		if ($this->get_webp_conversion_test_result()) {
 			$this->save_htaccess_rules();
 			$this->run_webp_serving_self_test();
+		} else {
+			$this->disable_webp_conversion();
+			$this->log("No working WebP converter was found on the server when running self-test, disabling WebP conversion");
 		}
 	}
 	
@@ -345,6 +389,13 @@ class WP_Optimize_WebP {
 	private function maybe_purge_cache($old_redirection_possible, $new_redirection_possible) {
 		if ($old_redirection_possible !== $new_redirection_possible) {
 			WP_Optimize()->get_page_cache()->purge();
+			$log_old_value = empty($old_redirection_possible) ? "null" : $old_redirection_possible;
+			$log_new_value = empty($new_redirection_possible) ? "null" : $new_redirection_possible;
+			$this->log("Purging cache because redirection_possible value changed from: " .
+				$log_old_value .
+				" to " .
+				$log_new_value
+			);
 		}
 	}
 	
@@ -362,42 +413,104 @@ class WP_Optimize_WebP {
 	/**
 	 * Initialize cron scheduler
 	 */
-	private function init_webp_cron_scheduler() {
-		WPO_WebP_Cron_Scheduler::get_instance();
+	public function init_webp_cron_scheduler() {
+		if (!wp_next_scheduled('wpo_reset_webp_conversion_test_result')) {
+			wp_schedule_event(time(), 'wpo_daily', 'wpo_reset_webp_conversion_test_result');
+		}
+		if (!wp_next_scheduled('wpo_prune_webp_logs')) {
+			wp_schedule_event(time(), 'weekly', 'wpo_prune_webp_logs');
+		}
 	}
 
 	/**
-	 * Determines whether the php shell functions are available or not
+	 * Remove all cron schedules
+	 */
+	public function remove_webp_cron_schedules() {
+		wp_clear_scheduled_hook('wpo_reset_webp_conversion_test_result');
+		wp_clear_scheduled_hook('wpo_prune_webp_logs');
+	}
+
+	/**
+	 * Return the true if webp conversion is enabled and vice-versa
 	 *
 	 * @return bool
 	 */
+	public function is_webp_conversion_enabled() {
+		return $this->_should_use_webp;
+	}
+
+	/**
+	 * Set the webp_conversion option value to false and remove webp cron schedules
+	 */
+	public function disable_webp_conversion() {
+		$this->empty_htaccess_file();
+		WP_Optimize()->get_options()->update_option("webp_conversion", false);
+		$this->remove_webp_cron_schedules();
+	}
+
+	/**
+	 * Remove webp converted test image file
+	 */
+	private function remove_webp_test_image_file() {
+		$upload_dir = wp_upload_dir();
+		$destination =  $upload_dir['basedir']. '/wpo/images/wpo_logo_small.png.webp';
+		if (@file_exists($destination)) { // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- suppress PHP warning in case of failure
+			@unlink($destination); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- suppress PHP warning in case of failure
+		}
+	}
+
+	/**
+	 * Run during plugin deactivation
+	 */
+	public function plugin_deactivate() {
+		$this->empty_htaccess_file();
+		$this->remove_webp_test_image_file();
+	}
+
+	/**
+	 * Determines whether one of the PHP shell functions required for WebP convertion is available or not.
+	 *
+	 * @return bool
+	 */
+	public function shell_functions_available() {
+		return function_exists('escapeshellarg') && ($this->any_function_exists(array('exec', 'passthru')) || $this->all_functions_exist(array('proc_open', 'proc_close')) || $this->all_functions_exist(array('popen', 'pclose')));
+	}
+
+	/**
+	 * Determines whether one of the PHP shell functions required for WebP convertion is available or not.
+	 *
+	 * @deprecated 3.6.0
+	 * @return bool
+	 */
 	public static function is_shell_functions_available() {
-		$shell_functions = self::get_shell_functions();
-		foreach ($shell_functions as $shell_function) {
-			if (!function_exists($shell_function)) return false;
+		_deprecated_function(__METHOD__, '3.6.0', 'WP_Optimize_WebP::is_shell_functions_available');
+		return WP_Optimize_WebP::get_instance()->shell_functions_available();
+	}
+
+	/**
+	 * Check if all of the functions from the list is available.
+	 *
+	 * @param array $functions
+	 * @return bool
+	 */
+	private function all_functions_exist($functions) {
+		foreach ($functions as $function) {
+			if (!function_exists($function)) return false;
 		}
 		return true;
 	}
 
 	/**
-	 * List of php shell function names
+	 * Check if one of the functions from the list is available.
 	 *
-	 * @return string[]
+	 * @param array $functions
+	 * @return bool
 	 */
-	public static function get_shell_functions() {
-		return array(
-			'escapeshellarg',
-			'escapeshellcmd',
-			'exec',
-			'passthru',
-			'proc_close',
-			'proc_get_status',
-			'proc_nice',
-			'proc_open',
-			'proc_terminate',
-			'shell_exec',
-			'system',
-		);
+	private function any_function_exists($functions) {
+		foreach ($functions as $function) {
+			if (function_exists($function)) return true;
+		}
+		return false;
 	}
 }
 

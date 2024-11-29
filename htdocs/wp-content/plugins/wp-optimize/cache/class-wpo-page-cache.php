@@ -97,6 +97,7 @@ class WPO_Page_Cache {
 	public function __construct() {
 		$this->config = WPO_Cache_Config::instance();
 		WPO_Cache_Rules::instance();
+		WP_Optimize_Page_Cache_Preloader::instance();
 		$this->logger = new Updraft_PHP_Logger();
 
 		add_action('activated_plugin', array($this, 'activate_deactivate_plugin'));
@@ -127,15 +128,21 @@ class WPO_Page_Cache {
 
 		add_filter('cron_schedules', array($this, 'cron_schedules'));
 		add_action('wpo_save_images_settings', array($this, 'update_webp_images_option'));
+
+		add_action('wpo_preload_url', array($this, 'maybe_preload_url'));
 	}
 
 	/**
-	 * Activate cron job for deleting expired cache files
+	 * Activate cron job when the cache is enabled for deleting expired cache files
 	 */
 	public function cron_activate() {
 		$page_cache_length = $this->config->get_option('page_cache_length');
-		if (!wp_next_scheduled('wpo_purge_old_cache')) {
-			wp_schedule_event(time() + (false === $page_cache_length ? '86400' : $page_cache_length), 'wpo_purge_old_cache', 'wpo_purge_old_cache');
+		if ($this->is_enabled()) {
+			if (!wp_next_scheduled('wpo_purge_old_cache')) {
+				wp_schedule_event(time() + (false === $page_cache_length ? '86400' : $page_cache_length), 'wpo_purge_old_cache', 'wpo_purge_old_cache');
+			}
+		} else {
+			wp_clear_scheduled_hook('wpo_purge_old_cache');
 		}
 	}
 
@@ -257,10 +264,29 @@ class WPO_Page_Cache {
 
 		} elseif (wp_verify_nonce($_GET['_wpo_purge'], 'wpo_purge_all_pages_cache')) {
 			$success = self::purge();
+			$this->maybe_set_preload_cron_job();
 
 			// remove nonce from url and reload page.
 			wp_redirect(add_query_arg('wpo_all_pages_cache_purged', $success, remove_query_arg('_wpo_purge')));
 			exit;
+		}
+	}
+
+	/**
+	 * Sets a preload cron job to run after 30 seconds
+	 *
+	 * As preloading may take time for larger sites, we are opting for an immediate cron job instead
+	 * of instant preloading to prevent the current request from slowing down the page load
+	 *
+	 * @return void
+	 */
+	private function maybe_set_preload_cron_job() {
+		$wpo_page_cache_preloader = WP_Optimize_Page_Cache_Preloader::instance();
+
+		if ($wpo_page_cache_preloader->is_scheduled_preload_enabled() || $this->should_auto_preload_purged_contents()) {
+			if (!wp_next_scheduled('wpo_page_cache_run_preload')) {
+				wp_schedule_single_event(time() + 30, 'wpo_page_cache_run_preload');
+			}
 		}
 	}
 
@@ -432,6 +458,9 @@ class WPO_Page_Cache {
 
 		// Delete cache to avoid stale cache on next activation
 		$this->purge();
+
+		// Unschedule cron job to purge old cache
+		wp_clear_scheduled_hook('wpo_purge_old_cache');
 
 		return $ret;
 	}
@@ -624,6 +653,7 @@ class WPO_Page_Cache {
 		$cache_extensions_path = WPO_CACHE_EXT_DIR;
 		$wpo_version = WPO_VERSION;
 		$wpo_home_url = trailingslashit(home_url());
+		$abspath = ABSPATH;
 
 		// CS does not like heredoc
 		// phpcs:disable
@@ -632,7 +662,7 @@ class WPO_Page_Cache {
 
 if (!defined('ABSPATH')) die('No direct access allowed');
 
-// WP-Optimize advanced-cache.php (written by version: $wpo_version) (do not change this line, it is used for correctness checks)
+// WP-Optimize advanced-cache.php (written by version: $wpo_version) (homeurl: $wpo_home_url) (abspath: $abspath) (do not change this line, it is used for correctness checks)
 
 if (!defined('WPO_ADVANCED_CACHE')) define('WPO_ADVANCED_CACHE', true);
 
@@ -744,14 +774,45 @@ EOF;
 		}
 
 		// from 3.0.17 we use more secure way to store cache config files and need update advanced-cache.php
+		// if the site url or folder changed we also update advanced-cache.php
 		$advanced_cache_current_version = $this->get_advanced_cache_version();
-		if ($advanced_cache_current_version && version_compare($advanced_cache_current_version, $this->_minimum_advanced_cache_file_version, '>=')) return;
+		$is_the_site_url_or_folder_changed = $this->is_the_site_url_or_folder_changed();
+
+		if ($advanced_cache_current_version && version_compare($advanced_cache_current_version, $this->_minimum_advanced_cache_file_version, '>=') && !$is_the_site_url_or_folder_changed) return;
+
+		// Purge the cache when the site url or folder changed.
+		if ($is_the_site_url_or_folder_changed) {
+			$this->purge();
+		}
 
 		if (!$this->write_advanced_cache()) {
 			add_action('admin_notices', array($this, 'notice_advanced_cache_autoupdate_error'));
 		} else {
 			$this->update_cache_config();
 		}
+	}
+
+	/**
+	 * Check if the site url or folder doesn't equal to values from advanced-cache.php
+	 *
+	 * @return bool
+	 */
+	private function is_the_site_url_or_folder_changed() {
+		if (!is_file($this->get_advanced_cache_filename())) return false;
+
+		$content = file_get_contents($this->get_advanced_cache_filename());
+		
+		if (false === $content) return false;
+
+		if (preg_match('/WP\-Optimize advanced\-cache\.php \(written by version\: (.+)\) (\(homeurl: (.+)\)) (\(abspath: (.+)\)) \(do not change/Ui', $content, $match)) {
+			$wpo_home_url = trailingslashit(home_url());
+			$abspath = ABSPATH;
+			return ($wpo_home_url != $match[3] || $abspath != $match[5]);
+		} elseif (preg_match('/WP\-Optimize advanced\-cache\.php \(written by version\: (.+)\)/Ui', $content, $match)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1018,9 +1079,7 @@ EOF;
 	 * @return boolean
 	 */
 	public static function delete($src) {
-
 		return wpo_delete_files($src);
-
 	}
 
 	/**
@@ -1038,9 +1097,38 @@ EOF;
 
 		do_action('wpo_delete_cache_by_url', $url, $recursive);
 
+		do_action('wpo_preload_url', $url);
+
 		return wpo_delete_files($path, $recursive);
 	}
 
+	/**
+	 * Adds the URL to the preload list and hooks the preload task to shutdown
+	 *
+	 * @param string $url
+	 * @return void
+	 */
+	public function maybe_preload_url($url) {
+		if (!$this->should_auto_preload_purged_contents()) return;
+
+		static $urls_preloaded = array();
+
+		// Remove the query string from the URL
+		$url = preg_replace('/\?.*/', '', $url);
+
+		if (!in_array($url, $urls_preloaded)) {
+			$urls_preloaded[] = $url;
+
+			$preloader = WP_Optimize_Page_Cache_Preloader::instance();
+			$preloader->add_url_to_preload_list($url);
+			$url_task_creator = array($preloader, 'create_tasks_for_auto_preload_urls');
+
+			if (!has_action('shutdown', $url_task_creator)) {
+				add_action('shutdown', $url_task_creator);
+			}
+		}
+	}
+	
 	/**
 	 * Delete cached files for single post.
 	 *
@@ -1077,6 +1165,8 @@ EOF;
 
 		do_action('wpo_delete_cache_by_url', $post_url, $recursive);
 
+		do_action('wpo_preload_url', $post_url);
+
 		return wpo_delete_files($path, $recursive);
 	}
 
@@ -1091,40 +1181,13 @@ EOF;
 
 		$path = self::get_full_path_from_url($homepage_url);
 
-		do_action('wpo_delete_cache_by_url', $homepage_url, false);
+		$recursive = false;
 
-		wpo_delete_files($path, false);
-	}
+		do_action('wpo_delete_cache_by_url', $homepage_url, $recursive);
 
-	/**
-	 * Delete sitemap cache.
-	 */
-	public static function delete_sitemap_cache() {
-		if (!defined('WPO_CACHE_FILES_DIR')) return;
+		do_action('wpo_preload_url', $homepage_url);
 
-		$homepage_url = get_home_url(get_current_blog_id());
-
-		$path = trailingslashit(WPO_CACHE_FILES_DIR) . trailingslashit(wpo_get_url_path($homepage_url));
-
-		if (!is_dir($path)) return;
-
-		$handle = opendir($path);
-
-		if (false !== $handle) {
-			$file = readdir($handle);
-
-			while (false !== $file) {
-	
-				if ('.' != $file && '..' != $file && is_dir($path . $file) && preg_match('/.*sitemap.*\.xml/i', $file)) {
-					do_action('wpo_delete_cache_by_url', $path . $file, false);
-					wpo_delete_files($path . $file, true);
-				}
-	
-				$file = readdir($handle);
-			}
-		}
-
-		closedir($handle);
+		wpo_delete_files($path, $recursive);
 	}
 
 	/**
@@ -1183,7 +1246,7 @@ EOF;
 		// delete empty comments dir from the cache
 		$comments_url = trailingslashit(get_home_url(get_current_blog_id())) . 'comments/';
 		$path = self::get_full_path_from_url($comments_url);
-
+		
 		if (wpo_is_empty_dir($path)) {
 			wpo_delete_files($path, true);
 		}
@@ -1492,6 +1555,18 @@ EOF;
 			return true;
 		}
 		return true;
+	}
+
+	/**
+	 * Check configuration for auto preloading after cache deletion
+	 *
+	 * @return bool
+	 */
+	public function should_auto_preload_purged_contents() {
+		$wpo_cache = WP_Optimize()->get_page_cache();
+		$wpo_cache_options = $wpo_cache->config->get();
+		
+		return $wpo_cache_options['auto_preload_purged_contents'];
 	}
 }
 

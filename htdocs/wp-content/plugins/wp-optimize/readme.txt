@@ -4,8 +4,8 @@ Donate link: https://david.dw-perspective.org.uk/donate
 Tags: cache, caching, image cache, minify, performance cache, page speed, image optimizer, compress images, optimize database, clean database
 Requires PHP: 5.6
 Requires at least: 4.5
-Tested up to: 6.4
-Stable tag: 3.3.0
+Tested up to: 6.7
+Stable tag: 3.7.1
 License: GPLv2+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -394,6 +394,109 @@ If none of the above works, disable processing of JavaScript files in the minify
 
 
 == Changelog ==
+
+= 3.7.1 - 20/Nov/2024 =
+
+* TWEAK: Resolved a PHP notice caused by translation loading too early when caching is enabled, introduced in WordPress 6.7
+
+
+= 3.7.0 - 21/Oct/2024 =
+
+* FEATURE: Added an option to automatically preload URLs immediately after cache content is purged
+* FEATURE: Premium - Gather data about table usage by filtering `query` event
+* FIX: Cache - Scheduled preloading wasn't working
+* FIX: Inconsistency in `smush_manager_send_command` function
+* REFACTOR: Smush - Popup styles, remove unused code 
+* TWEAK: Fix fatal implode error when updating to v3.5.0
+* TWEAK: Image compression - Issue with cancelling smush image compression
+* TWEAK: Improve module minification logic
+* TWEAK: Premium - Unused images - Fixed popup when moving images to or restoring images from the trash
+* TWEAK: Premium - Unused images - Placeholder images in unused images section
+* TWEAK: Added `security.md` file with information to report security issues
+
+= 3.6.0 - 12/Sep/2024 =
+
+* FEATURE: Premium - Auto-detect images lacking dimension attributes and add them to improve CLS
+* FIX: Fixed the issue that disabled WebP conversion due to checking all shell commands for WebP compression
+* FIX: Premium - Unused Images - The unused image size deletion functionality does not work when images are not in the /yyyy/mm/ folder
+* REFACTOR: Removed unnecessary static methods in WebP class
+* TWEAK: Image compression - Rolled back to using popup error notices as in versions prior to 3.4.0
+* TWEAK: Added a more descriptive error with resolution proposals for failed gzip compression and browser cache tests
+* TWEAK: Fix broken unused image list thumbnails and download as csv link in Multisite
+* TWEAK: Fix the singleton pattern in Heartbeat class
+* TWEAK: Image compression functionality added to the Media Library page
+* TWEAK: Premium - Cache - Added support for Aelia Currency Switcher plugin
+* TWEAK: Premium - Unusued images - improve clarity in UI for images in post revisions
+* TWEAK: Added additional checks to the `implode()` function to mitigate the risk of fatal errors on certain instances
+
+= 3.5.0 - 14/Aug/2024 =
+
+* FEATURE: Premium - Host Google and minimal analytics scripts locally
+* FIX: Premium - Cache - Single page cache purge/preload feature isn't working 
+* TWEAK: Add logging for the WebP feature
+* TWEAK: Allow minification of script modules
+* TWEAK: Cache - Purge the cache when the site is migrated 
+* TWEAK: Improvements to asset minification cache logic
+* TWEAK: Improvements to reSmushIt curl error message
+* TWEAK: Minify - Added an option to disable Google Fonts processing when it causes conflicts with other plugins
+* TWEAK: Move all WPO files from the `uploads` folder to `uploads/wpo`
+* TWEAK: Style improvement of the loading modals
+
+= 3.4.2 - 03/Jul/2024 =
+
+* FIX: Removes unnecessary heartbeat calls for retrieving information about images
+
+= 3.4.1 - 26/Jun/2024 =
+
+* FIX: Issue with bulk editing on the posts and pages edit screen
+
+= 3.4.0 - 25/Jun/2024 =
+
+* FEATURE: Premium - Smush - Bulk compress / restore from media library
+* FIX: Deactivate the form for minifying JS/CSS settings when the corresponding option is disabled
+* REFACTOR: The functionality for the 'Unused Images' feature in ACF has been moved to a separate class
+* TWEAK: Add UpdraftCentral commands for the latest WP-Optimize features
+* TWEAK: Adjusted the scheduled preload time for improved performance
+* TWEAK: Auto-update advanced-cache.php settings during site migration
+* TWEAK: Cache - Human-readable file names for the cache directory
+* TWEAK: Caching related cron jobs are activated even though cache is disabled
+* TWEAK: Image compression - Updated message for restoring images action
+* TWEAK: Implement Heartbeat API for image compression progress updates
+* TWEAK: Improving vendor autoload
+* TWEAK: Introduces a hook (`wpo_force_webp_serve_using_altered_html`) for changing WebP serving method
+* TWEAK: Minify - Exclude .min files from minification
+* TWEAK: Minify - Improve list of processed files UI
+* TWEAK: Optimization of the get_uncompressed_image query
+* TWEAK: Persist script loading strategy when minifying JS files
+* TWEAK: Premium - Compatibility with Curcy WooCommerce multi currency plugin
+* TWEAK: Premium - Unused Images - Added an option to delete original images when scaled versions exist
+
+= 3.3.2 - 16/Apr/2024 =
+
+* FIX: Ensure the admin bar is not cached when caching is enabled for both logged-in and guest users
+* REFACTOR: Remove unused code
+* TWEAK: Cache - Prevent sitemaps being cached
+* TWEAK: Display a notice when static browser cache is enabled but not working
+* TWEAK: Premium - Added "Lost your password?" link on plugin's page
+* TWEAK: Premium - Unused images - Detect Elementor's 'Video' widget's image
+* TWEAK: Recognise Rank Math plugin tables as used in database optimization
+* TWEAK: Reduce .htaccess file write operations when WebP is enabled
+* TWEAK: Seasonal notice content update for 2024 
+* TWEAK: Unused Images - Unused tab displays multiple images for compressed images with WebP Conversion
+* TWEAK: Prevent multiple AJAX requests being generated by repeated clicks on the "Purge Cache" button
+* TWEAK: Call the `litespeed_finish_request()` function when attempting to close browser connection on LiteSpeed servers
+
+= 3.3.1 - 06/Mar/2024 =
+
+* FIX: Cache - Compatibility issue with Jetpack's infinity scroll feature
+* FIX: Cache - Don't cache activity stream (ActivityPub plugin compatibility)
+* FIX: Cache - Page not cached comment is added to `robots.txt`
+* TWEAK: Fix PHP warnings when server variables are not available
+* TWEAK: Fix Unexpected response alert and PHP warning when cache preloading is triggered manually
+* TWEAK: Migrate from setInterval to WP heartbeat API to refresh information about backend tasks
+* TWEAK: Optimization of the WebP Implementation
+* TWEAK: Update dashboard notice to include all of our plugins
+* TWEAK: Update the footer review prompt
 
 = 3.3.0 - 31/Jan/2024 =
 
@@ -1501,4 +1604,4 @@ If none of the above works, disable processing of JavaScript files in the minify
 * Fix Interface
 
 == Upgrade Notice ==
-* 3.3.0: Added ability to preload/purge caches of individual post/page feature (Premium). Using updated `matthiasmullie/minify` repository, various fixes, and tweaks - a recommended update for all
+* 3.7.1: Resolved a PHP notice caused by translation loading too early when caching is enabled - a recommended update for all
