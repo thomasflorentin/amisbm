@@ -841,11 +841,12 @@ ul.sub-menu .menu-item:not(:last-child) {
 
 .footer_supporters {
   display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .footer_supporters img {
-  width: 33%;
+  max-height: 160px;
+  max-width: 160px;
   height: auto;
   object-fit: contain;
 }
