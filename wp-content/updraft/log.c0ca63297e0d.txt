@@ -1,0 +1,65 @@
+0000.001 (0) Opened log file at time: Wed, 04 Jun 2025 06:44:59 +0000 on http://amisbm.localhost
+0000.002 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.24.11 WP: 6.7.1 PHP: 8.1.31 (apache2handler, Darwin mbp-de-thomas.home 23.4.0 Darwin Kernel Version 23.4.0: Fri Mar 15 00:10:42 PDT 2024; root:xnu-10063.101.17~1/RELEASE_ARM64_T6000 arm64) MySQL: 11.3.2-MariaDB (max packet size=16777216) WPLANG: fr_FR Server: Apache/2.4.58 (Unix) PHP/8.1.31 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 7.1M | 34M) multisite: N openssl: OpenSSL 3.4.0 22 Oct 2024 mcrypt: N LANG:  ZipArchive::addFile: Y
+0000.008 (0) Free space on disk containing Updraft's temporary directory: 241559.9 MB
+0000.012 (0) Tasks: Backup files: 1 (schedule: weekly) Backup DB:  (schedule: daily)
+0000.014 (0) Processed schedules. Tasks now: Backup files: 1 Backup DB: 
+0000.015 (0) Requesting semaphore lock (f) (apparently via scheduler: last_scheduled_action_called_at=1743586133, seconds_ago=5433366)
+0000.016 (0) Set semaphore last lock (f) time to 2025-06-04 06:44:59
+0000.017 (0) Semaphore lock (f) complete
+0000.026 (0) Backup run: resumption=0, nonce=c0ca63297e0d, file_nonce=c0ca63297e0d begun at=1749019499 (0s ago), job type=backup
+0000.027 (0) Scheduling a resumption (1) after 300 seconds (1749019799) in case this run gets aborted
+0000.029 (0) Checking if we have a zip executable available
+0000.074 (0) Testing: /usr/bin/zip
+0000.221 (0) Output: zip warning: binziptest/test.zip not found or empty
+0000.222 (0) Output: adding: binziptest/subdir1/	(in=0) (out=0) (stored 0%)
+0000.222 (0) Output: adding: binziptest/subdir1/subdir2/	(in=0) (out=0) (stored 0%)
+0000.224 (0) Output: adding: binziptest/subdir1/subdir2/test.html	(in=131) (out=107) (deflated 18%)
+0000.224 (0) Output: total bytes=131, compressed=107 -> 18% savings
+0000.256 (0) Output: adding: binziptest/subdir1/subdir2/test2.html	(in=138) (out=113) (deflated 18%)
+0000.258 (0) Output: total bytes=269, compressed=220 -> 18% savings
+0000.268 (0) Working binary zip found: /usr/bin/zip
+0000.274 (0) Zip engine: found/will use a binary zip: /usr/bin/zip
+0000.274 (0) Creation of backups of directories: beginning
+0000.276 (0) No backup of plugins: excluded by user's options
+0000.276 (0) No backup of themes: excluded by user's options
+0000.278 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0000.279 (0) Looking for candidates to backup in: /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads
+0000.279 (0) finding files: 2025: adding to list (1)
+0000.279 (0) finding files: 2024: adding to list (2)
+0000.280 (0) finding files: wpcf7_uploads: adding to list (3)
+0000.283 (0) finding files: wpo: adding to list (4)
+0000.283 (0) finding files: matomo: adding to list (5)
+0000.284 (0) finding files: .htaccess: adding to list (6)
+0000.284 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0000.289 (0) Total entities for the zip file: 11 directories, 50 files (0 skipped as non-modified), 3 MB
+0000.362 (0) backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip.tmp: size is now: 2.20 MB
+0000.367 (0) Creating zip file manifest (backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip.list-temp.tmp)
+0000.368 (0) Successfully created zip file manifest (size: 2506)
+0000.389 (0) Created uploads zip (0) - 2262.8 KB in 0.1 s (21764.2 KB/s) (sha1: 85c4cb436f3c53f2e750bee324500ff00acad71d, sha256: 6096dee70c2311286c0de391886a4b4fe275e1af1b7ff5c7b626ef404b9a1235)
+0000.392 (0) Cloud backup selection (1/1): dropbox with instance (1/1) (last)
+0000.393 (0) Beginning dispatch of backup to remote (dropbox) (instance identifier s-3c41ffc498b7163154f71f92894a4678)
+0000.393 (0) Dropbox: begin cloud upload (using API version 2 with OAuth v2 token)
+0000.394 (0) Dropbox: access gained; setting chunk size to: 10240 KB
+0000.629 (0) Dropbox: quota usage: used=148658 MB, total=2101888 MB, available=1953230 MB
+0000.630 (0) Dropbox: Attempt to upload: backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip to: backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip
+0001.445 (0) Dropbox chunked upload: 100 % uploaded (pid_upload_session:ABIJRSG5_rA9lMpaazF353LibNBwFBeqoVwMa3D-qqsXS6bSIg, 2317107, 10240 KB)
+0002.564 (0) Recording as successfully uploaded: backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip
+0002.568 (0) Deleting local file: backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip: OK
+0002.568 (0) Dropbox: File upload success (backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip): 2262 KB in 1s (1167 KB/s)
+0002.573 (0) Beginning creation of dump of mu-plugins (split every: 400 MB)
+0002.573 (0) Does not exist: /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/mu-plugins
+0002.574 (0) There are no mu-plugins to backup. Will not raise an error.
+0002.574 (0) mu-plugins: create_zip returned an error
+0002.574 (0) No backup of others: excluded by user's options
+0002.577 (0) Saving backup status to database (elements: 2)
+0002.579 (0) No database backup (wp) - not part of this run
+0002.580 (0) backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip: uploads: This file has already been successfully uploaded
+0002.581 (0) Saving backup history. Total backup size: 2.2 MB
+0002.582 (0) Resume backup (c0ca63297e0d, 0): finish run
+0002.583 (0) There were no more files that needed uploading
+0002.584 (0) Decremented the semaphore (f) by 1
+0002.584 (0) Semaphore (f) unlocked
+0002.584 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0002.587 (0) Deleting zip manifest (backup_2025-06-04-0844_Les_Amis_de_Bourron_Marlotte_c0ca63297e0d-uploads.zip.list.tmp)
+0002.589 (0) No email will be sent - this backup set was empty.
+0002.589 (0) The backup succeeded and is now complete

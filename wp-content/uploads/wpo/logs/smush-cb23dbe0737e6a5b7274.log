@@ -1,0 +1,90 @@
+[2024-11-26 15:50:13 : INFO] - Re_Smush_It_Task with attachment ID : 2191, autocreated on : November 26, 2024 03:50:13 
+[2024-11-26 15:50:13 : INFO] - Re_Smush_It_Task with attachment ID : 2192, autocreated on : November 26, 2024 03:50:13 
+[2024-11-26 15:55:19 : INFO] - A total of 2 tasks of type smush found and will be processed in this iteration 
+[2024-11-26 15:55:19 : DEBUG] - Lock option (updraft_lock_smush, abm_options) was created in the database 
+[2024-11-26 15:55:19 : INFO] - Lock (updraft_lock_smush, abm_options) acquired after initialising the database 
+[2024-11-26 15:55:19 : INFO] - Processing task with ID : 629, and type 'smush' 
+[2024-11-26 15:55:19 : INFO] - Re_Smush_It_Task with attachment ID : 2191, autocreated on : November 26, 2024 03:50:13 
+[2024-11-26 15:55:19 : INFO] - File: Image1.jpg, Compression quality: 85 
+[2024-11-26 15:55:20 : INFO] - Backing up the original image - 2024/11/Image1-updraft-pre-smush-original.jpg 
+[2024-11-26 15:55:21 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-26 15:55:21 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/Image1.jpg.The file was compressed from 19.65 KB to 14.71 KB, saving 25.16 percent, using WP-Optimize 
+[2024-11-26 15:55:21 : INFO] - Completed processing task with ID : 629, and type 'smush' 
+[2024-11-26 15:55:21 : INFO] - Processing task with ID : 630, and type 'smush' 
+[2024-11-26 15:55:21 : INFO] - Re_Smush_It_Task with attachment ID : 2192, autocreated on : November 26, 2024 03:50:13 
+[2024-11-26 15:55:21 : INFO] - File: LOGO-HCP-HD-BLANC-scaled.jpg, Compression quality: 85 
+[2024-11-26 15:55:22 : INFO] - Backing up the original image - 2024/11/LOGO-HCP-HD-BLANC-scaled-updraft-pre-smush-original.jpg 
+[2024-11-26 15:55:26 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-26 15:55:26 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/LOGO-HCP-HD-BLANC-scaled.jpg.The file was compressed from 104.16 KB to 85.51 KB, saving 17.91 percent, using WP-Optimize 
+[2024-11-26 15:55:26 : INFO] - Completed processing task with ID : 630, and type 'smush' 
+[2024-11-26 15:55:26 : INFO] - Lock option (updraft_lock_smush, abm_options) released 
+[2024-11-26 15:55:26 : INFO] - Successfully processed the queue (smush). 2 tasks were processed out of 2. 
+[2024-11-26 15:55:26 : INFO] - Lock option (updraft_lock_smush, abm_options) was deleted from the database 
+[2024-11-26 15:55:26 : INFO] - Cleaning up tasks of type (smush). A total of 2 tasks will be deleted. 
+[2024-11-26 15:58:17 : INFO] - Re_Smush_It_Task with attachment ID : 2193, autocreated on : November 26, 2024 03:58:17 
+[2024-11-26 15:58:17 : INFO] - Re_Smush_It_Task with attachment ID : 2194, autocreated on : November 26, 2024 03:58:17 
+[2024-11-26 15:58:17 : INFO] - Re_Smush_It_Task with attachment ID : 2195, autocreated on : November 26, 2024 03:58:17 
+[2024-11-26 15:58:28 : INFO] - Re_Smush_It_Task with attachment ID : 2196, autocreated on : November 26, 2024 03:58:28 
+[2024-11-26 15:58:28 : INFO] - Re_Smush_It_Task with attachment ID : 2197, autocreated on : November 26, 2024 03:58:28 
+[2024-11-26 15:58:28 : INFO] - Re_Smush_It_Task with attachment ID : 2198, autocreated on : November 26, 2024 03:58:28 
+[2024-11-29 08:00:34 : INFO] - A total of 6 tasks of type smush found and will be processed in this iteration 
+[2024-11-29 08:00:34 : DEBUG] - Lock option (updraft_lock_smush, abm_options) was created in the database 
+[2024-11-29 08:00:34 : INFO] - Lock (updraft_lock_smush, abm_options) acquired after initialising the database 
+[2024-11-29 08:00:34 : INFO] - Processing task with ID : 631, and type 'smush' 
+[2024-11-29 08:00:34 : INFO] - Re_Smush_It_Task with attachment ID : 2193, autocreated on : November 26, 2024 03:58:17 
+[2024-11-29 08:00:34 : INFO] - File: logo_77.png, Compression quality: 85 
+[2024-11-29 08:00:43 : INFO] - Task with ID 631 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:00:43 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/ce9aace983e2d916b5c3809f66c7a5d2\/_src_logo_77.png","dest":"http:\/\/hel2.static.resmush.it\/ce9aace983e2d916b5c3809f66c7a5d2\/logo_77.png","src_size":29283,"dest_size":10682,"percent":64,"output":"json","expires":"Fri, 29 Nov 2024 09:05:38 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:00:57 : INFO] - Task with ID 631 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:00:57 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/16a1678c6beea4beb1acefb0fa2deec0\/_src_logo_77-150x150.png","dest":"http:\/\/hel2.static.resmush.it\/16a1678c6beea4beb1acefb0fa2deec0\/logo_77-150x150.png","src_size":19199,"dest_size":6925,"percent":64,"output":"json","expires":"Fri, 29 Nov 2024 09:05:52 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:00:57 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:00:57 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/logo_77.png.The file was compressed from 28.60 KB to 28.60 KB, saving 0 percent, using WP-Optimize 
+[2024-11-29 08:00:57 : INFO] - Completed processing task with ID : 631, and type 'smush' 
+[2024-11-29 08:00:57 : INFO] - Processing task with ID : 632, and type 'smush' 
+[2024-11-29 08:00:57 : INFO] - Re_Smush_It_Task with attachment ID : 2194, autocreated on : November 26, 2024 03:58:17 
+[2024-11-29 08:00:57 : INFO] - File: logo_BM.png, Compression quality: 85 
+[2024-11-29 08:01:17 : INFO] - Task with ID 632 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:01:17 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/4906196b9732073a44ca69cfea2a60db\/_src_logo_BM.png","dest":"http:\/\/hel2.static.resmush.it\/4906196b9732073a44ca69cfea2a60db\/logo_BM.png","src_size":27753,"dest_size":8469,"percent":69,"output":"json","expires":"Fri, 29 Nov 2024 09:06:12 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:01:18 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:01:18 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/logo_BM.png.The file was compressed from 27.10 KB to 27.10 KB, saving 0 percent, using WP-Optimize 
+[2024-11-29 08:01:18 : INFO] - Completed processing task with ID : 632, and type 'smush' 
+[2024-11-29 08:01:18 : INFO] - Processing task with ID : 633, and type 'smush' 
+[2024-11-29 08:01:18 : INFO] - Re_Smush_It_Task with attachment ID : 2195, autocreated on : November 26, 2024 03:58:17 
+[2024-11-29 08:01:18 : INFO] - File: Logo_ABM.png, Compression quality: 85 
+[2024-11-29 08:01:18 : INFO] - Backing up the original image - 2024/11/Logo_ABM-updraft-pre-smush-original.png 
+[2024-11-29 08:01:35 : INFO] - Task with ID 633 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:01:35 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/ed100791fb49c1164f8aae61e30b56d7\/_src_Logo_ABM-150x150.png","dest":"http:\/\/hel2.static.resmush.it\/ed100791fb49c1164f8aae61e30b56d7\/Logo_ABM-150x150.png","src_size":13303,"dest_size":5902,"percent":56,"output":"json","expires":"Fri, 29 Nov 2024 09:06:30 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:01:50 : INFO] - Task with ID 633 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:01:50 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/11821bfb01943fe04ec5a024cf6a2190\/_src_Logo_ABM-80x80.png","dest":"http:\/\/hel2.static.resmush.it\/11821bfb01943fe04ec5a024cf6a2190\/Logo_ABM-80x80.png","src_size":5464,"dest_size":2846,"percent":48,"output":"json","expires":"Fri, 29 Nov 2024 09:06:45 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:01:50 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:01:50 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/Logo_ABM.png.The file was compressed from 85.15 KB to 43.39 KB, saving 49.05 percent, using WP-Optimize 
+[2024-11-29 08:01:50 : INFO] - Completed processing task with ID : 633, and type 'smush' 
+[2024-11-29 08:01:50 : INFO] - Processing task with ID : 634, and type 'smush' 
+[2024-11-29 08:01:50 : INFO] - Re_Smush_It_Task with attachment ID : 2196, autocreated on : November 26, 2024 03:58:28 
+[2024-11-29 08:01:50 : INFO] - File: logo_77-1.png, Compression quality: 85 
+[2024-11-29 08:02:04 : INFO] - Task with ID 634 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:02:04 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/fa8fbc81d9155b3c7965f12bd9c1bb6a\/_src_logo_77-1.png","dest":"http:\/\/hel2.static.resmush.it\/fa8fbc81d9155b3c7965f12bd9c1bb6a\/logo_77-1.png","src_size":29283,"dest_size":10682,"percent":64,"output":"json","expires":"Fri, 29 Nov 2024 09:06:59 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:02:28 : INFO] - Task with ID 634 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:02:28 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/509ba8ec977692ade5200ac892ac5295\/_src_logo_77-1-80x80.png","dest":"http:\/\/hel2.static.resmush.it\/509ba8ec977692ade5200ac892ac5295\/logo_77-1-80x80.png","src_size":7687,"dest_size":3278,"percent":57,"output":"json","expires":"Fri, 29 Nov 2024 09:07:23 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:02:28 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:02:28 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/logo_77-1.png.The file was compressed from 28.60 KB to 28.60 KB, saving 0 percent, using WP-Optimize 
+[2024-11-29 08:02:28 : INFO] - Completed processing task with ID : 634, and type 'smush' 
+[2024-11-29 08:02:28 : INFO] - Processing task with ID : 635, and type 'smush' 
+[2024-11-29 08:02:28 : INFO] - Re_Smush_It_Task with attachment ID : 2197, autocreated on : November 26, 2024 03:58:28 
+[2024-11-29 08:02:28 : INFO] - File: logo_BM-1.png, Compression quality: 85 
+[2024-11-29 08:02:42 : INFO] - Task with ID 635 and type (smush) failed with error code invalid_response - The compression apparently succeeded, but WP-Optimize could not retrieve the compressed image from the remote server. 
+[2024-11-29 08:02:42 : INFO] - data: {"src":"http:\/\/hel2.static.resmush.it\/793f885835eaa7bb6927d0246fbf45eb\/_src_logo_BM-1.png","dest":"http:\/\/hel2.static.resmush.it\/793f885835eaa7bb6927d0246fbf45eb\/logo_BM-1.png","src_size":27753,"dest_size":8469,"percent":69,"output":"json","expires":"Fri, 29 Nov 2024 09:07:37 +0100","generator":"reSmush.it rev.3.0.11.20240125"} 
+[2024-11-29 08:02:49 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:02:49 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/logo_BM-1.png.The file was compressed from 27.10 KB to 27.10 KB, saving 0 percent, using WP-Optimize 
+[2024-11-29 08:02:49 : INFO] - Completed processing task with ID : 635, and type 'smush' 
+[2024-11-29 08:02:49 : INFO] - Processing task with ID : 636, and type 'smush' 
+[2024-11-29 08:02:49 : INFO] - Re_Smush_It_Task with attachment ID : 2198, autocreated on : November 26, 2024 03:58:28 
+[2024-11-29 08:02:49 : INFO] - File: Logo_ABM-1.png, Compression quality: 85 
+[2024-11-29 08:02:49 : INFO] - Backing up the original image - 2024/11/Logo_ABM-1-updraft-pre-smush-original.png 
+[2024-11-29 08:02:58 : INFO] - There were no WebP conversion tools found on your server. 
+[2024-11-29 08:02:58 : INFO] - Successfully optimized the image - /Users/thomas/Sites/_projets/amisbm/htdocs/wp-content/uploads/2024/11/Logo_ABM-1.png.The file was compressed from 85.15 KB to 43.39 KB, saving 49.05 percent, using WP-Optimize 
+[2024-11-29 08:02:58 : INFO] - Completed processing task with ID : 636, and type 'smush' 
+[2024-11-29 08:02:58 : INFO] - Lock option (updraft_lock_smush, abm_options) released 
+[2024-11-29 08:02:58 : INFO] - Successfully processed the queue (smush). 6 tasks were processed out of 6. 
+[2024-11-29 08:02:58 : INFO] - Lock option (updraft_lock_smush, abm_options) was deleted from the database 
+[2024-11-29 08:02:58 : INFO] - Cleaning up tasks of type (smush). A total of 6 tasks will be deleted. 
